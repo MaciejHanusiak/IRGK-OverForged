@@ -3,53 +3,67 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    Vector2 dir;
-    [SerializeField] float moveSpeed = 5f;
-    Animator animator;
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Animator anim;
 
-    float moveX, moveY;
+    private const string ANIM_MOVE_X = "AnimMoveX";
+    private const string ANIM_MOVE_Y = "AnimMoveY";
+    private const string ANIM_MOVE_MAGNITUDE = "AnimMoveMagnitude";
+    private const string ANIM_LAST_MOVE_X= "AnimLastMoveX";
+    private const string ANIM_LAST_MOVE_Y= "AnimLastMoveY";
 
-    float moveStance;
-    int direction;
 
-    private void Awake()
-    {
-        animator = GetComponent<Animator>();
-    }
-    void Start()
-    {
-        
-    }
-
+    private Vector2 moveDirection;
+    private Vector2 lastMoveDirection;
     
+   
     void Update()
     {
+        ProcessInputs();
+        Animate();
+        Debug.Log("MoveStance:" + moveDirection);
+    }
+    private void FixedUpdate()
+    {
+        // Physics Calculations
+        Move();
+    }
+
+    void ProcessInputs()
+    {
         // Get player Input
-        moveX = Input.GetAxisRaw("Horizontal");
-        moveY = Input.GetAxisRaw("Vertical");
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveY = Input.GetAxisRaw("Vertical");
+
+
+        // Set player last vector for Idle Animation
+        if ((moveX == 0 && moveY == 0) && moveDirection.x != 0 || moveDirection.y != 0)
+        {
+            lastMoveDirection = moveDirection;
+        }
+
+
+        // Set player vector 
+        moveDirection = new Vector2(moveX, moveY).normalized;  
+    }
+
+    void Move()
+    {   
+        // Set vector to player rigidbody velocity
+        rb.linearVelocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
+    }
+
+    void Animate()
+    {
         
-        // set player vector
-        dir.x = moveX;
-        dir.y = moveY;
-        dir.Normalize();
+        // Set parameters in animator
+        anim.SetFloat(ANIM_MOVE_X, moveDirection.x);
+        anim.SetFloat(ANIM_MOVE_Y, moveDirection.y);
+        anim.SetFloat(ANIM_MOVE_MAGNITUDE, moveDirection.magnitude);
+        anim.SetFloat(ANIM_LAST_MOVE_X,lastMoveDirection.x);
+        anim.SetFloat(ANIM_LAST_MOVE_Y,lastMoveDirection.y);
 
-        moveStance = Mathf.Abs(dir.x) + Mathf.Abs(dir.y);
-        animator.SetFloat("SpeedFloat", moveStance);
-
-
-
-        if (dir.y < 0)      // Down
-                direction = 0;
-        else if (dir.x < 0) // Left
-                direction = 1;
-        else if (dir.y > 0) // Up
-                direction = 2;
-        else if (dir.x > 0) // Right
-                direction = 3;
-
-        animator.SetInteger("DirectionInt", direction);
-
-        transform.Translate(Time.deltaTime * dir * moveSpeed);
-        Debug.Log("MoveStance:" + moveStance + " Direction:" + direction + " " +  dir);
+        
     }
 }
