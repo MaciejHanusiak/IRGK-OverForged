@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private Rigidbody2D rb;
+    //[SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator anim;
 
     private const string ANIM_MOVE_X = "AnimMoveX";
@@ -21,14 +21,14 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         ProcessInputs();
-        Animate();
-        //Debug.Log("MoveStance 25:" + moveDirection);
         HandleInteractions();
+        Animate();
     }
     private void FixedUpdate()
     {
         // Physics Calculations
         Move();
+       
     }
 
     void ProcessInputs()
@@ -50,15 +50,28 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void Move()
-    {   
-        // Set vector to player rigidbody velocity
-        rb.linearVelocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
+    {
+        
+        float moveDistance = moveSpeed * Time.deltaTime;
+
+        // check, do player hit any object circlecast
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, 0.5f, moveDirection, moveDistance);
+
+        bool canMove = !hit;
+        if (canMove)
+        {
+            // change player position in world
+        transform.position += new Vector3(moveDirection.x * moveDistance, moveDirection.y * moveDistance, 0f);
+
+        }
+        
     }
 
     void HandleInteractions()
     {
         float interactDistance = 1f;
         Debug.DrawRay(transform.position, lastMoveDirection, Color.red, 1f);
+        // check, do player has object in front to interact
         RaycastHit2D hit = Physics2D.Raycast(transform.position, lastMoveDirection, interactDistance);
         if (hit.collider != null) 
         {
