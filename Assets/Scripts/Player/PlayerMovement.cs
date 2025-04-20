@@ -22,7 +22,8 @@ public class PlayerMovement : MonoBehaviour
     {
         ProcessInputs();
         Animate();
-        Debug.Log("MoveStance:" + moveDirection);
+        //Debug.Log("MoveStance 25:" + moveDirection);
+        HandleInteractions();
     }
     private void FixedUpdate()
     {
@@ -54,6 +55,22 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
     }
 
+    void HandleInteractions()
+    {
+        float interactDistance = 1f;
+        Debug.DrawRay(transform.position, lastMoveDirection, Color.red, 1f);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, lastMoveDirection, interactDistance);
+        if (hit.collider != null) 
+        {
+             if (hit.transform.TryGetComponent(out ClearCounter clearCounter))
+            {
+                clearCounter.Interact();
+
+            }
+            
+        }
+        
+    }
     void Animate()
     {
         
