@@ -14,8 +14,8 @@ public class PlayerMovement : MonoBehaviour
     private const string ANIM_LAST_MOVE_Y= "AnimLastMoveY";
 
 
-    private Vector2 moveDirection;
-    private Vector2 lastMoveDirection;
+    private Vector2 moveDir;
+    private Vector2 lastMoveDir;
     
    
     void Update()
@@ -38,30 +38,67 @@ public class PlayerMovement : MonoBehaviour
         float moveY = Input.GetAxisRaw("Vertical");
 
 
-        // Set player last vector for Idle Animation
-        if ((moveX == 0 && moveY == 0) && moveDirection.x != 0 || moveDirection.y != 0)
-        {
-            lastMoveDirection = moveDirection;
-        }
+        //// Set player last vector for Idle Animation
+        //if ((moveX == 0 && moveY == 0) && moveDir.x != 0 || moveDir.y != 0)
+        //{
+        //    lastMoveDir = moveDir;
+        //}
 
 
         // Set player vector 
-        moveDirection = new Vector2(moveX, moveY).normalized;  
+        moveDir = new Vector2(moveX, moveY).normalized;  
+
+        if (moveDir != Vector2.zero)
+        {
+            lastMoveDir = moveDir;
+        }
     }
 
     void Move()
     {
         
         float moveDistance = moveSpeed * Time.deltaTime;
-
+        float playerRadius = 0.2f;
         // check, do player hit any object circlecast
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, 0.5f, moveDirection, moveDistance);
+        bool canMove  = !Physics2D.CircleCast(transform.position, playerRadius, moveDir, moveDistance);
 
-        bool canMove = !hit;
+         
+        if (!canMove)
+        {
+            // Cannot move towards moveDir
+
+            // Attempt only X movement
+            Vector2 moveDirX = new Vector2(moveDir.x, 0f).normalized;
+            canMove = !Physics2D.CircleCast(transform.position, playerRadius, moveDirX, moveDistance);
+            //canMove = !hit;
+            if (canMove)
+            {
+                moveDir = moveDirX;
+                Debug.Log("PlayerMov.cs 72/ moveDir:" + moveDir + " moveDirX:" + moveDirX);
+
+
+            }
+            else
+            {
+                // Cannot move towards moveDirX
+
+                // Attempt  only Y movement
+                Vector2 moveDirY = new Vector2(0f, moveDir.y).normalized;
+                canMove = !Physics2D.CircleCast(transform.position, playerRadius, moveDirY, moveDistance);
+
+                if (canMove)
+                {
+                    moveDir = moveDirY;
+                    Debug.Log("PlayerMov.cs 72/ moveDir:" + moveDir + " moveDirY:" + moveDirY);
+                }
+
+            }
+        }
+
         if (canMove)
         {
             // change player position in world
-        transform.position += new Vector3(moveDirection.x * moveDistance, moveDirection.y * moveDistance, 0f);
+            transform.position += new Vector3(moveDir.x * moveDistance, moveDir.y * moveDistance, 0f);
 
         }
         
@@ -70,9 +107,11 @@ public class PlayerMovement : MonoBehaviour
     void HandleInteractions()
     {
         float interactDistance = 1f;
-        Debug.DrawRay(transform.position, lastMoveDirection, Color.red, 1f);
+        Debug.DrawRay(transform.position, lastMoveDir, Color.red, 1f);
+        Debug.DrawRay(transform.position, moveDir, Color.blue, 1f);
+
         // check, do player has object in front to interact
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, lastMoveDirection, interactDistance);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, lastMoveDir, interactDistance);
         if (hit.collider != null) 
         {
              if (hit.transform.TryGetComponent(out ClearCounter clearCounter))
@@ -86,13 +125,15 @@ public class PlayerMovement : MonoBehaviour
     }
     void Animate()
     {
+     
         
+
         // Set parameters in animator
-        anim.SetFloat(ANIM_MOVE_X, moveDirection.x);
-        anim.SetFloat(ANIM_MOVE_Y, moveDirection.y);
-        anim.SetFloat(ANIM_MOVE_MAGNITUDE, moveDirection.magnitude);
-        anim.SetFloat(ANIM_LAST_MOVE_X,lastMoveDirection.x);
-        anim.SetFloat(ANIM_LAST_MOVE_Y,lastMoveDirection.y);
+        anim.SetFloat(ANIM_MOVE_X, moveDir.x);
+        anim.SetFloat(ANIM_MOVE_Y, moveDir.y);
+        anim.SetFloat(ANIM_MOVE_MAGNITUDE, moveDir.magnitude);
+        anim.SetFloat(ANIM_LAST_MOVE_X,lastMoveDir.x);
+        anim.SetFloat(ANIM_LAST_MOVE_Y,lastMoveDir.y);
 
         
     }
