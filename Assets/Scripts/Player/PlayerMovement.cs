@@ -4,8 +4,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
-    //[SerializeField] private Rigidbody2D rb;
     [SerializeField] private Animator anim;
+    [SerializeField] private GameInput gameInput;
 
     private const string ANIM_MOVE_X = "AnimMoveX";
     private const string ANIM_MOVE_Y = "AnimMoveY";
@@ -33,20 +33,13 @@ public class PlayerMovement : MonoBehaviour
 
     void ProcessInputs()
     {
-        // Get player Input
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
+        
 
-
-        //// Set player last vector for Idle Animation
-        //if ((moveX == 0 && moveY == 0) && moveDir.x != 0 || moveDir.y != 0)
-        //{
-        //    lastMoveDir = moveDir;
-        //}
+        Vector2 inputVector = gameInput.GetMovementVectorNormalized();
 
 
         // Set player vector 
-        moveDir = new Vector2(moveX, moveY).normalized;  
+        moveDir = inputVector; 
 
         if (moveDir != Vector2.zero)
         {
