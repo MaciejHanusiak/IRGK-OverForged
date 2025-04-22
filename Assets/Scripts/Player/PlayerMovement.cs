@@ -16,12 +16,21 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector2 moveDir;
     private Vector2 lastMoveDir;
-    
-   
+
+    private void Start()
+    {
+        gameInput.OnInteractAction += GameInput_OnInteractAction;
+    }
+
+    private void GameInput_OnInteractAction(object sender, EventArgs e)
+    {
+        HandleInteractions();
+    }
+
     void Update()
     {
         ProcessInputs();
-        HandleInteractions();
+        
         Animate();
     }
     private void FixedUpdate()
