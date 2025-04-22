@@ -1,12 +1,23 @@
 using System;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class Player : MonoBehaviour
 {
+    public static Player Instance { get; private set; }
+
+    public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
+    public class OnSelectedCounterChangedEventArgs : EventArgs 
+    {
+        public ClearCounter selectedCounter;
+    } 
+
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private Animator anim;
     [SerializeField] private GameInput gameInput;
+    [SerializeField] private LayerMask countersLayerMask;
 
+
+    // name of Parameters in "PlayerController" Animator 
     private const string ANIM_MOVE_X = "AnimMoveX";
     private const string ANIM_MOVE_Y = "AnimMoveY";
     private const string ANIM_MOVE_MAGNITUDE = "AnimMoveMagnitude";
@@ -16,7 +27,18 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector2 moveDir;
     private Vector2 lastMoveDir;
+    private ClearCounter selectedCounter;
 
+    private void Awake()
+    {
+        // Singleton Pattern
+        if (Instance != null)
+        {
+            Debug.LogError("There is more then one Player instance");
+        }
+            Instance = this;
+
+    }
     private void Start()
     {
         gameInput.OnInteractAction += GameInput_OnInteractAction;
@@ -24,32 +46,36 @@ public class PlayerMovement : MonoBehaviour
 
     private void GameInput_OnInteractAction(object sender, EventArgs e)
     {
-        HandleInteractions();
+        // input Event
+        if (selectedCounter != null)
+        {
+            selectedCounter.Interact();
+        }
     }
 
     void Update()
     {
         ProcessInputs();
-        
         Animate();
+        HandleInteractions();
+        Move();
     }
     private void FixedUpdate()
     {
         // Physics Calculations
-        Move();
-       
     }
 
     void ProcessInputs()
     {
         
-
+        // get input vector from GameInput.cs
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
 
 
         // Set player vector 
         moveDir = inputVector; 
 
+        // Set last move dir for idle animation state
         if (moveDir != Vector2.zero)
         {
             lastMoveDir = moveDir;
@@ -76,7 +102,6 @@ public class PlayerMovement : MonoBehaviour
             if (canMove)
             {
                 moveDir = moveDirX;
-                Debug.Log("PlayerMov.cs 72/ moveDir:" + moveDir + " moveDirX:" + moveDirX);
 
 
             }
@@ -91,7 +116,6 @@ public class PlayerMovement : MonoBehaviour
                 if (canMove)
                 {
                     moveDir = moveDirY;
-                    Debug.Log("PlayerMov.cs 72/ moveDir:" + moveDir + " moveDirY:" + moveDirY);
                 }
 
             }
@@ -109,21 +133,52 @@ public class PlayerMovement : MonoBehaviour
     void HandleInteractions()
     {
         float interactDistance = 1f;
-        Debug.DrawRay(transform.position, lastMoveDir, Color.red, 1f);
-        Debug.DrawRay(transform.position, moveDir, Color.blue, 1f);
+        Debug.DrawRay(transform.position, lastMoveDir * interactDistance, Color.red, 1f);
+        Debug.DrawRay(transform.position, moveDir * interactDistance, Color.blue, 1f);
 
         // check, do player has object in front to interact
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, lastMoveDir, interactDistance);
-        if (hit.collider != null) 
-        {
-             if (hit.transform.TryGetComponent(out ClearCounter clearCounter))
-            {
-                clearCounter.Interact();
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, lastMoveDir, interactDistance, countersLayerMask);
+        if (hit.collider != null)
+        { //hit any object
 
-            }
             
+            
+            if (hit.transform.TryGetComponent(out ClearCounter clearCounter))
+            {
+                // Object has ClearCounter
+               
+
+                if (clearCounter != selectedCounter)
+                { // 
+
+                    SetSelectedCounter(clearCounter);
+                }
+                
+            }
+            else
+            {
+                
+                // hit any object
+                SetSelectedCounter(null);
+            }
+
         }
-        
+        else
+        {  // any object was not hitted     
+            SetSelectedCounter(null);
+        }
+
+    }
+
+    private void SetSelectedCounter(ClearCounter selectedCounter)
+    {
+        //if (this.selectedCounter == selectedCounter) return; // <-- to linia ratuj¹ca ¿ycie
+
+        this.selectedCounter = selectedCounter;
+
+        OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs {
+            selectedCounter = selectedCounter
+        });
     }
     void Animate()
     {

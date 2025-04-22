@@ -254,6 +254,9 @@ MonoBehaviour:
   moveSpeed: 5
   anim: {fileID: 48828721}
   gameInput: {fileID: 1318294641}
+  countersLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!95 &48828721
 Animator:
   serializedVersion: 7
@@ -2124,6 +2127,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2572442720115804950, guid: aca21b60157b24b468f6257be0b888ab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2723968420526388570, guid: aca21b60157b24b468f6257be0b888ab, type: 3}
       propertyPath: m_Name
       value: ClearCounter
@@ -2138,7 +2145,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3182973980782632051, guid: aca21b60157b24b468f6257be0b888ab, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.053794917
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3182973980782632051, guid: aca21b60157b24b468f6257be0b888ab, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2166,6 +2173,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3182973980782632051, guid: aca21b60157b24b468f6257be0b888ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3745642284677217898, guid: aca21b60157b24b468f6257be0b888ab, type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
