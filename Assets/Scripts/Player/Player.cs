@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, ISmithObjectParent
 {
     public static Player Instance { get; private set; }
 
@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask countersLayerMask;
+    [SerializeField] private Transform smithObjectHoldPoint;
 
 
     // name of Parameters in "PlayerController" Animator 
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour
     private Vector2 moveDir;
     private Vector2 lastMoveDir;
     private ClearCounter selectedCounter;
+    private SmithObject smithObject;
 
     private void Awake()
     {
@@ -49,7 +51,7 @@ public class Player : MonoBehaviour
         // input Event
         if (selectedCounter != null)
         {
-            selectedCounter.Interact();
+            selectedCounter.Interact(this);
         }
     }
 
@@ -59,10 +61,6 @@ public class Player : MonoBehaviour
         Animate();
         HandleInteractions();
         Move();
-    }
-    private void FixedUpdate()
-    {
-        // Physics Calculations
     }
 
     void ProcessInputs()
@@ -149,7 +147,7 @@ public class Player : MonoBehaviour
                
 
                 if (clearCounter != selectedCounter)
-                { // 
+                { 
 
                     SetSelectedCounter(clearCounter);
                 }
@@ -172,8 +170,6 @@ public class Player : MonoBehaviour
 
     private void SetSelectedCounter(ClearCounter selectedCounter)
     {
-        //if (this.selectedCounter == selectedCounter) return; // <-- to linia ratuj¹ca ¿ycie
-
         this.selectedCounter = selectedCounter;
 
         OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs {
@@ -193,5 +189,26 @@ public class Player : MonoBehaviour
         anim.SetFloat(ANIM_LAST_MOVE_Y,lastMoveDir.y);
 
         
+    }
+
+    public Transform GetSmithObjectFollowTransform()
+    {
+        return smithObjectHoldPoint;
+    }
+    public void SetSmithObject(SmithObject smithObject)
+    {
+        this.smithObject = smithObject;
+    }
+    public SmithObject GetSmithObject()
+    {
+        return smithObject;
+    }
+    public void ClearSmithObject()
+    {
+        smithObject = null;
+    }
+    public bool HasSmithObject()
+    {
+        return smithObject != null;
     }
 }

@@ -1,41 +1,27 @@
 using UnityEngine;
 
-public class ClearCounter : MonoBehaviour
+public class ClearCounter : MonoBehaviour, ISmithObjectParent
 {
     [SerializeField] private SmithObjectSO smithObjectSO;
     [SerializeField] private Transform counterTopPoint;
-    [SerializeField] private ClearCounter secondClearCounter;
 
-    public bool testing;
 
     private SmithObject smithObject;
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T) && testing)
-        {
-            if (smithObject != null)
-            {
-                smithObject.SetClearCounter(secondClearCounter);
-            }
-            else
-            {
-                Debug.LogError("Clear counter does't has any object!");
-            }
-        }
-    }
-    public void Interact()
+ 
+    public void Interact(Player player)
     {
 
         if (smithObject == null)
         {
             // Create new smith object if none exist
             Transform smithObjectTransform = Instantiate(smithObjectSO.prefab, counterTopPoint);
-            smithObjectTransform.GetComponent<SmithObject>().SetClearCounter(this);
+            smithObjectTransform.GetComponent<SmithObject>().SetSmithObjectParent(this);
             smithObjectTransform.localPosition = Vector2.zero;
         }
         else
         {
-            Debug.LogError(smithObject.GetClearCounter() + " already has a object on it!");
+            // Give the object to player
+            smithObject.SetSmithObjectParent(player);
         }
         
     }

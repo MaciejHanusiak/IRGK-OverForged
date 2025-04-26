@@ -4,31 +4,31 @@ public class SmithObject : MonoBehaviour
 {
     [SerializeField] private SmithObjectSO smithObjectSO;
 
-    private ClearCounter clearCounter;
+    private ISmithObjectParent smithObjectParent;
     public SmithObjectSO GetSmithObjectSO()
     {
         return smithObjectSO;
     }
 
-    public void SetClearCounter(ClearCounter clearCounter)
+    public void SetSmithObjectParent(ISmithObjectParent smithObjectParent)
     {
-        if (this.clearCounter != null)
+        if (this.smithObjectParent != null)
         {
-            this.clearCounter.ClearSmithObject();
+            this.smithObjectParent.ClearSmithObject();
         }
-        this.clearCounter = clearCounter;
+        this.smithObjectParent = smithObjectParent;
 
-        if (clearCounter.HasSmithObject())
+        if (smithObjectParent.HasSmithObject())
         {
-            Debug.LogError("Counter already has a SmithObject!");
+            Debug.LogError("IKitchenObjectParent already has a SmithObject!");
         }
-        clearCounter.SetSmithObject(this);
-        transform.parent = clearCounter.GetSmithObjectFollowTransform();
+        smithObjectParent.SetSmithObject(this);
+        transform.parent = smithObjectParent.GetSmithObjectFollowTransform();
         transform.localPosition = Vector2.zero;
     }
 
-    public ClearCounter GetClearCounter()
+    public ISmithObjectParent GetSmithObjectParent()
     {
-        return clearCounter;
+        return smithObjectParent;
     }
 }
