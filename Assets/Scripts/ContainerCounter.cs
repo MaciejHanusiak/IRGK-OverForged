@@ -8,12 +8,15 @@ public class ContainerCounter : BaseCounter
 
     public override void Interact(Player player)
     {
-        if (!HasSmithObject())
+        if (!player.HasSmithObject())
         {
-            // Create new smith object if none exist
+            // Player is not carrying anything
             Transform smithObjectTransform = Instantiate(smithObjectSO.prefab);
-            smithObjectTransform.GetComponent<SmithObject>().SetSmithObjectParent(player);
-            smithObjectTransform.localPosition = Vector2.zero;
+            smithObjectTransform.GetComponent<SmithObject>().SetSmithObjectParent(player);           
+        }
+        else
+        {
+            // Player already has an smith object
         }
     }
 
