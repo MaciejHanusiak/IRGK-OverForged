@@ -12,10 +12,8 @@ public class SmithObject : MonoBehaviour
 
     public void SetSmithObjectParent(ISmithObjectParent smithObjectParent)
     {
-        if (this.smithObjectParent != null)
-        {
-            this.smithObjectParent.ClearSmithObject();
-        }
+        this.smithObjectParent?.ClearSmithObject();
+
         this.smithObjectParent = smithObjectParent;
 
         if (smithObjectParent.HasSmithObject())

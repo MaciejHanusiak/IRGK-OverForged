@@ -8,7 +8,7 @@ public class Player : MonoBehaviour, ISmithObjectParent
     public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
     public class OnSelectedCounterChangedEventArgs : EventArgs 
     {
-        public ClearCounter selectedCounter;
+        public BaseCounter selectedCounter;
     } 
 
     [SerializeField] private float moveSpeed = 5f;
@@ -28,7 +28,7 @@ public class Player : MonoBehaviour, ISmithObjectParent
 
     private Vector2 moveDir;
     private Vector2 lastMoveDir;
-    private ClearCounter selectedCounter;
+    private BaseCounter selectedCounter;
     private SmithObject smithObject;
 
     private void Awake()
@@ -141,15 +141,15 @@ public class Player : MonoBehaviour, ISmithObjectParent
 
             
             
-            if (hit.transform.TryGetComponent(out ClearCounter clearCounter))
+            if (hit.transform.TryGetComponent(out BaseCounter baseCounter))
             {
                 // Object has ClearCounter
                
 
-                if (clearCounter != selectedCounter)
+                if (baseCounter != selectedCounter)
                 { 
 
-                    SetSelectedCounter(clearCounter);
+                    SetSelectedCounter(baseCounter);
                 }
                 
             }
@@ -168,7 +168,7 @@ public class Player : MonoBehaviour, ISmithObjectParent
 
     }
 
-    private void SetSelectedCounter(ClearCounter selectedCounter)
+    private void SetSelectedCounter(BaseCounter selectedCounter)
     {
         this.selectedCounter = selectedCounter;
 
