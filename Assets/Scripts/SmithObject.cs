@@ -24,9 +24,23 @@ public class SmithObject : MonoBehaviour
         transform.parent = smithObjectParent.GetSmithObjectFollowTransform();
         transform.localPosition = Vector2.zero;
     }
-
     public ISmithObjectParent GetSmithObjectParent()
     {
         return smithObjectParent;
     }
+    public void DestroySelf()
+    {
+        smithObjectParent.ClearSmithObject();
+        Destroy(gameObject);
+    }
+    public static SmithObject SpawnSmithObject(SmithObjectSO smithObjectSO, ISmithObjectParent smithObjectParent)
+    {
+        Transform smithObjectTransform = Instantiate(smithObjectSO.prefab); // Create new smith object
+        SmithObject smithObject = smithObjectTransform.GetComponent<SmithObject>();
+
+        smithObject.SetSmithObjectParent(smithObjectParent); // Set this object to transform to parent
+
+        return smithObject;
+    }
+
 }

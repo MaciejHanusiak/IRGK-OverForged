@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c48830e2b0992024b9a4f4351e44bbb2, type: 3}
-  m_Name: CopperOre-CopperIngot
+  m_Script: {fileID: 11500000, guid: 5e781320123216546a9edfcb6a32958e, type: 3}
+  m_Name: CopperIngot-CopperIngotBurned
   m_EditorClassIdentifier: 
-  input: {fileID: 11400000, guid: f5222167bf750c348a90aaf5a4326fad, type: 2}
-  output: {fileID: 11400000, guid: 98e13cfe8a08291428e93009fc0757f6, type: 2}
-  forgeingTimerMax: 1
+  input: {fileID: 11400000, guid: 98e13cfe8a08291428e93009fc0757f6, type: 2}
+  output: {fileID: 11400000, guid: 610725ac26fe2a04dac1f4d393b00850, type: 2}
+  burningTimerMax: 2
