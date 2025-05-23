@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c48830e2b0992024b9a4f4351e44bbb2, type: 3}
   m_Name: CopperOre-Copperingot
   m_EditorClassIdentifier: 
-  input: {fileID: 0}
-  output: {fileID: 0}
-  forgeingTimerMax: 0
+  input: {fileID: 11400000, guid: f5222167bf750c348a90aaf5a4326fad, type: 2}
+  output: {fileID: 11400000, guid: 98e13cfe8a08291428e93009fc0757f6, type: 2}
+  forgeingTimerMax: 3
