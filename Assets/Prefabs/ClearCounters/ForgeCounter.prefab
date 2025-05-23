@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2925458292509586257, guid: 7f599fb8d23001f4c8fbaafe89fc697e, type: 3}
       propertyPath: m_Name
-      value: ClearCounter
+      value: ForgeCounter
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
