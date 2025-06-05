@@ -11,8 +11,7 @@ public class ContainerCounter : BaseCounter
         if (!player.HasSmithObject())
         {
             // Player is not carrying anything
-            Transform smithObjectTransform = Instantiate(smithObjectSO.prefab);
-            smithObjectTransform.GetComponent<SmithObject>().SetSmithObjectParent(player);           
+            SmithObject.SpawnSmithObject(smithObjectSO, player);
         }
         else
         {
