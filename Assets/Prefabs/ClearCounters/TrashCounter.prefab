@@ -219,6 +219,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Selected
       objectReference: {fileID: 0}
+    - target: {fileID: 5320201048658073715, guid: f0862962a526fa14595261efadd9ddcf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -245,7 +249,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseCounter: {fileID: 2882952312753199453}
-  visualGameObject: {fileID: 3939259535064738600}
+  visualGameObject: {fileID: 4560695570750603016}
+--- !u!1 &4560695570750603016 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5320201048658073715, guid: f0862962a526fa14595261efadd9ddcf, type: 3}
+  m_PrefabInstance: {fileID: 8547830854618294139}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8929408357975210007 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 969504586226311020, guid: f0862962a526fa14595261efadd9ddcf, type: 3}
