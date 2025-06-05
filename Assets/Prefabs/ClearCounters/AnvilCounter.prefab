@@ -89,7 +89,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   counterTopPoint: {fileID: 3084762763740407127}
-  forgedSmithObjectSO: {fileID: 11400000, guid: 121d325a8ec372348bb7ed73ff0bf24e, type: 2}
+  anvilForgeingRecipeSOArray:
+  - {fileID: 11400000, guid: eb415faaddd3f5d48b835290c096bc65, type: 2}
 --- !u!4 &4064362789682444458 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3182973980782632051, guid: c8abd69e64d6d154a8a268364f8c1576, type: 3}

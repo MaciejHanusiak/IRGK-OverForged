@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class AnvilCounter : BaseCounter
 {
-    [SerializeField] private SmithObjectSO forgedSmithObjectSO;
+
+    [SerializeField] private AnvilForgeingRecipeSO[] anvilForgeingRecipeSOArray;
     public override void Interact(Player player)
     {
         if (!HasSmithObject())
@@ -12,7 +13,10 @@ public class AnvilCounter : BaseCounter
             if (player.HasSmithObject())
             {
                 // Player is carrying something
-                player.GetSmithObject().SetSmithObjectParent(this);
+                if (HasRecipeWithInput(player.GetSmithObject().GetSmithObjectSO()))
+                {
+                    player.GetSmithObject().SetSmithObjectParent(this);
+                }
             }
             else
             {
@@ -37,13 +41,38 @@ public class AnvilCounter : BaseCounter
 
     public override void InteractAlternate(Player player)
     {
-        if (HasSmithObject())
+        if (HasSmithObject() && HasRecipeWithInput(GetSmithObject().GetSmithObjectSO()))
         {
-            // There is a smith object
+            // There is a smith object AND it can be forged on anvil
+            SmithObjectSO outputSmithObjectSO = GetOutputForInput(GetSmithObject().GetSmithObjectSO());
             GetSmithObject().DestroySelf();
-            SmithObject.SpawnSmithObject(forgedSmithObjectSO, this);
+            SmithObject.SpawnSmithObject(outputSmithObjectSO, this);
         }
 
 
+    }
+
+    private bool HasRecipeWithInput(SmithObjectSO inputSmithObjectSO)
+    {
+        foreach (AnvilForgeingRecipeSO anvilForgeingRecipeSO in anvilForgeingRecipeSOArray)
+        {
+            if (anvilForgeingRecipeSO.input == inputSmithObjectSO)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private SmithObjectSO GetOutputForInput(SmithObjectSO inputSmithObjectSO)
+    {
+        foreach (AnvilForgeingRecipeSO anvilForgeingRecipeSO in anvilForgeingRecipeSOArray)
+        {
+            if (anvilForgeingRecipeSO.input == inputSmithObjectSO)
+            {
+                return anvilForgeingRecipeSO.output;
+            }
+        }
+        return null;
     }
 }
