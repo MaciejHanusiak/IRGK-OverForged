@@ -5,5 +5,5 @@ public class AnvilForgeingRecipeSO : ScriptableObject
 {
     public SmithObjectSO input;
     public SmithObjectSO output;
-    public float forgeingTimerMax;
+    public float anvilForgeingProgressMax;
 }
