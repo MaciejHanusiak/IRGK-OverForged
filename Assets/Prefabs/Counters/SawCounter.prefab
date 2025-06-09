@@ -128,6 +128,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4996843459741208479}
   m_SourcePrefab: {fileID: 100100000, guid: c8abd69e64d6d154a8a268364f8c1576, type: 3}
+--- !u!4 &765814971616285824 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4504992670981226894, guid: c8abd69e64d6d154a8a268364f8c1576, type: 3}
+  m_PrefabInstance: {fileID: 3757209765299508494}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1290616126133575764 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2723968420526388570, guid: c8abd69e64d6d154a8a268364f8c1576, type: 3}
@@ -145,7 +150,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214d4c45d243eb143bfc195006242a27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  counterTopPoint: {fileID: 0}
+  counterTopPoint: {fileID: 765814971616285824}
+  cuttingRecipeSOArray:
+  - {fileID: 11400000, guid: e58423d8174675544b94cd180db3f862, type: 2}
+  overCuttingRecipeSOArray:
+  - {fileID: 11400000, guid: 37766b0d250f4974a925aa4ecb45631d, type: 2}
 --- !u!4 &1731770015299029373 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3182973980782632051, guid: c8abd69e64d6d154a8a268364f8c1576, type: 3}

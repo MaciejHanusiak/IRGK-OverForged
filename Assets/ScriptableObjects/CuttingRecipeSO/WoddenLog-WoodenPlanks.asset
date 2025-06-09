@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8829bd4ee4f6f664cb80ec640e021790, type: 3}
+  m_Name: WoddenLog-WoodenPlanks
+  m_EditorClassIdentifier: 
+  input: {fileID: 11400000, guid: e8eba7375f58ae64ab8ff987efcab4e4, type: 2}
+  output: {fileID: 11400000, guid: 05a70181c6e367c4391a5a57665c32f9, type: 2}
+  cuttingTimerMax: 4
