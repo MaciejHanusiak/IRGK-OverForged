@@ -1,7 +1,13 @@
+using System;
 using UnityEngine;
 
 public class AnvilCounter : BaseCounter
 {
+    public event EventHandler<OnProgressChangedEventArgs> OnProgressChanged;
+    public class OnProgressChangedEventArgs : EventArgs
+    {
+        public float progressNormalized;
+    }
 
     [SerializeField] private AnvilForgeingRecipeSO[] anvilForgeingRecipeSOArray;
 
@@ -19,6 +25,14 @@ public class AnvilCounter : BaseCounter
                 {
                     player.GetSmithObject().SetSmithObjectParent(this);
                     anvilForgeingProgress = 0;
+
+                    AnvilForgeingRecipeSO anvilForgeingRecipeSO = GetAnvilForgeingRecipeSOWithInput(GetSmithObject().GetSmithObjectSO());
+
+                    OnProgressChanged?.Invoke(this, new OnProgressChangedEventArgs
+                    {
+
+                        progressNormalized = (float)anvilForgeingProgress / anvilForgeingRecipeSO.anvilForgeingProgressMax
+                    });
                 }
             }
             else
@@ -51,6 +65,12 @@ public class AnvilCounter : BaseCounter
 
             AnvilForgeingRecipeSO anvilForgeingRecipeSO = GetAnvilForgeingRecipeSOWithInput(GetSmithObject().GetSmithObjectSO());
             SmithObjectSO outputSmithObjectSO = GetOutputForInput(GetSmithObject().GetSmithObjectSO());
+
+            OnProgressChanged?.Invoke(this, new OnProgressChangedEventArgs
+            {
+
+                progressNormalized = (float)anvilForgeingProgress / anvilForgeingRecipeSO.anvilForgeingProgressMax
+            });
 
             if (anvilForgeingProgress >= anvilForgeingRecipeSO.anvilForgeingProgressMax)
             {
