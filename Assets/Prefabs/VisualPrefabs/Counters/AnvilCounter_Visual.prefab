@@ -129,7 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5754766869429780333}
   m_Layer: 0
-  m_Name: AnvilVisual
+  m_Name: AnvilCounter_Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

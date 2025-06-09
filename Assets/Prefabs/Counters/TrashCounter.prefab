@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrashCounterWhite_Visual
       objectReference: {fileID: 0}
+    - target: {fileID: 5889215778598485752, guid: 6c0386941960a1245a013b94a008c648, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8473710781534131116, guid: 6c0386941960a1245a013b94a008c648, type: 3}
       propertyPath: m_IsActive
       value: 0

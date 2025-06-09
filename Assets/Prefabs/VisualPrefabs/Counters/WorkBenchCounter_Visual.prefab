@@ -97,7 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 969504586226311020}
   m_Layer: 0
-  m_Name: WorkBench_Visual
+  m_Name: WorkBenchCounter_Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
