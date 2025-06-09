@@ -98,6 +98,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CopperIngotVisual
       objectReference: {fileID: 0}
+    - target: {fileID: 8360674236839166590, guid: c6e1dd25e909a4e4e82753a2145b5db3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
