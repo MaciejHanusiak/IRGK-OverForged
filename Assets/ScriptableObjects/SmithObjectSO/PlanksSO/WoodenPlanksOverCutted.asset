@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e121ded9c06515148bdfca1693a23823, type: 3}
   m_Name: WoodenPlanksOverCutted
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6338669265703863827, guid: f09b6768fdf0df6449d6ed86df7afd62, type: 3}
+  prefab: {fileID: 6338669265703863827, guid: f66b55021afc6cd40b999c0af1ade2e0, type: 3}
   sprite: {fileID: 7306135039076159149, guid: 40e2b8cf3fd2baa4c863bb675258b21f, type: 3}
-  objectName: Wooden Planks
+  objectName: Wooden Planks OverCutted

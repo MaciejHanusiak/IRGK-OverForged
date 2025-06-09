@@ -52,7 +52,7 @@ public class AnvilCounter : BaseCounter
             AnvilForgeingRecipeSO anvilForgeingRecipeSO = GetAnvilForgeingRecipeSOWithInput(GetSmithObject().GetSmithObjectSO());
             SmithObjectSO outputSmithObjectSO = GetOutputForInput(GetSmithObject().GetSmithObjectSO());
 
-            if (anvilForgeingProgress > anvilForgeingRecipeSO.anvilForgeingProgressMax)
+            if (anvilForgeingProgress >= anvilForgeingRecipeSO.anvilForgeingProgressMax)
             {
                 GetSmithObject().DestroySelf();
                 SmithObject.SpawnSmithObject(outputSmithObjectSO, this);

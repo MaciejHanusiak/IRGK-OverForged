@@ -159,6 +159,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3327345156133857787}
   m_SourcePrefab: {fileID: 100100000, guid: c8abd69e64d6d154a8a268364f8c1576, type: 3}
+--- !u!4 &8030463767307390746 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4504992670981226894, guid: c8abd69e64d6d154a8a268364f8c1576, type: 3}
+  m_PrefabInstance: {fileID: 5905629548503076500}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8374575518573984718 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2723968420526388570, guid: c8abd69e64d6d154a8a268364f8c1576, type: 3}
@@ -176,7 +181,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2454919c11a234e49a9f391fa8e50002, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  counterTopPoint: {fileID: 0}
+  counterTopPoint: {fileID: 8030463767307390746}
+  knifePlaningRecipeSOArray:
+  - {fileID: 11400000, guid: ef06f8bf8f4e0af4f845c7c43d26d9f4, type: 2}
 --- !u!4 &9068335607420261095 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3182973980782632051, guid: c8abd69e64d6d154a8a268364f8c1576, type: 3}
