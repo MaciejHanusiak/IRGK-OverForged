@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
-public class SawCounter : BaseCounter
+public class SawCounter : BaseCounter, IHasProgress
 {
+    public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
     private enum State
     {
         Idle,
@@ -14,8 +16,8 @@ public class SawCounter : BaseCounter
     [SerializeField] private OverCuttingRecipeSO[] overCuttingRecipeSOArray;
 
     private State state;
-    private float cuttingTime;
-    private float overCuttingTime;
+    private float cuttingTimer;
+    private float overCuttingTimer;
     private CuttingRecipeSO cuttingRecipeSO;
     private OverCuttingRecipeSO overCuttingRecipeSO;
 
@@ -33,10 +35,16 @@ public class SawCounter : BaseCounter
                 case State.Idle:
                     break;
                 case State.Cutting:
-                    cuttingTime += Time.deltaTime;
-                    if (cuttingTime > cuttingRecipeSO.cuttingTimerMax)
+                    cuttingTimer += Time.deltaTime;
+
+                    OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
                     {
-                        cuttingTime = 0f;
+                        progressNormalized = cuttingTimer / cuttingRecipeSO.cuttingTimerMax
+                    });
+
+                    if (cuttingTimer > cuttingRecipeSO.cuttingTimerMax)
+                    {
+                        cuttingTimer = 0f;
                         // forged
                         Debug.Log("Cutted!");
                         GetSmithObject().DestroySelf();
@@ -44,26 +52,41 @@ public class SawCounter : BaseCounter
                         Debug.Log("ObjectCutted!");
                         state = State.Cutted;
                         overCuttingRecipeSO = GetOverCuttingRecipeSOWithInput(GetSmithObject().GetSmithObjectSO());
-                        overCuttingTime = 0f;
+                        overCuttingTimer = 0f;
                     }
-                    Debug.Log(cuttingTime);
+                    Debug.Log(cuttingTimer);
                     break;
+
                 case State.Cutted:
-                    overCuttingTime += Time.deltaTime;
-                    if (overCuttingTime > overCuttingRecipeSO.overCuttingTimerMax)
+                    overCuttingTimer += Time.deltaTime;
+
+                    OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+                    {
+                        progressNormalized = cuttingTimer / cuttingRecipeSO.cuttingTimerMax
+                    });
+
+                    if (overCuttingTimer > overCuttingRecipeSO.overCuttingTimeMax)
                     {
 
-                        // overforged
+                        // overCutted
 
                         GetSmithObject().DestroySelf();
                         SmithObject.SpawnSmithObject(overCuttingRecipeSO.output, this);
                         Debug.Log("ObjectOverCutted!");
-                        state = State.OverCutted;
-                        overCuttingTime = 0f;
+                        
+                        overCuttingTimer = 0f;
                         overCuttingRecipeSO = GetOverCuttingRecipeSOWithInput(GetSmithObject().GetSmithObjectSO());
+
+                        OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+                        {
+                            progressNormalized = 0f
+                        });
+
+                        state = State.OverCutted;
                     }
-                    Debug.Log(overCuttingTime);
+                    Debug.Log(overCuttingTimer);
                     break;
+
                 case State.OverCutted:
                     break;
             }
@@ -92,7 +115,12 @@ public class SawCounter : BaseCounter
 
                     cuttingRecipeSO = GetCuttingRecipeSOWithInput(GetSmithObject().GetSmithObjectSO());
                     state = State.Cutting;
-                    cuttingTime = 0f;
+                    cuttingTimer = 0f;
+
+                    OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+                    {
+                        progressNormalized = cuttingTimer / cuttingRecipeSO.cuttingTimerMax
+                    });
 
                 }
             }

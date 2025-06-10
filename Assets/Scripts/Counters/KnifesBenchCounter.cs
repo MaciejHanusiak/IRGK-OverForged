@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
-public class KnifesBenchCounter : BaseCounter
+public class KnifesBenchCounter : BaseCounter,IHasProgress
 {
+    public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
+
     [SerializeField] private KnifePlaningRecipeSO[] knifePlaningRecipeSOArray;
 
     private int knifePlaningProgress;
@@ -18,6 +21,14 @@ public class KnifesBenchCounter : BaseCounter
                 {
                     player.GetSmithObject().SetSmithObjectParent(this);
                     knifePlaningProgress = 0;
+
+                    KnifePlaningRecipeSO knifePlaningRecipeSO = GetKnifePlaningRecipeSOWithInput(GetSmithObject().GetSmithObjectSO());
+
+                    OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+                    {
+
+                        progressNormalized = (float)knifePlaningProgress / knifePlaningRecipeSO.knifePlaningProgressMax
+                    });
                 }
             }
             else
@@ -48,13 +59,20 @@ public class KnifesBenchCounter : BaseCounter
             // There is a smith object AND it can be forged on anvil
             knifePlaningProgress++;
 
-            KnifePlaningRecipeSO anvilForgeingRecipeSO = GetKnifePlaningRecipeSOWithInput(GetSmithObject().GetSmithObjectSO());
+            KnifePlaningRecipeSO knifePlaningRecipeSO = GetKnifePlaningRecipeSOWithInput(GetSmithObject().GetSmithObjectSO());
             SmithObjectSO outputSmithObjectSO = GetOutputForInput(GetSmithObject().GetSmithObjectSO());
 
-            if (knifePlaningProgress >= anvilForgeingRecipeSO.knifePlaningProgressMax)
+            OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+            {
+
+                progressNormalized = (float)knifePlaningProgress / knifePlaningRecipeSO.knifePlaningProgressMax
+            });
+
+            if (knifePlaningProgress >= knifePlaningRecipeSO.knifePlaningProgressMax)
             {
                 GetSmithObject().DestroySelf();
                 SmithObject.SpawnSmithObject(outputSmithObjectSO, this);
+
 
             }
         }

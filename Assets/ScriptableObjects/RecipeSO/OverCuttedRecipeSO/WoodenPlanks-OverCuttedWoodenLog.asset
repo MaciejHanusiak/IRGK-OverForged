@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: {fileID: 11400000, guid: 05a70181c6e367c4391a5a57665c32f9, type: 2}
   output: {fileID: 11400000, guid: 4c7b15bda9aad554a8359b0e208812e5, type: 2}
-  overCuttingTimerMax: 6
+  overCuttingTimeMax: 6

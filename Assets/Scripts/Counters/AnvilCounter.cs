@@ -4,9 +4,7 @@ using UnityEngine;
 public class AnvilCounter : BaseCounter, IHasProgress
 {
     public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
-
     [SerializeField] private AnvilForgeingRecipeSO[] anvilForgeingRecipeSOArray;
-
     private int anvilForgeingProgress;
     public override void Interact(Player player)
     {

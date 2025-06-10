@@ -58,6 +58,7 @@ public class ForgeCounter : BaseCounter, IHasProgress
                         state = State.Forged;
                         burningRecipeSO = GetBurningRecipeSOWithInput(GetSmithObject().GetSmithObjectSO());
                         burningTimer = 0f;
+
                     }
                     Debug.Log(forgeingTimer);
                     break;
@@ -148,6 +149,12 @@ public class ForgeCounter : BaseCounter, IHasProgress
                 GetSmithObject().SetSmithObjectParent(player);
 
                 state = State.Idle;
+                forgeingTimer = 0f;
+
+                OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+                {
+                    progressNormalized = forgeingTimer / forgeingRecipeSO.forgeingTimerMax
+                });
             }
         }
     }

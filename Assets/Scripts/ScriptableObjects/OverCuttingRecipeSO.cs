@@ -5,5 +5,5 @@ public class OverCuttingRecipeSO : ScriptableObject
 {
     public SmithObjectSO input;
     public SmithObjectSO output;
-    public float overCuttingTimerMax;
+    public float overCuttingTimeMax;
 }
