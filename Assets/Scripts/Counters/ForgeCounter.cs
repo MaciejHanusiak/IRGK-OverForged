@@ -1,10 +1,13 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
+using UnityEditor;
 
 
-public class ForgeCounter : BaseCounter
+public class ForgeCounter : BaseCounter, IHasProgress
 {
+    public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
     private enum State
     {
         Idle,
@@ -22,6 +25,7 @@ public class ForgeCounter : BaseCounter
     private ForgeingRecipeSO forgeingRecipeSO;
     private BurningRecipeSO burningRecipeSO;
 
+
     private void Start()
     {
         state = State.Idle;
@@ -37,22 +41,37 @@ public class ForgeCounter : BaseCounter
                     break;
                 case State.Forgeing:
                     forgeingTimer += Time.deltaTime;
+
+                    OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+                    {
+                        progressNormalized = forgeingTimer / forgeingRecipeSO.forgeingTimerMax
+                    });
+
                     if (forgeingTimer > forgeingRecipeSO.forgeingTimerMax)
                     {
                         forgeingTimer = 0f;
-                        // forged
-                        Debug.Log("Fried!");
+                        
+                        
                         GetSmithObject().DestroySelf();
                         SmithObject.SpawnSmithObject(forgeingRecipeSO.output, this);
-                        Debug.Log("ObjectFried!");
+                        Debug.Log("ObjectForged!");
                         state = State.Forged;
                         burningRecipeSO = GetBurningRecipeSOWithInput(GetSmithObject().GetSmithObjectSO());
                         burningTimer = 0f;
                     }
                     Debug.Log(forgeingTimer);
                     break;
+
                 case State.Forged:
                     burningTimer += Time.deltaTime;
+
+                    OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+                    {
+                        progressNormalized = burningTimer / burningRecipeSO.burningTimerMax                     
+
+                    });
+                    
+
                     if (burningTimer > burningRecipeSO.burningTimerMax )
                     {
                         
@@ -60,13 +79,21 @@ public class ForgeCounter : BaseCounter
                         
                         GetSmithObject().DestroySelf();
                         SmithObject.SpawnSmithObject(burningRecipeSO.output, this);
+
                         Debug.Log("ObjectBurned!");
-                        state = State.Burned;
+
+
                         burningTimer = 0f;
                         burningRecipeSO = GetBurningRecipeSOWithInput(GetSmithObject().GetSmithObjectSO());
+
+                        state = State.Burned;
+                        OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+                        {
+                            progressNormalized = 0f
+                        });
                     }
-                   Debug.Log(burningTimer);
                     break;
+
                 case State.Burned:
                     break;
             }
@@ -97,6 +124,10 @@ public class ForgeCounter : BaseCounter
                     state = State.Forgeing;
                     forgeingTimer = 0f;
 
+                    OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+                    {
+                        progressNormalized = forgeingTimer / forgeingRecipeSO.forgeingTimerMax
+                    });
                 }
             }
             else
