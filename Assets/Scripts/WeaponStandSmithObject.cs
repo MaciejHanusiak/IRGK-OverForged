@@ -1,10 +1,15 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponStandSmithObject : SmithObject
 {
-
+    public event EventHandler<OnWeaponPartAddedEventArgs> OnWeaponPartAdded;
+    public class OnWeaponPartAddedEventArgs : EventArgs
+    {
+        public SmithObjectSO SmithObjectSO;
+    }
     [SerializeField] private List<SmithObjectSO> validSmithObjectSOList;
     private List<SmithObjectSO> smithObjectSOList;
 
@@ -28,6 +33,10 @@ public class WeaponStandSmithObject : SmithObject
         else
         {
             smithObjectSOList.Add(smithObjectSO);
+            OnWeaponPartAdded?.Invoke(this, new OnWeaponPartAddedEventArgs()
+            {
+                SmithObjectSO = smithObjectSO
+            });
             return true;
         }
     }

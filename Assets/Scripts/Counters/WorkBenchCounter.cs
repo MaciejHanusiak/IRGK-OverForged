@@ -9,6 +9,13 @@ public class WorkBenchCounter : BaseCounter
         if (!HasSmithObject())
         {
             // There is no smith object, player has or hasn't something.
+            if (player.HasSmithObject())
+            {
+                if (player.GetSmithObject().TryGetWeaponStand(out WeaponStandSmithObject weaponStandSmithObject))
+                {
+                    player.GetSmithObject().SetSmithObjectParent(this);
+                }
+            }
         }
         else
         {
@@ -28,7 +35,7 @@ public class WorkBenchCounter : BaseCounter
             else
             {
                 // Player is no carrying anything
-                player.GetSmithObject().SetSmithObjectParent(this);
+                this.GetSmithObject().SetSmithObjectParent(player);
             }
         }
     }
@@ -51,7 +58,7 @@ public class WorkBenchCounter : BaseCounter
             else
             {
                 // Player is no carrying anything
-                player.GetSmithObject().SetSmithObjectParent(this);
+                
             }
         }
     }
