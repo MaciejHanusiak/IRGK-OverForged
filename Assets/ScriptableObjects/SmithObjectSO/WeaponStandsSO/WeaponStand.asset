@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e121ded9c06515148bdfca1693a23823, type: 3}
   m_Name: WeaponStand
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  sprite: {fileID: 0}
-  objectName: 
+  prefab: {fileID: 6338669265703863827, guid: 56fb04b19dc0e574fa7cdb6c3cfb40f3, type: 3}
+  sprite: {fileID: 7482667652216324306, guid: f4cada46589010349854aad500b83fe5, type: 3}
+  objectName: Weapon Stand

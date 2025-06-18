@@ -9,6 +9,35 @@ public class WorkBenchCounter : BaseCounter
         if (!HasSmithObject())
         {
             // There is no smith object, player has or hasn't something.
+        }
+        else
+        {
+            // There is smith object
+
+            if (player.HasSmithObject())
+            {
+                // Player carrying an object
+               if (GetSmithObject().TryGetWeaponStand(out WeaponStandSmithObject weaponStandSmithObject))
+               {
+                    if (weaponStandSmithObject.TryAddWeaponPart(player.GetSmithObject().GetSmithObjectSO()))
+                    {
+                        player.GetSmithObject().DestroySelf();
+                    }
+               }
+            }
+            else
+            {
+                // Player is no carrying anything
+                player.GetSmithObject().SetSmithObjectParent(this);
+            }
+        }
+    }
+
+    public override void InteractAlternate(Player player)
+    {
+        if (!HasSmithObject())
+        {
+            // There is no smith object, player has or hasn't something.
             SmithObject.SpawnSmithObject(weaponStandObjectSO, this);
         }
         else

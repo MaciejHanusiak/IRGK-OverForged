@@ -43,4 +43,17 @@ public class SmithObject : MonoBehaviour
         return smithObject;
     }
 
+    public bool TryGetWeaponStand(out WeaponStandSmithObject weaponStandSmithObject)
+    {
+        if (this is WeaponStandSmithObject)
+        {
+            weaponStandSmithObject = this as WeaponStandSmithObject;
+            return true;
+        }
+        else
+        {
+            weaponStandSmithObject = null;
+            return false;
+        }
+    }
 }
