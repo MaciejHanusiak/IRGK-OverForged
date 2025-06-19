@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e781320123216546a9edfcb6a32958e, type: 3}
-  m_Name: CopperIngot-CopperIngotBurned
+  m_Name: CopperIngot-CopperIngotBurned 1
   m_EditorClassIdentifier: 
   input: {fileID: 11400000, guid: 98e13cfe8a08291428e93009fc0757f6, type: 2}
   output: {fileID: 11400000, guid: 610725ac26fe2a04dac1f4d393b00850, type: 2}

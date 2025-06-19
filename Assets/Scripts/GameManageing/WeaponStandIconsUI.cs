@@ -18,8 +18,8 @@ public class WeaponStandIconsUI : MonoBehaviour
 
     private void Instance_OnSelectedCounterChanged(object sender, Player.OnSelectedCounterChangedEventArgs e)
     {
-        if (e.selectedCounter != null && e.selectedCounter.GetSmithObject() ==
-            weaponStandSmithObject)
+ 
+        if (e.selectedCounter != null && e.selectedCounter.GetSmithObject() == weaponStandSmithObject)
         {
             ShowUI();
         }
@@ -27,6 +27,7 @@ public class WeaponStandIconsUI : MonoBehaviour
         {
             HideUI();
         }
+        
 
     }
 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6338669265703863827}
   - component: {fileID: 7547963587568637822}
   m_Layer: 0
-  m_Name: CopperBlade
+  m_Name: IronBladeNotSharpened
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8049411885052171577}
+  - {fileID: 2768905738373407581}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7547963587568637822
@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99f89f09e759eb34890e17d1361d8c81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smithObjectSO: {fileID: 11400000, guid: 121d325a8ec372348bb7ed73ff0bf24e, type: 2}
---- !u!1001 &5711884922235112368
+  smithObjectSO: {fileID: 11400000, guid: bc231f7b8b34ac14e83f96216411bc13, type: 2}
+--- !u!1001 &476485997956562388
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -54,47 +54,47 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6338669265703863827}
     m_Modifications:
-    - target: {fileID: 2373942794393509513, guid: 1741fade0c65c9244b3fc88147135b71, type: 3}
+    - target: {fileID: 2373942794393509513, guid: b33093c10ce8ee647b5e5046089eb040, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2373942794393509513, guid: 1741fade0c65c9244b3fc88147135b71, type: 3}
+    - target: {fileID: 2373942794393509513, guid: b33093c10ce8ee647b5e5046089eb040, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2373942794393509513, guid: 1741fade0c65c9244b3fc88147135b71, type: 3}
+    - target: {fileID: 2373942794393509513, guid: b33093c10ce8ee647b5e5046089eb040, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2373942794393509513, guid: 1741fade0c65c9244b3fc88147135b71, type: 3}
+    - target: {fileID: 2373942794393509513, guid: b33093c10ce8ee647b5e5046089eb040, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2373942794393509513, guid: 1741fade0c65c9244b3fc88147135b71, type: 3}
+    - target: {fileID: 2373942794393509513, guid: b33093c10ce8ee647b5e5046089eb040, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2373942794393509513, guid: 1741fade0c65c9244b3fc88147135b71, type: 3}
+    - target: {fileID: 2373942794393509513, guid: b33093c10ce8ee647b5e5046089eb040, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2373942794393509513, guid: 1741fade0c65c9244b3fc88147135b71, type: 3}
+    - target: {fileID: 2373942794393509513, guid: b33093c10ce8ee647b5e5046089eb040, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2373942794393509513, guid: 1741fade0c65c9244b3fc88147135b71, type: 3}
+    - target: {fileID: 2373942794393509513, guid: b33093c10ce8ee647b5e5046089eb040, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2373942794393509513, guid: 1741fade0c65c9244b3fc88147135b71, type: 3}
+    - target: {fileID: 2373942794393509513, guid: b33093c10ce8ee647b5e5046089eb040, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2373942794393509513, guid: 1741fade0c65c9244b3fc88147135b71, type: 3}
+    - target: {fileID: 2373942794393509513, guid: b33093c10ce8ee647b5e5046089eb040, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6483643413091951331, guid: 1741fade0c65c9244b3fc88147135b71, type: 3}
+    - target: {fileID: 6483643413091951331, guid: b33093c10ce8ee647b5e5046089eb040, type: 3}
       propertyPath: m_Name
       value: CopperBladeNotComplete_Visual
       objectReference: {fileID: 0}
@@ -102,9 +102,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 1741fade0c65c9244b3fc88147135b71, type: 3}
---- !u!4 &8049411885052171577 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: b33093c10ce8ee647b5e5046089eb040, type: 3}
+--- !u!4 &2768905738373407581 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 2373942794393509513, guid: 1741fade0c65c9244b3fc88147135b71, type: 3}
-  m_PrefabInstance: {fileID: 5711884922235112368}
+  m_CorrespondingSourceObject: {fileID: 2373942794393509513, guid: b33093c10ce8ee647b5e5046089eb040, type: 3}
+  m_PrefabInstance: {fileID: 476485997956562388}
   m_PrefabAsset: {fileID: 0}

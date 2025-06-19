@@ -335,7 +335,9 @@ MonoBehaviour:
   counterTopPoint: {fileID: 8768416252423729623}
   forgeingRecipeSOArray:
   - {fileID: 11400000, guid: 89388ee911cfce0448891c2cdde7497d, type: 2}
+  - {fileID: 11400000, guid: 474aa75e381109b4dab87bc281ee6ed6, type: 2}
   burningRecipeSOArray:
+  - {fileID: 11400000, guid: db134e08f678d04479b9432c46ba9a28, type: 2}
   - {fileID: 11400000, guid: f0251c6f1385f604eac6228e193bb0c6, type: 2}
 --- !u!4 &7712255003287972906 stripped
 Transform:

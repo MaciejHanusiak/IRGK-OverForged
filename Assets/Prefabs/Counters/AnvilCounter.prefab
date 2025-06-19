@@ -412,6 +412,7 @@ MonoBehaviour:
   counterTopPoint: {fileID: 3084762763740407127}
   anvilForgeingRecipeSOArray:
   - {fileID: 11400000, guid: eb415faaddd3f5d48b835290c096bc65, type: 2}
+  - {fileID: 11400000, guid: 11ac3d8da5b182e4f9a24da8d7231a05, type: 2}
 --- !u!4 &4064362789682444458 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3182973980782632051, guid: c8abd69e64d6d154a8a268364f8c1576, type: 3}
