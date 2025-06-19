@@ -10,6 +10,8 @@ public class DeliveryCounter : BaseCounter
         {
             if (player.GetSmithObject().TryGetWeaponStand(out WeaponStandSmithObject weaponStandSmithObject))
             {
+                DeliveryManager.Instance.DeliverRecipe(weaponStandSmithObject);
+
                 player.GetSmithObject().SetSmithObjectParent(baseCounterForFinishedWeapons);
                 baseCounterForFinishedWeapons.GetSmithObject().gameObject.SetActive(false);
 
