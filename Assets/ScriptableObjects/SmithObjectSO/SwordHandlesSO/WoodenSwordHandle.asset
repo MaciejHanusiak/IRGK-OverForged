@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e121ded9c06515148bdfca1693a23823, type: 3}
-  m_Name: WoodenSticks
+  m_Name: WoodenSwordHandle
   m_EditorClassIdentifier: 
   prefab: {fileID: 6338669265703863827, guid: 9c57db014e26dce41b492ed9578b029a, type: 3}
-  sprite: {fileID: 6650738528677379693, guid: 638bd93634ec71344ba0fc360256e9be, type: 3}
-  objectName: Wooden Sticks
+  sprite: {fileID: 1482990579054729423, guid: 96916f72aec4f1347b08020768298e48, type: 3}
+  objectName: Wooden Sword Handle

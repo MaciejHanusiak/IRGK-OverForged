@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 638bd93634ec71344ba0fc360256e9be
+guid: 96916f72aec4f1347b08020768298e48
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6650738528677379693
-    second: sticks_0
+      213: 1482990579054729423
+    second: WoodenSwordHandle_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sticks_0
+      name: WoodenSwordHandle_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 31
+        x: 9
+        y: 8
+        width: 14
+        height: 14
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d6eb1d7647b2c4c50800000000000000
-      internalID: 6650738528677379693
+      spriteID: fc8decd0314a49410800000000000000
+      internalID: 1482990579054729423
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      sticks_0: 6650738528677379693
+      WoodenSwordHandle_0: 1482990579054729423
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

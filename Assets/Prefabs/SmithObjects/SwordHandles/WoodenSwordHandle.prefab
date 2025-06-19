@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6338669265703863827}
   - component: {fileID: -1101419017463304890}
   m_Layer: 0
-  m_Name: WoodenSticks
+  m_Name: WoodenSwordHandle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,7 +96,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6483643413091951331, guid: f6262bd8021947e49811289f9bc20d2c, type: 3}
       propertyPath: m_Name
-      value: WoodenSticks_Visual
+      value: WoodenSwordHandle_Visual
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
