@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: CopperBlade
   m_EditorClassIdentifier: 
   prefab: {fileID: 6338669265703863827, guid: 18faf6f03f57dab419e1e14a0d520b32, type: 3}
-  sprite: {fileID: -1380561577489049501, guid: d8e16cce72c791f4d83c94200b9d80dd, type: 3}
+  sprite: {fileID: -3745200523084892632, guid: 3806487400651264ab537d0abb2aa0c1, type: 3}
   objectName: Copper Blade

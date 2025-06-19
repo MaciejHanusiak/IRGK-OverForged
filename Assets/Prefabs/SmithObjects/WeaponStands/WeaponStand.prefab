@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2575185291507164008}
   - component: {fileID: 3585616890314729674}
   - component: {fileID: 5609186906868903088}
+  - component: {fileID: 4770948202070662454}
   m_Layer: 5
   m_Name: WeaponStandIconsUI
   m_TagString: Untagged
@@ -129,6 +130,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &4770948202070662454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913540645325922611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c8ca3956e3e32a4688f98a780706d77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponStandSmithObject: {fileID: 8782783317294939201}
+  iconTemplate: {fileID: 1035721620891635832}
 --- !u!1 &2358649751072842434
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,6 +228,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1035721620891635832}
+  - component: {fileID: 7208935810870934873}
   m_Layer: 5
   m_Name: IconTemplate
   m_TagString: Untagged
@@ -241,6 +257,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 4, y: 1.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7208935810870934873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3500591599029569295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13a3421fc5f0a4342899083a89d13c4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 8994141437792226219}
 --- !u!1 &5603886880377008882
 GameObject:
   m_ObjectHideFlags: 0

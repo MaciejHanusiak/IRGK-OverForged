@@ -1,8 +1,10 @@
 using UnityEngine;
+using static Player;
 
 public class ClearCounter : BaseCounter
 {
     [SerializeField] private SmithObjectSO smithObjectSO;
+
 
 
 
@@ -25,7 +27,6 @@ public class ClearCounter : BaseCounter
         else
         {
             // There is smith object
-
             if (player.HasSmithObject())
             {
                 // Player carrying an object

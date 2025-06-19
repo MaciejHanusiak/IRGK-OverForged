@@ -16,7 +16,7 @@ public class Player : MonoBehaviour, ISmithObjectParent
     [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask countersLayerMask;
     [SerializeField] private Transform smithObjectHoldPoint;
-
+    [SerializeField] private SmithObjectSO objectToActivateWeaponStandUI;
 
     // name of Parameters in "PlayerController" Animator 
     private const string ANIM_MOVE_X = "AnimMoveX";
@@ -158,10 +158,8 @@ public class Player : MonoBehaviour, ISmithObjectParent
 
                 if (baseCounter != selectedCounter)
                 { 
-
                     SetSelectedCounter(baseCounter);
-                }
-                
+                }               
             }
             else
             {
