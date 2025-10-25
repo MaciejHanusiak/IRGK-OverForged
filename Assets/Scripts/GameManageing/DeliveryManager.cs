@@ -65,11 +65,11 @@ public class DeliveryManager : MonoBehaviour
                             switch (weaponStandSmithObjectSO.name)
                             {
                                 case "CopperBlade":
-                                    moneyForOrder = 1;
+                                    moneyForOrder = weaponStandSmithObjectSO.price;
                                     Debug.Log($"Odda≥eú Miedü, zarobi≥eú {moneyForOrder}!");
                                     break;
                                 case "IronBladeNotSharpened":
-                                    moneyForOrder = 2;
+                                    moneyForOrder = weaponStandSmithObjectSO.price;
                                     Debug.Log($"Odda≥eú Øelazo, zarobi≥eú {moneyForOrder}!");
 
                                     break;

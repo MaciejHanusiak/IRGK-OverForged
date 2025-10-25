@@ -15,3 +15,4 @@ MonoBehaviour:
   prefab: {fileID: 6338669265703863827, guid: 18faf6f03f57dab419e1e14a0d520b32, type: 3}
   sprite: {fileID: -3745200523084892632, guid: 3806487400651264ab537d0abb2aa0c1, type: 3}
   objectName: Copper Blade
+  price: 5

@@ -54,7 +54,6 @@ public class SawCounter : BaseCounter, IHasProgress
                         overCuttingRecipeSO = GetOverCuttingRecipeSOWithInput(GetSmithObject().GetSmithObjectSO());
                         overCuttingTimer = 0f;
                     }
-                    Debug.Log(cuttingTimer);
                     break;
 
                 case State.Cutted:
@@ -84,18 +83,11 @@ public class SawCounter : BaseCounter, IHasProgress
 
                         state = State.OverCutted;
                     }
-                    Debug.Log(overCuttingTimer);
                     break;
 
                 case State.OverCutted:
                     break;
             }
-            Debug.Log(state);
-
-
-
-
-
         }
     }
 

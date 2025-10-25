@@ -8,4 +8,5 @@ public class SmithObjectSO : ScriptableObject
     public Transform prefab;
     public Sprite sprite;
     public string objectName;
+    public int price;
 }

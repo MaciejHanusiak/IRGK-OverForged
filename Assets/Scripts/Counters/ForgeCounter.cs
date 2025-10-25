@@ -60,7 +60,6 @@ public class ForgeCounter : BaseCounter, IHasProgress
                         burningTimer = 0f;
 
                     }
-                    Debug.Log(forgeingTimer);
                     break;
 
                 case State.Forged:
@@ -98,12 +97,6 @@ public class ForgeCounter : BaseCounter, IHasProgress
                 case State.Burned:
                     break;
             }
-            Debug.Log(state);
-
-            
-            
-
-            
         }
     }
 
