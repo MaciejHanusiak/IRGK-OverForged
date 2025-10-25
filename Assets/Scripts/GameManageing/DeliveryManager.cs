@@ -9,6 +9,7 @@ public class DeliveryManager : MonoBehaviour
     public event EventHandler OnRecipeCompleted;
     public static DeliveryManager Instance { get; private set; }
     [SerializeField] private RecipeListSO recipeListSO;
+   
 
     private List<RecipeSO> waitingRecipeSOList;
     private float spawnRecipeTimer;
@@ -19,6 +20,7 @@ public class DeliveryManager : MonoBehaviour
     {
         Instance = this;
         waitingRecipeSOList = new List<RecipeSO>();
+       
     }
     private void Update()
     {
@@ -59,6 +61,24 @@ public class DeliveryManager : MonoBehaviour
                         if (weaponStandSmithObjectSO == recipeSmithObjectSO)
                         {
                             // Part matches!
+                            int moneyForOrder = 0;
+                            switch (weaponStandSmithObjectSO.name)
+                            {
+                                case "CopperBlade":
+                                    moneyForOrder = 1;
+                                    Debug.Log($"Odda≥eú Miedü, zarobi≥eú {moneyForOrder}!");
+                                    break;
+                                case "IronBladeNotSharpened":
+                                    moneyForOrder = 2;
+                                    Debug.Log($"Odda≥eú Øelazo, zarobi≥eú {moneyForOrder}!");
+
+                                    break;
+
+                            }
+                            LevelStats.Instance.AddGold(moneyForOrder);
+                            
+
+
                             partFound = true;
                             break;
                         }
