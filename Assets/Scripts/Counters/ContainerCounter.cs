@@ -3,7 +3,7 @@ using UnityEngine;
 public class ContainerCounter : BaseCounter
 {
     [SerializeField] private SmithObjectSO smithObjectSO;
-    
+    private int priceForMaterial = 0;
 
 
 
@@ -13,9 +13,22 @@ public class ContainerCounter : BaseCounter
         if (!player.HasSmithObject())
         {
             // Player is not carrying anything
+            switch (smithObjectSO.name)
+            {
+                case "WoodenLog":
+                    priceForMaterial = 1;
+                    break;
+                case "CopperOre":
+                    priceForMaterial = 2;
+                    break;
+                case "IronOre":
+                    priceForMaterial = 3;
+                    break;
+            }
+
+            if(LevelStats.Instance.SpendGold(priceForMaterial))
             SmithObject.SpawnSmithObject(smithObjectSO, player);
-            Debug.Log(smithObjectSO.name);
-            
+
         }
         else
         {

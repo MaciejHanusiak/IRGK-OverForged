@@ -48,7 +48,7 @@ public class LevelTime : MonoBehaviour
         {
             int seconds = Mathf.FloorToInt(timeRemaining);
             int milliseconds = Mathf.FloorToInt((timeRemaining - seconds) * 1000);
-            timerText.text = string.Format("{0}:{1:000}", seconds, milliseconds);
+            timerText.text = string.Format("{0}", LevelStats.Instance.gold);
         }
         if (timerSlider != null)
         {
