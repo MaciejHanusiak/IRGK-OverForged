@@ -16,3 +16,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e9a975fdbbaaf684d9efe8341d15e530, type: 2}
   - {fileID: 11400000, guid: 121d325a8ec372348bb7ed73ff0bf24e, type: 2}
   recipeName: Copper Sword With Wooden Handle
+  recipeTime: 25

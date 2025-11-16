@@ -7,4 +7,5 @@ public class RecipeSO : ScriptableObject
 {
     public List<SmithObjectSO> smithObjectSOList;
     public string recipeName;
+    public float recipeTime;
 }

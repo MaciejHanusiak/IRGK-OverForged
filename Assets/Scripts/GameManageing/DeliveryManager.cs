@@ -9,6 +9,7 @@ public class DeliveryManager : MonoBehaviour
     public event EventHandler OnRecipeCompleted;
     public static DeliveryManager Instance { get; private set; }
     [SerializeField] private RecipeListSO recipeListSO;
+    private List<float> singleRecipeTimeList;
    
 
     private List<RecipeSO> waitingRecipeSOList;
@@ -20,6 +21,7 @@ public class DeliveryManager : MonoBehaviour
     {
         Instance = this;
         waitingRecipeSOList = new List<RecipeSO>();
+        singleRecipeTimeList = new List<float>();
        
     }
     private void Update()

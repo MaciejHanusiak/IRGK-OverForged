@@ -15,3 +15,4 @@ MonoBehaviour:
   prefab: {fileID: 6338669265703863827, guid: e43c676312b2d9c40bfa32cd9cb415b5, type: 3}
   sprite: {fileID: -4463995381955299072, guid: 920e82df7ebddd54ea4ff60f82f9d77a, type: 3}
   objectName: Iron Blade
+  price: 10

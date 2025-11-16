@@ -6,6 +6,7 @@ public class LevelTime : MonoBehaviour
     public float timeRemaining = 60f;
     public float maxTime = 60f;
     private bool timerIsRunning = false;
+    
 
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] Slider timerSlider;
@@ -31,6 +32,7 @@ public class LevelTime : MonoBehaviour
             {
                 timeRemaining -= Time.deltaTime;
                 UpdateTimerUI();
+
             }
             else
             {

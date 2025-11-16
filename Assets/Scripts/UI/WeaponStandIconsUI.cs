@@ -53,10 +53,12 @@ public class WeaponStandIconsUI : MonoBehaviour
 
     public void ShowUI()
     {
-        transform.gameObject.SetActive(true);
+        if (weaponStandSmithObject != null)
+            transform.gameObject.SetActive(true);
     }
     public void HideUI()
     {
+        if (weaponStandSmithObject != null) 
         transform.gameObject.SetActive(false);
     }
 }
