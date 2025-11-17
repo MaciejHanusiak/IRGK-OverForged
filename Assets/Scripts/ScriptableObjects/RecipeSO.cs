@@ -7,5 +7,11 @@ public class RecipeSO : ScriptableObject
 {
     public List<SmithObjectSO> smithObjectSOList;
     public string recipeName;
-    public float recipeTime;
+    public float recipeTime = 30f; // Domyœlnie 30 sekund
+    public int recipePrice;
+    //public Sprite iconSprite;
+    
+    
+
+
 }

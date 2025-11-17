@@ -35996,7 +35996,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8059778ba680164c9c8942e05fae923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnRecipeTimerMax: 20
   recipeListSO: {fileID: 11400000, guid: 62548175a09e07f4baf58ee0583a43fe, type: 2}
+  waitingRecipesMax: 3
 --- !u!4 &664316775
 Transform:
   m_ObjectHideFlags: 0
@@ -36590,8 +36592,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 532d8dc94eb08824883ec8168ff6cfcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeRemaining: 120
-  maxTime: 120
+  timeRemaining: 240
+  maxTime: 240
   timerText: {fileID: 420801691}
   timerSlider: {fileID: 2008574444}
 --- !u!4 &1056549415
