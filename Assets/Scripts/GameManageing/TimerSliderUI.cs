@@ -12,17 +12,13 @@ public abstract class TimerSliderUI : MonoBehaviour
     [SerializeField] protected Image sliderBackgroundImage;
 
     [Header("Visual Settings")]
-    [SerializeField] private float blinkStartPrecent = 0.40f;
     [SerializeField] private float colorChangeStartPrecent = 0.50f;
-    [SerializeField] private float minBlinkFrequency = 4f;
-    [SerializeField] private float maxBlinkFrequecny = 20f;
+
 
     [Header("Colors")]
     [SerializeField] private Color colorGood = new Color(0.1f, 0.8f, 0.1f); // gren
     [SerializeField] private Color colorWarning = new Color(1f, 0.8f, 0f); // yellow
     [SerializeField] private Color colorDanger = new Color(1f, 0.2f, 0.2f);
-
-    private Coroutine blinkCoroutine;
 
     protected abstract float GetRemainingTime();
     protected abstract float GetTotalTime();
