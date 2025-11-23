@@ -45,11 +45,6 @@ public abstract class TimerSliderUI : MonoBehaviour
 
         // Color
         UpdateSliderColor(precentLeft, expired);
-
-        // Blinking
-        UpdateBlinking(precentLeft, expired);
-
-
     }
 
     private void UpdateSliderColor(float precentLeft, bool expired)
@@ -75,48 +70,4 @@ public abstract class TimerSliderUI : MonoBehaviour
         if (sliderFillImage) sliderFillImage.color = targetColor;
         if (sliderBackgroundImage) sliderBackgroundImage.color = targetColor * 0.4f;
     }
-
-    // Update Blinking
-    private void UpdateBlinking(float precentLeft, bool expired)
-    {
-        if (precentLeft <= blinkStartPrecent || expired)
-        {
-            float t = expired ? 0f : (blinkStartPrecent - precentLeft) / blinkStartPrecent;
-            float frequency = Mathf.Lerp(minBlinkFrequency, maxBlinkFrequecny, t);
-            StartBlinking(frequency);
-        }
-        else
-        {
-            StopBlinking();
-            if (labelText) labelText.color = Color.white;
-        }
-
-        // Text (optional)
-        if (labelText) labelText.text = GetLabelText();
-    }
-    protected void StartBlinking(float frequency)
-    {
-        if (blinkCoroutine != null) StopCoroutine(blinkCoroutine);
-        blinkCoroutine = StartCoroutine(BlinkCoroutine(frequency));
-    }
-    protected void StopBlinking()
-    {
-        if (blinkCoroutine != null)
-        {
-            StopCoroutine(blinkCoroutine);
-            blinkCoroutine = null;
-            if (labelText) labelText.color = Color.white;
-        }
-    }
-
-    private IEnumerator BlinkCoroutine(float frequency)
-    {
-        while (true)
-        {
-            float alpha = Mathf.Sin(Time.time * frequency * Mathf.PI) * 0.5f + 0.5f;
-            if (labelText) labelText.color = new Color(1f, 0f, 0f, alpha);
-            yield return null;
-        }
-    }
-    private void OnDestroy() => StopBlinking();
 }
