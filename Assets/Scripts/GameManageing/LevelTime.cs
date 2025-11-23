@@ -1,60 +1,56 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class LevelTime : MonoBehaviour
+public class LevelTime : TimerSliderUI
 {
-    public float timeRemaining = 60f;
-    public float maxTime = 60f;
-    private bool timerIsRunning = false;
+    [SerializeField] private float maxTime = 60f;
+    public float timeRemaining;
     
-
-    [SerializeField] TextMeshProUGUI timerText;
-    [SerializeField] Slider timerSlider;
     
     void Start()
     {
-        timerIsRunning = true;
 
-        if (timerSlider != null)
+        timeRemaining = maxTime;
+        if (timerSlider)
         {
             timerSlider.maxValue = maxTime;
             timerSlider.value = timeRemaining;
         }
-        UpdateTimerUI();
+        
     }
 
     
-    void Update()
+    private void Update()
     {
-        if (timerIsRunning)
+        
+        if (timeRemaining > 0)
         {
-            if (timeRemaining > 0)
-            {
-                timeRemaining -= Time.deltaTime;
-                UpdateTimerUI();
+            timeRemaining -= Time.deltaTime;
+            if (timeRemaining < 0) timeRemaining = 0;
 
-            }
-            else
-            {
-                timeRemaining = 0;
-                timerIsRunning = false;
-                UpdateTimerUI();
-                Debug.Log("Koniec gry");
-            }
+        }
+
+        base.Update();
+        
+        // Koniec czasu
+        if (timeRemaining <= 0 && !IsExpired())
+        {
+            Debug.Log("Koniec gry!");
+            // gameover
         }
     }
 
-    void UpdateTimerUI()
+    protected override float GetRemainingTime() => timeRemaining;
+    protected override float GetTotalTime() => maxTime;
+    protected override bool IsExpired() => timeRemaining <= 0;
+
+    protected override string GetLabelText()
     {
-        if (timerText != null)
-        {
-            int seconds = Mathf.FloorToInt(timeRemaining);
-            int milliseconds = Mathf.FloorToInt((timeRemaining - seconds) * 1000);
-            timerText.text = string.Format("{0}", LevelStats.Instance.gold);
-        }
-        if (timerSlider != null)
-        {
-            timerSlider.value = timeRemaining;
-        }
+        int seconds = Mathf.FloorToInt(timeRemaining);
+        int milliseconds = Mathf.FloorToInt((timeRemaining - seconds) * 100);
+        return $"{seconds:D2}:{milliseconds:D2}";
     }
+
+
+   
 }
