@@ -35996,8 +35996,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8059778ba680164c9c8942e05fae923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnRecipeTimerMax: 20
   recipeListSO: {fileID: 11400000, guid: 62548175a09e07f4baf58ee0583a43fe, type: 2}
+  spawnRecipeTimerMax: 2
   waitingRecipesMax: 3
 --- !u!4 &664316775
 Transform:
@@ -36563,6 +36563,9 @@ MonoBehaviour:
   iconContainer: {fileID: 184538372}
   iconTemplate: {fileID: 1432183845}
   recipeTimeSlider: {fileID: 17092083}
+  sliderFillImage: {fileID: 1610465503}
+  sliderBackgroundImage: {fileID: 192121221}
+  warningThreshold: 0.4
 --- !u!1 &1056549413
 GameObject:
   m_ObjectHideFlags: 0
