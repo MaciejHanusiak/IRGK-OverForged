@@ -61,7 +61,7 @@ public class SawCounter : BaseCounter, IHasProgress
 
                     OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
                     {
-                        progressNormalized = overCuttingTimer / cuttingRecipeSO.cuttingTimerMax
+                        progressNormalized = overCuttingTimer / overCuttingRecipeSO.overCuttingTimeMax
                     });
 
                     if (overCuttingTimer > overCuttingRecipeSO.overCuttingTimeMax)
@@ -134,6 +134,11 @@ public class SawCounter : BaseCounter, IHasProgress
                 GetSmithObject().SetSmithObjectParent(player);
 
                 state = State.Idle;
+                cuttingTimer = 0f;
+                OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+                {
+                    progressNormalized = cuttingTimer / cuttingRecipeSO.cuttingTimerMax
+                });
             }
         }
     }

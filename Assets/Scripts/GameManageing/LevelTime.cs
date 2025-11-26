@@ -20,7 +20,7 @@ public class LevelTime : TimerSliderUI
     }
 
     
-    private void Update()
+    override protected void Update()
     {
         
         if (timeRemaining > 0)
