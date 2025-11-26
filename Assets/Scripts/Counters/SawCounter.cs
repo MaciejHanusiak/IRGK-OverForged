@@ -61,7 +61,7 @@ public class SawCounter : BaseCounter, IHasProgress
 
                     OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
                     {
-                        progressNormalized = cuttingTimer / cuttingRecipeSO.cuttingTimerMax
+                        progressNormalized = overCuttingTimer / cuttingRecipeSO.cuttingTimerMax
                     });
 
                     if (overCuttingTimer > overCuttingRecipeSO.overCuttingTimeMax)

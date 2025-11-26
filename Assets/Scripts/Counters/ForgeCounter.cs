@@ -86,11 +86,11 @@ public class ForgeCounter : BaseCounter, IHasProgress
                         burningTimer = 0f;
                         burningRecipeSO = GetBurningRecipeSOWithInput(GetSmithObject().GetSmithObjectSO());
 
-                        state = State.Burned;
                         OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
                         {
                             progressNormalized = 0f
                         });
+                        state = State.Burned;                       
                     }
                     break;
 
