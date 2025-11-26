@@ -9,7 +9,6 @@ public class SmithObject : MonoBehaviour
     {
         return smithObjectSO;
     }
-
     public void SetSmithObjectParent(ISmithObjectParent smithObjectParent)
     {
         this.smithObjectParent?.ClearSmithObject();
@@ -18,6 +17,7 @@ public class SmithObject : MonoBehaviour
 
         if (smithObjectParent.HasSmithObject())
         {
+            if (smithObjectParent != null && smithObjectParent.GetObjectParentName() != "FinishedWeapons")
             Debug.LogError("IKitchenObjectParent already has a SmithObject!");
         }
         smithObjectParent.SetSmithObject(this);

@@ -35,4 +35,8 @@ public class BaseCounter : MonoBehaviour, ISmithObjectParent
     {
         return smithObject != null;
     }
+    public string GetObjectParentName()
+    {
+        return this.name;
+    }
 }
