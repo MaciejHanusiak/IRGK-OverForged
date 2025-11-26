@@ -62,7 +62,7 @@ public class DeliveryManagerSingleIconUI : TimerSliderUI
     }
 
     // Sprawdzenie, czy slot nadal istnieje (wa¿ne przy usuwaniu zlecenia)
-    private void Update()
+    override protected void Update()
     {
         if (recipeIndex >= DeliveryManager.Instance.GetWaitingRecipeSOList().Count)
         {
