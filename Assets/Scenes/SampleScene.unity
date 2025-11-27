@@ -36607,7 +36607,7 @@ MonoBehaviour:
   colorGood: {r: 0.1, g: 0.8, b: 0.1, a: 1}
   colorWarning: {r: 1, g: 0.8, b: 0, a: 1}
   colorDanger: {r: 1, g: 0.2, b: 0.2, a: 1}
-  maxTime: 40
+  maxTime: 50
 --- !u!4 &1056549415
 Transform:
   m_ObjectHideFlags: 0
