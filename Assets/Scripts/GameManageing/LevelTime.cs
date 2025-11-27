@@ -4,7 +4,7 @@ using TMPro;
 public class LevelTime : TimerSliderUI
 {
     [SerializeField] private float maxTime = 60f;
-    public float timeRemaining;
+    public static float timeRemaining;
     
     
     void Start()

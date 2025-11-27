@@ -36579,6 +36579,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1056549415}
   - component: {fileID: 1056549414}
+  - component: {fileID: 1056549416}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -36606,8 +36607,7 @@ MonoBehaviour:
   colorGood: {r: 0.1, g: 0.8, b: 0.1, a: 1}
   colorWarning: {r: 1, g: 0.8, b: 0, a: 1}
   colorDanger: {r: 1, g: 0.2, b: 0.2, a: 1}
-  maxTime: 240
-  timeRemaining: 240
+  maxTime: 40
 --- !u!4 &1056549415
 Transform:
   m_ObjectHideFlags: 0
@@ -36623,6 +36623,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1056549416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056549413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90185e63af0d4154bb2affb3917947a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelGoldGoal: 11
 --- !u!1 &1058783407
 GameObject:
   m_ObjectHideFlags: 0
