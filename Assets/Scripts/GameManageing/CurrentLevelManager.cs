@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class CurrentLevelManager : MonoBehaviour
 {
     [SerializeField] public int levelGoldGoal;
@@ -22,6 +22,9 @@ public class CurrentLevelManager : MonoBehaviour
         if (LevelEndStatement != "")
         {
             ShowLevelEndScreen(LevelEndStatement);
+            UnlockNewLevel();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            
             hasLevelEnded = true; // lvl ended, stop level
         }
     }
@@ -29,8 +32,15 @@ public class CurrentLevelManager : MonoBehaviour
     public void ShowLevelEndScreen(string lvlEndStmt)
     {
         Debug.Log(lvlEndStmt);
-        Time.timeScale = 0f;
-        Time.fixedDeltaTime = normalFixedDeltaTime * Time.timeScale;
+    }
+    void UnlockNewLevel()
+    {
+        if (SceneManager.GetActiveScene().buildIndex >= PlayerPrefs.GetInt("ReachedIndex"))
+        {
+            PlayerPrefs.SetInt("ReachedIndex", SceneManager.GetActiveScene().buildIndex + 1);
+            PlayerPrefs.SetInt("UnlockedLevel", PlayerPrefs.GetInt("UnlockedLevel", 1) + 1);
+            PlayerPrefs.Save();
+        }
     }
 
 }
