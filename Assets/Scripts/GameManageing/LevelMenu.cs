@@ -8,7 +8,7 @@ public class LevelMenu : MonoBehaviour
     private void Awake()
     {
 
-        int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
+        int unlockedLevel = Mathf.Min(PlayerPrefs.GetInt("UnlockedLevel", 1), buttons.Length);
         for (int i = 0; i < buttons.Length; i++)
         {
             buttons[i].interactable = false;
