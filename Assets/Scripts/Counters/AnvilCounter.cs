@@ -24,7 +24,6 @@ public class AnvilCounter : BaseCounter, IHasProgress
 
                     OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
                     {
-
                         progressNormalized = (float)anvilForgeingProgress / anvilForgeingRecipeSO.anvilForgeingProgressMax
                     });
                 }

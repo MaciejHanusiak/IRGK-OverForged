@@ -8,7 +8,7 @@ using UnityEditor;
 public class ForgeCounter : BaseCounter, IHasProgress
 {
     public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
-    private enum State
+    public enum State
     {
         Idle,
         Forgeing,
@@ -67,8 +67,8 @@ public class ForgeCounter : BaseCounter, IHasProgress
 
                     OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
                     {
-                        progressNormalized = burningTimer / burningRecipeSO.burningTimerMax                     
-
+                        progressNormalized = burningTimer / burningRecipeSO.burningTimerMax,
+                        forgeState = State.Forged
                     });
                     
 

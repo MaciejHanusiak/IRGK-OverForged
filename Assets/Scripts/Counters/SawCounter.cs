@@ -4,7 +4,7 @@ using UnityEngine;
 public class SawCounter : BaseCounter, IHasProgress
 {
     public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
-    private enum State
+    public enum State
     {
         Idle,
         Cutting,
@@ -61,7 +61,8 @@ public class SawCounter : BaseCounter, IHasProgress
 
                     OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
                     {
-                        progressNormalized = overCuttingTimer / overCuttingRecipeSO.overCuttingTimeMax
+                        progressNormalized = overCuttingTimer / overCuttingRecipeSO.overCuttingTimeMax,
+                        sawState = State.Cutted
                     });
 
                     if (overCuttingTimer > overCuttingRecipeSO.overCuttingTimeMax)

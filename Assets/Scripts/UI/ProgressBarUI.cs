@@ -5,7 +5,9 @@ public class ProgressBarUI : MonoBehaviour
 {
     [SerializeField] GameObject hasProgressGameObject;
     [SerializeField] private Image barImage;
+    [SerializeField] private Image redBarImage;
     private IHasProgress hasProgress;
+
 
     private void Start()
     {
@@ -22,7 +24,16 @@ public class ProgressBarUI : MonoBehaviour
 
     private void HasProgress_OnProgressChanged(object sender, IHasProgress.OnProgressChangedEventArgs e)
     {
-        barImage.fillAmount = e.progressNormalized;
+        if (e.forgeState == ForgeCounter.State.Forged || e.sawState == SawCounter.State.Cutted)
+        {
+            redBarImage.gameObject.SetActive(true);
+            redBarImage.fillAmount = e.progressNormalized;
+
+        }
+        else
+            barImage.fillAmount = e.progressNormalized;
+
+
 
         if (e.progressNormalized == 0f || e.progressNormalized == 1f)
         {

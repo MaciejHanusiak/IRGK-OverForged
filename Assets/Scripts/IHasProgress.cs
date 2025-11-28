@@ -7,5 +7,7 @@ public interface IHasProgress
     public class OnProgressChangedEventArgs : EventArgs
     {
         public float progressNormalized;
+        public ForgeCounter.State forgeState;
+        public SawCounter.State sawState;
     }
 }
