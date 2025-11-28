@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 public class CurrentLevelManager : MonoBehaviour
 {
+    [SerializeField] public GameObject levelEndPanel;
+    [SerializeField] public TextMeshProUGUI endLevelStatement;
     [SerializeField] public int levelGoldGoal;
-    private string LevelEndStatement = string.Empty;
     private float normalFixedDeltaTime;
 
     private bool hasLevelEnded = false;
@@ -11,27 +13,27 @@ public class CurrentLevelManager : MonoBehaviour
     private void Awake()
     {
         normalFixedDeltaTime = Time.fixedDeltaTime; // Save default value
+        endLevelStatement.text = "";
     }
 
     void Update()
     {
         // If level ended do nothing
         if (hasLevelEnded) return;
-        LevelEndStatement = LevelStats.Instance.gold >= levelGoldGoal ? "Congrats! You won this lvl!" : 
+        endLevelStatement.text = LevelStats.Instance.gold >= levelGoldGoal ? "Congrats! You won this lvl!" : 
             LevelTime.timeRemaining <= 0 ? "Game over! :<" : "";
-        if (LevelEndStatement != "")
+        if (endLevelStatement.text != "")
         {
-            ShowLevelEndScreen(LevelEndStatement);
+            levelEndPanel.SetActive(true);
             UnlockNewLevel();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            
+            Time.timeScale = 0f;
             hasLevelEnded = true; // lvl ended, stop level
         }
     }
 
-    public void ShowLevelEndScreen(string lvlEndStmt)
+    public void GoToNextLevel()
     {
-        Debug.Log(lvlEndStmt);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     void UnlockNewLevel()
     {
