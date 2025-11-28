@@ -374,6 +374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelEndPanel: {fileID: 1440137094005323383}
+  nextLevelButton: {fileID: 5205443590805519830}
   endLevelStatement: {fileID: 3825249159036082427}
   levelGoldGoal: 11
 --- !u!1 &5730160639741511542
@@ -817,6 +818,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &5205443590805519830 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4186089245885545620, guid: 78dfb4de3589b164a9cf9363f1a9564d, type: 3}
+  m_PrefabInstance: {fileID: 8226540090275184962}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8594985474475097729 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 390985649603624899, guid: 78dfb4de3589b164a9cf9363f1a9564d, type: 3}

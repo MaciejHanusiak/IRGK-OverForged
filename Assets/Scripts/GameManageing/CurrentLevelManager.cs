@@ -4,6 +4,7 @@ using TMPro;
 public class CurrentLevelManager : MonoBehaviour
 {
     [SerializeField] public GameObject levelEndPanel;
+    [SerializeField] public GameObject nextLevelButton;
     [SerializeField] public TextMeshProUGUI endLevelStatement;
     [SerializeField] public int levelGoldGoal;
     private float normalFixedDeltaTime;
@@ -24,6 +25,8 @@ public class CurrentLevelManager : MonoBehaviour
             LevelTime.timeRemaining <= 0 ? "Game over! :<" : "";
         if (endLevelStatement.text != "")
         {
+            if(endLevelStatement.text == "Game over! :<")
+                nextLevelButton.SetActive(false);
             levelEndPanel.SetActive(true);
             UnlockNewLevel();
             Time.timeScale = 0f;
@@ -34,6 +37,7 @@ public class CurrentLevelManager : MonoBehaviour
     public void GoToNextLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        Time.timeScale = 1f;
     }
     void UnlockNewLevel()
     {
