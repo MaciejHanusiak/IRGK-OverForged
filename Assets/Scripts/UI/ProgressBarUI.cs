@@ -31,7 +31,11 @@ public class ProgressBarUI : MonoBehaviour
 
         }
         else
+        {
+            redBarImage.gameObject.SetActive(false);
             barImage.fillAmount = e.progressNormalized;
+
+        }
 
 
 
