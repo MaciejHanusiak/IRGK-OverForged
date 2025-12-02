@@ -20,7 +20,7 @@ MonoBehaviour:
     outputSprite: {fileID: 7306135039076159149, guid: 40e2b8cf3fd2baa4c863bb675258b21f, type: 3}
     inputLabel: Logs
     actionLabel: Cut
-    outputLabel: boards
+    outputLabel: Boards
   - objectName: BaseCounter
     objectUIName: BazowuCounter(this is bug propably bug)
     inputSprite: {fileID: 4179495660910005209, guid: 8e618e234215c2641bea6d66cc0bf77d, type: 3}
@@ -71,9 +71,9 @@ MonoBehaviour:
     outputLabel: EmptyName
   - objectName: WorkBenchCounter
     objectUIName: Workbench
-    inputSprite: {fileID: 0}
-    actionSprite: {fileID: 0}
-    outputSprite: {fileID: 0}
+    inputSprite: {fileID: -1124781145681123543, guid: e5d5dda7d5407934fbc83a21079c262b, type: 3}
+    actionSprite: {fileID: -7548252748297952592, guid: 4506ca84f1792724caa1b9eb86c79451, type: 3}
+    outputSprite: {fileID: -8065901078798434006, guid: bfd215472f0840c4cbf7af61084d1afe, type: 3}
     inputLabel: Weapon Parts
     actionLabel: Combine
     outputLabel: Weapon
@@ -81,13 +81,13 @@ MonoBehaviour:
     objectUIName: Scrap Bin
     inputSprite: {fileID: 7100757809047929424, guid: c32b9dca0968c104b891f6125f26c3ca, type: 3}
     actionSprite: {fileID: -7548252748297952592, guid: 4506ca84f1792724caa1b9eb86c79451, type: 3}
-    outputSprite: {fileID: 0}
+    outputSprite: {fileID: -3186519200494786208, guid: 7ec078c8cd8438e4dabc68f44002a540, type: 3}
     inputLabel: Anything
     actionLabel: Destroy
     outputLabel: 
-  - objectName: DeliveryCountr
+  - objectName: DeliveryCounter
     objectUIName: Delivery Station
-    inputSprite: {fileID: 0}
+    inputSprite: {fileID: -8065901078798434006, guid: bfd215472f0840c4cbf7af61084d1afe, type: 3}
     actionSprite: {fileID: -7548252748297952592, guid: 4506ca84f1792724caa1b9eb86c79451, type: 3}
     outputSprite: {fileID: 4847653217444231831, guid: 92a6e1a7ed1e3e7499663a31890aa24e, type: 3}
     inputLabel: Weapon
