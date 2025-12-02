@@ -5,7 +5,7 @@ public class BaseCounter : MonoBehaviour, ISmithObjectParent
     [SerializeField] private Transform counterTopPoint;
 
 
-    private SmithObject smithObject;
+    protected SmithObject smithObject;
     public virtual void Interact(Player player)
     {
         Debug.LogError("BaseCounter.Interact();");
@@ -39,4 +39,6 @@ public class BaseCounter : MonoBehaviour, ISmithObjectParent
     {
         return this.name;
     }
+    public virtual SmithObjectSO GetOutputSmithObjectSO() => null;
+    
 }

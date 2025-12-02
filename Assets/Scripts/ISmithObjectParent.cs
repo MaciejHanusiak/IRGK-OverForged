@@ -9,4 +9,5 @@ public interface ISmithObjectParent
     public void ClearSmithObject();
     public bool HasSmithObject();
     public string GetObjectParentName();
+    SmithObjectSO GetOutputSmithObjectSO();
 }

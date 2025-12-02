@@ -223,4 +223,5 @@ public class Player : MonoBehaviour, ISmithObjectParent
     {
         return this.name;
     }
+    public virtual SmithObjectSO GetOutputSmithObjectSO() => null;
 }

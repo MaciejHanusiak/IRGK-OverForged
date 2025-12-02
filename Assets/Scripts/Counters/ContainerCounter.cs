@@ -2,10 +2,8 @@ using UnityEngine;
 
 public class ContainerCounter : BaseCounter
 {
-    [SerializeField] private SmithObjectSO smithObjectSO;
+    [SerializeField] public SmithObjectSO smithObjectSO;
     private int priceForMaterial = 0;
-
-
 
 
     public override void Interact(Player player)
@@ -36,5 +34,6 @@ public class ContainerCounter : BaseCounter
         }
     }
 
-   
+    public override SmithObjectSO GetOutputSmithObjectSO() => smithObjectSO;
+
 }
