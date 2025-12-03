@@ -38,6 +38,7 @@ public class CurrentLevelManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         Time.timeScale = 1f;
+        Analytics.Instance.NextLevel(SceneManager.GetActiveScene().buildIndex + 1);
     }
     void UnlockNewLevel()
     {
