@@ -24,8 +24,12 @@ public class ContainerCounter : BaseCounter
                     break;
             }
 
-            if(LevelStats.Instance.SpendGold(priceForMaterial))
-            SmithObject.SpawnSmithObject(smithObjectSO, player);
+            if (LevelStats.Instance.SpendGold(priceForMaterial))
+            {
+                SmithObject.SpawnSmithObject(smithObjectSO, player);
+                Analytics.Instance.PlayerBuySomething(smithObjectSO.name, LevelStats.Instance.gold, LevelTime.Instance.timeRemaining);
+
+            }
 
         }
         else

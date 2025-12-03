@@ -10,5 +10,6 @@ public class MainManuManagement : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+        Analytics.Instance.EndGame();
     }
 }

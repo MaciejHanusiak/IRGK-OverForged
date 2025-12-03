@@ -46,6 +46,8 @@ public class WorkBenchCounter : BaseCounter
         {
             // There is no smith object, player has or hasn't something.
             SmithObject.SpawnSmithObject(weaponStandObjectSO, this);
+
+            Analytics.Instance.PlayerCreateWeaponStand(LevelStats.Instance.gold, LevelTime.Instance.timeRemaining);
         }
         else
         {

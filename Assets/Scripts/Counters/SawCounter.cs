@@ -51,6 +51,13 @@ public class SawCounter : BaseCounter, IHasProgress
                         SmithObject.SpawnSmithObject(cuttingRecipeSO.output, this);
                         Debug.Log("ObjectCutted!");
                         state = State.Cutted;
+
+                        Analytics.Instance.PlayerCutSomething(cuttingRecipeSO.input.objectName,
+                            cuttingTimer,
+                            cuttingRecipeSO.cuttingTimerMax,
+                            LevelStats.Instance.gold,
+                            LevelTime.Instance.timeRemaining);
+
                         overCuttingRecipeSO = GetOverCuttingRecipeSOWithInput(GetSmithObject().GetSmithObjectSO());
                         overCuttingTimer = 0f;
                     }
@@ -73,7 +80,13 @@ public class SawCounter : BaseCounter, IHasProgress
                         GetSmithObject().DestroySelf();
                         SmithObject.SpawnSmithObject(overCuttingRecipeSO.output, this);
                         Debug.Log("ObjectOverCutted!");
-                        
+
+                                            Analytics.Instance.PlayerOvercutSomething(overCuttingRecipeSO.input.objectName,
+                        overCuttingTimer,
+                        overCuttingRecipeSO.overCuttingTimeMax,
+                        LevelStats.Instance.gold,
+                        LevelTime.Instance.timeRemaining);
+
                         overCuttingTimer = 0f;
                         overCuttingRecipeSO = GetOverCuttingRecipeSOWithInput(GetSmithObject().GetSmithObjectSO());
 

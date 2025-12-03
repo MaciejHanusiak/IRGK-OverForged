@@ -51,10 +51,14 @@ public class DeliveryManager : MonoBehaviour
 
                 OnRecipeSpawned?.Invoke(this, EventArgs.Empty);
                 Debug.Log($"Nowe zamównienie: {newRecipe.recipeName}");
+                Analytics.Instance.RecipeGenerated(newRecipe.recipeName, LevelStats.Instance.gold, LevelTime.Instance.timeRemaining);
+
             }
             else
             {
                 Debug.Log("Kolejka pe³na (3/3) - pomijam nowe zamównienie");
+                Analytics.Instance.RecipeQuerryFull(LevelStats.Instance.gold, LevelTime.Instance.timeRemaining);
+
             }
         }
     }
@@ -70,6 +74,7 @@ public class DeliveryManager : MonoBehaviour
                 singleRecipeEndTimeList[i] = -1; // Oznacz jako expierd
                 OnRecipeExpired?.Invoke(this, EventArgs.Empty);
                 Debug.Log($"Zamównienie po terminie: {waitingRecipeSOList[i].recipeName}");
+                Analytics.Instance.TimeForRecipeEnd(waitingRecipeSOList[i].recipeName, i, LevelStats.Instance.gold, LevelTime.Instance.timeRemaining);
             }
         }
     }
@@ -174,6 +179,7 @@ public class DeliveryManager : MonoBehaviour
             if (matches)
             {
                 // Sukces!
+                Analytics.Instance.GoodRecipeDelivered(waitingRecipeSOList[i].recipeName, i, LevelStats.Instance.gold, GetRecipeRemainingTime(i), LevelTime.Instance.timeRemaining);
                 waitingRecipeSOList.RemoveAt(i);
                 singleRecipeEndTimeList.RemoveAt(i);
 

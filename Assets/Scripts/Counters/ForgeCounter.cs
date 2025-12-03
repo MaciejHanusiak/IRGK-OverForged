@@ -56,6 +56,13 @@ public class ForgeCounter : BaseCounter, IHasProgress
                         SmithObject.SpawnSmithObject(forgeingRecipeSO.output, this);
                         Debug.Log("ObjectForged!");
                         state = State.Forged;
+
+                        Analytics.Instance.PlayerSmeltSomething(forgeingRecipeSO.input.objectName,
+                            forgeingTimer,
+                            forgeingRecipeSO.forgeingTimerMax,
+                            LevelStats.Instance.gold,
+                            LevelTime.Instance.timeRemaining);
+
                         burningRecipeSO = GetBurningRecipeSOWithInput(GetSmithObject().GetSmithObjectSO());
                         burningTimer = 0f;
 
@@ -82,6 +89,11 @@ public class ForgeCounter : BaseCounter, IHasProgress
 
                         Debug.Log("ObjectBurned!");
 
+                                            Analytics.Instance.PlayerBurntSomething(burningRecipeSO.input.objectName,
+                        burningTimer,
+                        burningRecipeSO.burningTimerMax,
+                        LevelStats.Instance.gold,
+                        LevelTime.Instance.timeRemaining);
 
                         burningTimer = 0f;
                         burningRecipeSO = GetBurningRecipeSOWithInput(GetSmithObject().GetSmithObjectSO());

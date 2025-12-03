@@ -59,6 +59,9 @@ public class AnvilCounter : BaseCounter, IHasProgress
             AnvilForgeingRecipeSO anvilForgeingRecipeSO = GetAnvilForgeingRecipeSOWithInput(GetSmithObject().GetSmithObjectSO());
             SmithObjectSO outputSmithObjectSO = GetOutputForInput(GetSmithObject().GetSmithObjectSO());
 
+            Analytics.Instance.PlayerStrikeSomethingOnce(
+        (float)anvilForgeingProgress, anvilForgeingRecipeSO.anvilForgeingProgressMax, LevelStats.Instance.gold, LevelTime.Instance.timeRemaining);
+
             OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
             {
 
@@ -70,6 +73,7 @@ public class AnvilCounter : BaseCounter, IHasProgress
                 GetSmithObject().DestroySelf();
                 SmithObject.SpawnSmithObject(outputSmithObjectSO, this);
 
+                Analytics.Instance.PlayerForgedSomething(outputSmithObjectSO.objectName, LevelStats.Instance.gold, LevelTime.Instance.timeRemaining);
             }
         }
 

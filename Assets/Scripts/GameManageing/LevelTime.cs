@@ -1,12 +1,24 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 public class LevelTime : TimerSliderUI
 {
     [SerializeField] private float maxTime = 60f;
-    public static float timeRemaining;
-    
-    
+    public float timeRemaining;
+
+    public static LevelTime Instance;               // }
+                                                    // }
+                                                    // }
+    public void Awake()                             // }
+    {                                               // }
+        if (Instance == null) Instance = this;      // }
+        else Destroy(gameObject);                   // }  Wzorzec Singleton
+        //Analytics.Instance.GoldChanged(gold,);
+
+    }
+
     void Start()
     {
 
@@ -35,8 +47,9 @@ public class LevelTime : TimerSliderUI
         // Koniec czasu
         if (timeRemaining <= 0 && !IsExpired())
         {
+            //Analytics.Instance.EndLevelTime(SceneManager.GetActiveScene().buildIndex, LevelStats.Instance.gold, LevelTime.Instance.timeRemaining);
             Debug.Log("Koniec gry!");
-            // gameover
+            // gameover - to ju¿ chyba nie dzia³a
         }
     }
 

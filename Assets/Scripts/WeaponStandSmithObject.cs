@@ -33,6 +33,8 @@ public class WeaponStandSmithObject : SmithObject
         else
         {
             smithObjectSOList.Add(smithObjectSO);
+
+            Analytics.Instance.PlayerAddWeaponPart(smithObjectSO.objectName, LevelStats.Instance.gold, LevelTime.Instance.timeRemaining);
             OnWeaponPartAdded?.Invoke(this, new OnWeaponPartAddedEventArgs()
             {
                 SmithObjectSO = smithObjectSO

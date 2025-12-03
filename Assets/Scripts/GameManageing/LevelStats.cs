@@ -9,7 +9,6 @@ public class LevelStats : MonoBehaviour
     {                                               // }
         if (Instance == null) Instance = this;      // }
         else Destroy(gameObject);                   // }  Wzorzec Singleton
-        //Analytics.Instance.GoldChanged(gold,);
 
     }
 
@@ -17,24 +16,28 @@ public class LevelStats : MonoBehaviour
     {
         gold += moneyAmount;
         Debug.Log("Gold: " + gold);
+        Analytics.Instance.GoldAdded(gold, moneyAmount, LevelTime.Instance.timeRemaining);
+
     }
 
 
-    public bool SpendGold( int amount)
+    public bool SpendGold( int moneyAmount)
     {
-        if (gold >= amount)
+        if (gold >= moneyAmount)
         {
 
-        gold -= amount;
+        gold -= moneyAmount;
         Debug.Log("Gold: " + gold);
+        Analytics.Instance.GoldSpend(gold, moneyAmount, LevelTime.Instance.timeRemaining);
             return true;
         }
         Debug.Log("Not enough gold");
         return false;
-        
+
+
     }
 
-    
+
     void Start()
     {
         

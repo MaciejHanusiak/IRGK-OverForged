@@ -59,13 +59,18 @@ public class KnifesBenchCounter : BaseCounter,IHasProgress
             // There is a smith object AND it can be forged on anvil
             knifePlaningProgress++;
 
+
             KnifePlaningRecipeSO knifePlaningRecipeSO = GetKnifePlaningRecipeSOWithInput(GetSmithObject().GetSmithObjectSO());
             SmithObjectSO outputSmithObjectSO = GetOutputForInput(GetSmithObject().GetSmithObjectSO());
+
+            Analytics.Instance.PlayerWhittledSomethingOnce(
+                    (float)knifePlaningProgress, knifePlaningRecipeSO.knifePlaningProgressMax, LevelStats.Instance.gold, LevelTime.Instance.timeRemaining);
 
             OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
             {
 
-                progressNormalized = (float)knifePlaningProgress / knifePlaningRecipeSO.knifePlaningProgressMax
+                progressNormalized = (float)knifePlaningProgress / knifePlaningRecipeSO.knifePlaningProgressMax,
+                
             });
 
             if (knifePlaningProgress >= knifePlaningRecipeSO.knifePlaningProgressMax)
@@ -73,7 +78,7 @@ public class KnifesBenchCounter : BaseCounter,IHasProgress
                 GetSmithObject().DestroySelf();
                 SmithObject.SpawnSmithObject(outputSmithObjectSO, this);
 
-
+                Analytics.Instance.PlayerPlannedSomething(outputSmithObjectSO.objectName, LevelStats.Instance.gold, LevelTime.Instance.timeRemaining);
             }
         }
 

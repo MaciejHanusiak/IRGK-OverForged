@@ -22,7 +22,7 @@ public class CurrentLevelManager : MonoBehaviour
         // If level ended do nothing
         if (hasLevelEnded) return;
         endLevelStatement.text = LevelStats.Instance.gold >= levelGoldGoal ? "Congrats! You won this lvl!" : 
-            LevelTime.timeRemaining <= 0 ? "Game over! :<" : "";
+            LevelTime.Instance.timeRemaining <= 0 ? "Game over! :<" : "";
         if (endLevelStatement.text != "")
         {
             if(endLevelStatement.text == "Game over! :<")
@@ -31,6 +31,7 @@ public class CurrentLevelManager : MonoBehaviour
             UnlockNewLevel();
             Time.timeScale = 0f;
             hasLevelEnded = true; // lvl ended, stop level
+            Analytics.Instance.EndLevelTime(SceneManager.GetActiveScene().buildIndex, LevelStats.Instance.gold, LevelTime.Instance.timeRemaining);
         }
     }
 

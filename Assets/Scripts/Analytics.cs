@@ -11,14 +11,13 @@ public class Analytics : MonoBehaviour
     private bool _isInitialized = false;
     private void Awake()
     {
-        if (Instance != null)
+        if (Instance != null && Instance != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
+            return;
         }
-        else
-        {
-            Instance = this;
-        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
 
     }
     private async void Start()
@@ -39,48 +38,70 @@ public class Analytics : MonoBehaviour
             {"level_index", currentLevel }
         };
         AnalyticsService.Instance.RecordEvent(myEvent);
-        AnalyticsService.Instance.Flush();
+        
         Debug.Log("next_level");
     }
     public void RestartGame()
     {
         AnalyticsService.Instance.RecordEvent("restart_game");
-        AnalyticsService.Instance.Flush();
+        
         Debug.Log("restart_game");
 
     }
     public void GamePaused()
     {
         AnalyticsService.Instance.RecordEvent("game_paused");
-        AnalyticsService.Instance.Flush();
+        
         Debug.Log("game_paused"); 
     }
     public void GameResumed()
     {
         AnalyticsService.Instance.RecordEvent("game_resumed");
-        AnalyticsService.Instance.Flush();
+        
         Debug.Log("game_resumed");
     }
     public void GoHome()
     {
         AnalyticsService.Instance.RecordEvent("go_home");
-        AnalyticsService.Instance.Flush();
+        Debug.Log("go_home");
+
+
     }
-    public void GoldChanged(int goldAmount, float levelTime)
+    public void GoldAdded(int goldAmount,int goldChange, float levelTime)
     {
         if (!_isInitialized)
         {
             return;
         }
-        CustomEvent myEvent = new CustomEvent("gold_changed")
+        CustomEvent myEvent = new CustomEvent("gold_added")
         {
             {"gold_amount", goldAmount},
+            {"gold_added", goldChange },
+            {"level_time", levelTime},
+        };
+        AnalyticsService.Instance.RecordEvent(myEvent);
+        Debug.Log("gold_added");
+
+
+    }
+    public void GoldSpend(int goldAmount, int goldChange, float levelTime)
+    {
+        if (!_isInitialized)
+        {
+            return;
+        }
+        CustomEvent myEvent = new CustomEvent("gold_spend")
+        {
+            {"gold_amount", goldAmount},
+            {"gold_spend", goldChange },
             {"level_time", levelTime}
         };
-        AnalyticsService.Instance.RecordEvent("gold_changed");
-        AnalyticsService.Instance.Flush();
+        AnalyticsService.Instance.RecordEvent(myEvent);
+        Debug.Log("gold_spend");
+
+
     }
-    public void RecipeGenerated(string recipeName, float levelTime, int goldAmount)
+    public void RecipeGenerated(string recipeName, int goldAmount, float levelTime)
     {
         if (!_isInitialized)
         {
@@ -92,10 +113,28 @@ public class Analytics : MonoBehaviour
             {"level_time", levelTime},
             {"gold_amount", goldAmount}
         };
-        AnalyticsService.Instance.RecordEvent("recipe_generated");
-        AnalyticsService.Instance.Flush();
+        AnalyticsService.Instance.RecordEvent(myEvent);
+        Debug.Log("recipe_generated");
+
+
     }
-    public void PlayerBuySomething(string productName, float levelTime, int goldAmount)
+    public void RecipeQuerryFull( int goldAmount, float levelTime)
+    {
+        if (!_isInitialized)
+        {
+            return;
+        }
+        CustomEvent myEvent = new CustomEvent("recipe_querry_full")
+        {
+            {"level_time", levelTime},
+            {"gold_amount", goldAmount}
+        };
+        AnalyticsService.Instance.RecordEvent(myEvent);
+        Debug.Log("recipe_querry_full");
+
+
+    }
+    public void PlayerBuySomething(string productName, int goldAmount, float levelTime)
     {
         if (!_isInitialized)
         {
@@ -104,13 +143,14 @@ public class Analytics : MonoBehaviour
         CustomEvent myEvent = new CustomEvent("player_buy_something")
         {
             {"product_name", productName},
-            {"level_time", levelTime},
-            {"gold_amount", goldAmount }
+            {"gold_amount", goldAmount },
+            {"level_time", levelTime}
         };
-        AnalyticsService.Instance.RecordEvent("player_buy_something");
-        AnalyticsService.Instance.Flush();
+        AnalyticsService.Instance.RecordEvent(myEvent);
+        Debug.Log("player_buy_something");
+
     }
-    public void PlayerSmeltSomething(float levelTime, int goldAmount)
+    public void PlayerSmeltSomething(string smeltingItemName, float smeltingItemTime, float smeltingItemTimeMax, int goldAmount, float levelTime)
     {
         if (!_isInitialized)
         {
@@ -118,13 +158,17 @@ public class Analytics : MonoBehaviour
         }
         CustomEvent myEvent = new CustomEvent("player_smelt_something")
         {
-            {"level_time", levelTime},
-            {"gold_amount", goldAmount }
+            {"smelting_item_name", smeltingItemName},
+            {"smelting_item_time", smeltingItemTime },
+            {"smelting_item_time_max", smeltingItemTimeMax },
+            {"gold_amount", goldAmount },
+            {"level_time", levelTime}
         };
-        AnalyticsService.Instance.RecordEvent("player_smelt_something");
-        AnalyticsService.Instance.Flush();
+        AnalyticsService.Instance.RecordEvent(myEvent);
+        Debug.Log("player_smelt_something");
+
     }
-    public void PlayerBurntSomething(float levelTime, int goldAmount)
+    public void PlayerBurntSomething(string burningItemName, float burningItemTime, float burningItemTimeMax, int goldAmount, float levelTime)
     {
         if (!_isInitialized)
         {
@@ -132,13 +176,18 @@ public class Analytics : MonoBehaviour
         }
         CustomEvent myEvent = new CustomEvent("player_burnt_something")
         {
-            {"level_time", levelTime},
-            {"gold_amount", goldAmount }
+            {"burning_item_name", burningItemName},
+            {"burning_item_time", burningItemTime },
+            {"burning_item_time_max", burningItemTimeMax },
+            {"gold_amount", goldAmount },
+            {"level_time", levelTime}
         };
-        AnalyticsService.Instance.RecordEvent("player_burnt_something");
-        AnalyticsService.Instance.Flush();
+        AnalyticsService.Instance.RecordEvent(myEvent);
+        Debug.Log("player_burnt_something");
+
+
     }
-    public void PlayerCutSomething(float levelTime, int goldAmount)
+    public void PlayerCutSomething(string cuttingItemName, float cuttingItemTime, float cuttingItemTimeMax, int goldAmount, float levelTime)
     {
         if (!_isInitialized)
         {
@@ -146,13 +195,17 @@ public class Analytics : MonoBehaviour
         }
         CustomEvent myEvent = new CustomEvent("player_cut_something")
         {
-            {"level_time", levelTime},
-            {"gold_amount", goldAmount }
+            {"cutting_item_name", cuttingItemName},
+            {"cutting_item_time", cuttingItemTime },
+            {"cutting_item_time_max", cuttingItemTimeMax },
+            {"gold_amount", goldAmount },
+            {"level_time", levelTime}
         };
-        AnalyticsService.Instance.RecordEvent("player_cut_something");
-        AnalyticsService.Instance.Flush();
+        AnalyticsService.Instance.RecordEvent(myEvent);
+        Debug.Log("player_cut_something");
+
     }
-    public void PlayerOvercutSomething(float levelTime, int goldAmount)
+    public void PlayerOvercutSomething(string overcuttingItemName, float overcuttingItemTime, float overcuttingItemTimeMax, int goldAmount, float levelTime)
     {
         if (!_isInitialized)
         {
@@ -160,13 +213,17 @@ public class Analytics : MonoBehaviour
         }
         CustomEvent myEvent = new CustomEvent("player_overcut_something")
         {
-            {"level_time", levelTime},
-            {"gold_amount", goldAmount }
+            {"overcutting_item_name", overcuttingItemName},
+            {"overcutting_item_time", overcuttingItemTime },
+            {"overcutting_item_time_max", overcuttingItemTimeMax },
+            {"gold_amount", goldAmount },
+            {"level_time", levelTime}
         };
-        AnalyticsService.Instance.RecordEvent("player_overcut_something");
-        AnalyticsService.Instance.Flush();
+        AnalyticsService.Instance.RecordEvent(myEvent);
+        Debug.Log("player_overcut_something");
+
     }
-    public void PlayerWhittledSomethingOnce(float levelTime, int goldAmount)
+    public void PlayerWhittledSomethingOnce(float knifePlanningProgress, float knifePlanningProgressMax, int goldAmount, float levelTime)
     {
         if (!_isInitialized)
         {
@@ -174,27 +231,34 @@ public class Analytics : MonoBehaviour
         }
         CustomEvent myEvent = new CustomEvent("player_whittled_something_once")
         {
-            {"level_time", levelTime},
-            {"gold_amount", goldAmount }
+            {"knife_planing_progress", knifePlanningProgress},
+            {"knife_planning_progress_max", knifePlanningProgressMax },
+            {"gold_amount", goldAmount },
+            {"level_time", levelTime}
         };
-        AnalyticsService.Instance.RecordEvent("player_whittled_something_once");
-        AnalyticsService.Instance.Flush();
+        AnalyticsService.Instance.RecordEvent(myEvent);
+        Debug.Log("player_whittled_something_once");
+
     }
-    public void PlayerStrikeSomethingOnce(float levelTime, int goldAmount)
+    public void PlayerStrikeSomethingOnce(float forgeingProgress, float forgeingProgressMax, int goldAmount, float levelTime)
     {
         if (!_isInitialized)
         {
             return;
         }
-        CustomEvent myEvent = new CustomEvent("player_whittled_something_once")
+        CustomEvent myEvent = new CustomEvent("player_striked_something_once")
         {
-            {"level_time", levelTime},
-            {"gold_amount", goldAmount }
+            {"forgeing_progress", forgeingProgress},
+            {"forgeing_progress_max", forgeingProgressMax },
+            {"gold_amount", goldAmount },
+            {"level_time", levelTime}
         };
-        AnalyticsService.Instance.RecordEvent("player_whittled_something_once");
-        AnalyticsService.Instance.Flush();
+        AnalyticsService.Instance.RecordEvent(myEvent);
+        Debug.Log("player_striked_something_once");
+
+
     }
-    public void PlayerForgedSomething(float levelTime, int goldAmount)
+    public void PlayerForgedSomething(string forgedItemName, int goldAmount, float levelTime)
     {
         if (!_isInitialized)
         {
@@ -202,27 +266,31 @@ public class Analytics : MonoBehaviour
         }
         CustomEvent myEvent = new CustomEvent("player_forged_something")
         {
-            {"level_time", levelTime},
-            {"gold_amount", goldAmount }
+            {"forged_item_name", forgedItemName},
+            {"gold_amount", goldAmount },
+            {"level_time", levelTime}
         };
-        AnalyticsService.Instance.RecordEvent("player_forged_something");
-        AnalyticsService.Instance.Flush();
+        AnalyticsService.Instance.RecordEvent(myEvent);
+        Debug.Log("player_forged_something");
+
     }
-    public void PlayerPlanedSomething(float levelTime, int goldAmount)
+    public void PlayerPlannedSomething(string PlannedItemName, int goldAmount, float levelTime)
     {
         if (!_isInitialized)
         {
             return;
         }
-        CustomEvent myEvent = new CustomEvent("player_planed_something")
+        CustomEvent myEvent = new CustomEvent("player_planned_something")
         {
-            {"level_time", levelTime},
-            {"gold_amount", goldAmount }
+            {"planned_item_name", PlannedItemName},
+            {"gold_amount", goldAmount },
+            {"level_time", levelTime}
         };
-        AnalyticsService.Instance.RecordEvent("player_planed_something");
-        AnalyticsService.Instance.Flush();
+        AnalyticsService.Instance.RecordEvent(myEvent);
+        Debug.Log("player_planned_something");
+
     }
-    public void PlayerCreateWeaponStand(float levelTime, int goldAmount)
+    public void PlayerCreateWeaponStand(int goldAmount, float levelTime)
     {
         if (!_isInitialized)
         {
@@ -230,13 +298,15 @@ public class Analytics : MonoBehaviour
         }
         CustomEvent myEvent = new CustomEvent("player_create_weapon_stand")
         {
-            {"level_time", levelTime},
-            {"gold_amount", goldAmount }
+            {"gold_amount", goldAmount },
+            {"level_time", levelTime}
         };
-        AnalyticsService.Instance.RecordEvent("player_create_weapon_stand");
-        AnalyticsService.Instance.Flush();
+        AnalyticsService.Instance.RecordEvent(myEvent);
+        Debug.Log("player_create_weapon_stand");
+
+
     }
-    public void PlayerAddWeaponPart(float levelTime, int goldAmount)
+    public void PlayerAddWeaponPart(string weaponPartName, int goldAmount, float levelTime)
     {
         if (!_isInitialized)
         {
@@ -244,27 +314,30 @@ public class Analytics : MonoBehaviour
         }
         CustomEvent myEvent = new CustomEvent("player_add_weapon_part")
         {
-            {"level_time", levelTime},
-            {"gold_amount", goldAmount }
+            {"weapon_part_name", weaponPartName},
+            {"gold_amount", goldAmount },
+            {"level_time", levelTime}
         };
-        AnalyticsService.Instance.RecordEvent("player_add_weapon_part");
-        AnalyticsService.Instance.Flush();
+        AnalyticsService.Instance.RecordEvent(myEvent);
+        Debug.Log("player_add_weapon_part");
+
+
     }
-    public void WeaponCompleted(float levelTime, int goldAmount)
-    {
-        if (!_isInitialized)
-        {
-            return;
-        }
-        CustomEvent myEvent = new CustomEvent("weapon_completed")
-        {
-            {"level_time", levelTime},
-            {"gold_amount", goldAmount }
-        };
-        AnalyticsService.Instance.RecordEvent("weapon_completed");
-        AnalyticsService.Instance.Flush();
-    }
-    public void TimeForRecipeEnd(float levelTime, int goldAmount, int recipeId, string recipeName)
+    //public void WeaponCompleted(float levelTime, int goldAmount)
+    //{
+    //    if (!_isInitialized)
+    //    {
+    //        return;
+    //    }
+    //    CustomEvent myEvent = new CustomEvent("weapon_completed")
+    //    {
+    //        {"level_time", levelTime},
+    //        {"gold_amount", goldAmount }
+    //    };
+    //    AnalyticsService.Instance.RecordEvent("weapon_completed");
+    //    
+    //}
+    public void TimeForRecipeEnd(string recipeName, int recipeId, int goldAmount, float levelTime)
     {
         if (!_isInitialized)
         {
@@ -272,15 +345,18 @@ public class Analytics : MonoBehaviour
         }
         CustomEvent myEvent = new CustomEvent("recipe_time_end")
         {
-            {"level_time", levelTime},
+
+            {"recipe_name", recipeName},
+            {"recipe_id", recipeId },
             {"gold_amount", goldAmount },
-            {"recipe_id", recipeId},
-            {"recipeName", recipeName }
+            {"level_time", levelTime}
         };
-        AnalyticsService.Instance.RecordEvent("recipe_time_end");
-        AnalyticsService.Instance.Flush();
+        AnalyticsService.Instance.RecordEvent(myEvent);
+        Debug.Log("recipe_time_end");
+
+
     }
-    public void GoodRecipeDelivered(float levelTime, int goldAmount, int recipeId, string recipeName)
+    public void GoodRecipeDelivered(string recipeName, int recipeId, int goldAmount, float recipeTime, float levelTime)
     {
         if (!_isInitialized)
         {
@@ -288,27 +364,46 @@ public class Analytics : MonoBehaviour
         }
         CustomEvent myEvent = new CustomEvent("good_recipe_delivered")
         {
-            {"level_time", levelTime},
+
+            {"recipe_name", recipeName},
+            {"recipe_id", recipeId },
             {"gold_amount", goldAmount },
-            {"recipe_id", recipeId},
-            {"recipeName", recipeName }
+            {"recipe_time", recipeTime },
+            {"level_time", levelTime}
         };
-        AnalyticsService.Instance.RecordEvent("good_recipe_delivered");
-        AnalyticsService.Instance.Flush();
+        AnalyticsService.Instance.RecordEvent(myEvent);
+        Debug.Log("good_recipe_delivered");
+
+
     }
-    public void EndLevelTime(float levelTime, int goldAmount)
+    public void EndLevelTime(int levelId, int goldAmount, float levelTime)
     {
         if (!_isInitialized)
         {
             return;
         }
-        CustomEvent myEvent = new CustomEvent("recipe_time_end")
+        CustomEvent myEvent = new CustomEvent("level_time_end")
         {
-            {"level_time", levelTime},
-            {"gold_amount", goldAmount }
+            {"level_id", levelId },
+            {"gold_amount", goldAmount },
+            {"level_time", levelTime}
         };
-        AnalyticsService.Instance.RecordEvent("recipe_time_end");
-        AnalyticsService.Instance.Flush();
-    }
+        AnalyticsService.Instance.RecordEvent(myEvent);
+        Debug.Log("level_time_end");
 
+
+    }
+    public void EndGame()
+    {
+        if (!_isInitialized)
+        {
+            return;
+        }
+
+        AnalyticsService.Instance.RecordEvent("end_game");
+        AnalyticsService.Instance.Flush();
+        Debug.Log("end_game_data_flushed");
+
+
+    }
 }
