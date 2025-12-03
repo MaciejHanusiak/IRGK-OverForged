@@ -55,6 +55,12 @@ public class Analytics : MonoBehaviour
         AnalyticsService.Instance.Flush();
         Debug.Log("game_paused"); 
     }
+    public void GameResumed()
+    {
+        AnalyticsService.Instance.RecordEvent("game_resumed");
+        AnalyticsService.Instance.Flush();
+        Debug.Log("game_resumed");
+    }
     public void GoHome()
     {
         AnalyticsService.Instance.RecordEvent("go_home");

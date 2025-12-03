@@ -9,6 +9,8 @@ public class LevelStats : MonoBehaviour
     {                                               // }
         if (Instance == null) Instance = this;      // }
         else Destroy(gameObject);                   // }  Wzorzec Singleton
+        //Analytics.Instance.GoldChanged(gold,);
+
     }
 
     public void AddGold(int moneyAmount)
