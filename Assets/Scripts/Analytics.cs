@@ -23,7 +23,6 @@ public class Analytics : MonoBehaviour
     private async void Start()
     {
         await UnityServices.InitializeAsync();
-        AnalyticsService.Instance.StartDataCollection();
         _isInitialized = true; ;
     }
 
@@ -403,6 +402,19 @@ public class Analytics : MonoBehaviour
         AnalyticsService.Instance.RecordEvent("end_game");
         AnalyticsService.Instance.Flush();
         Debug.Log("end_game_data_flushed");
+
+
+    }
+    public void DisagreedForAnalytics()
+    {
+        if (!_isInitialized)
+        {
+            return;
+        }
+
+        AnalyticsService.Instance.RecordEvent("disagreed_for_analytics");
+        AnalyticsService.Instance.Flush();
+        Debug.Log("disagreed_for_analytics_data_flushed");
 
 
     }
