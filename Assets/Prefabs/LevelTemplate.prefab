@@ -2029,7 +2029,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 99803031115707242}
-  - component: {fileID: 8224287099081698760}
   m_Layer: 5
   m_Name: GoldGoal
   m_TagString: Untagged
@@ -2059,19 +2058,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -70}
   m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8224287099081698760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4208100247803364004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c559c4c81e27414a8f0b9f3125fabb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  goldAmountText: {fileID: 702684640170337004}
 --- !u!1 &4399651907813944799
 GameObject:
   m_ObjectHideFlags: 0
@@ -2477,7 +2463,7 @@ GameObject:
   - component: {fileID: 3073532446057795884}
   - component: {fileID: 702684640170337004}
   m_Layer: 5
-  m_Name: Gold
+  m_Name: GoldGoal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
