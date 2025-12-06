@@ -6,6 +6,7 @@ public class CurrentLevelManager : MonoBehaviour
     [SerializeField] public GameObject levelEndPanel;
     [SerializeField] public GameObject nextLevelButton;
     [SerializeField] public TextMeshProUGUI endLevelStatement;
+    [SerializeField] public TextMeshProUGUI goldGoal;
     [SerializeField] public int levelGoldGoal;
     private float normalFixedDeltaTime;
 
@@ -19,6 +20,7 @@ public class CurrentLevelManager : MonoBehaviour
 
     void Update()
     {
+        goldGoal.text = levelGoldGoal.ToString();
         // If level ended do nothing
         if (hasLevelEnded) return;
         endLevelStatement.text = LevelStats.Instance.gold >= levelGoldGoal ? "Congrats! You won this lvl!" : 
