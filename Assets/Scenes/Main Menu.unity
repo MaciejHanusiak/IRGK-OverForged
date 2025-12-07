@@ -6137,10 +6137,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 938530606}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1624320521}
+        m_TargetAssemblyTypeName: MainManuManagement, Assembly-CSharp
+        m_MethodName: OpenSelectLevelMenu
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6567,6 +6567,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnalyticsPanel: {fileID: 331571893}
+  selectLevelMenu: {fileID: 938530607}
+  tutorialMenu: {fileID: 1096234962}
 --- !u!114 &1624320522
 MonoBehaviour:
   m_ObjectHideFlags: 0
