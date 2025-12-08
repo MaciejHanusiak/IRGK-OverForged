@@ -65,7 +65,7 @@ public class TutorialLevelScript : MonoBehaviour
         switch (index)
         {
             case 0:
-                hint = "Hello! In OverForged your main goal is to collect the right amount of gold before time runs out. Currently, you have 5 pieces of gold, and your goal is to obtain at least 10. In the tutorial level, you have unlimited time, so you don't need to worry about it.";
+                hint = "Hello! In OverForged your main goal is to collect the right amount of gold before time runs out. Currently, you have 5 pieces of gold, and your goal is to obtain at least 10. In the tutorial level, you have unlimited time, so you don't need to worry about it.\r\n\r\nIf you forget last hint, just click on green box with “?” symbol on the right :)";
                 break;
             case 1:
                 hint = "You can earn gold by fulfilling weapon orders. The list of pending orders is in the top-left corner. As you can see, there's an order for a copper sword in the queue. Let's get to work!";
@@ -177,7 +177,8 @@ public class TutorialLevelScript : MonoBehaviour
     {
         tutorialPanel.gameObject.SetActive(false);
         isHintShowing = false;   // teraz mo¿e pojawiæ siê nastêpny
-        hintIndex++;             //  ZWIÊKSZAMY INDEKS DOPIERO TUTAJ!
+        if(GetConditionByIndex(hintIndex))
+            hintIndex++;             //  ZWIÊKSZAMY INDEKS DOPIERO TUTAJ!
         Time.timeScale = 1f;
     }
 }
