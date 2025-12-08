@@ -16,5 +16,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e9a975fdbbaaf684d9efe8341d15e530, type: 2}
   - {fileID: 11400000, guid: bc231f7b8b34ac14e83f96216411bc13, type: 2}
   recipeName: Iron Sword With Wooden Handle
-  recipeTime: 80
+  recipeTime: 110
   recipePrice: 5
