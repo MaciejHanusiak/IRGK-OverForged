@@ -33,8 +33,19 @@ public class TutorialLevelScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(hintIndex > 0)
+            isHintShowing = tutorialPanel.gameObject.activeSelf;
         if (isHintShowing)
         {
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+            {
+                tutorialPanel.gameObject.SetActive(false);
+                isHintShowing = false;   // teraz mo¿e pojawiæ siê nastêpny
+                if (GetConditionByIndex(hintIndex))
+                    hintIndex++;             //  ZWIÊKSZAMY INDEKS DOPIERO TUTAJ!
+                Time.timeScale = 1f;
+            }
+
             Time.timeScale = 0f;
             return;
         }
@@ -52,11 +63,10 @@ public class TutorialLevelScript : MonoBehaviour
             tutorialPanel.gameObject.SetActive(true);
             hintText.text = GetHintByIndex(hintIndex);
             actualHintNumber.text = (hintIndex + 1).ToString()  + "/ 16";
-
-
             isHintShowing = true;
 
         }
+
     }
 
     string GetHintByIndex(int index)
