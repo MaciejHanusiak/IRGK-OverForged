@@ -99,7 +99,7 @@ public class TutorialLevelScript : MonoBehaviour
                 hint = "You've created a weapon stand are where you can place finished weapon parts. Remember, the weapon stand must be on the workbench so you can assemble the next weapon parts. Outside the workbench, you don't have the necessary tools for this, so ALWAYS ASSEMBLE WEAPONS WHEN THE WEAPON STAND IS ON THE WORKBENCH! And you'll be the best blacksmith in the world!\r\n\r\nOnce you've placed the blade on the weapon stand, approach the log chest on the left side of the yard and buy one.";
                 break;
             case 8:
-                hint = "Your gold reserves have shrunk again, but don't worry—you'll soon have a finished weapon to sell. Take the log to the saw table to saw it into planks. Here too, watch the time so the planks don't get ruined.";
+                hint = "Your gold reserves have shrunk again, but don't worry-you'll soon have a finished weapon to sell. Take the log to the saw table to saw it into planks. Here too, watch the time so the planks don't get ruined.";
                 break;
             case 9:
                 hint = "Excellent! Now, from the planks, you can whittle a handle on the knife table to the right. Whittle it just like forging the blade, using “F” and then pick it up!";
@@ -111,13 +111,13 @@ public class TutorialLevelScript : MonoBehaviour
                 hint = "You can only hold one item at a time. If you need to set something down just for a moment, you can use the empty table in the middle of the yard. Let's go for it!";
                 break;
             case 12:
-                hint = "Now pick up the weapon stand with the finished weapon again and place it at the delivery station—it's the long table at the bottom of the yard.";
+                hint = "Now pick up the weapon stand with the finished weapon again and place it at the delivery station-it's the long table at the bottom of the yard.";
                 break;
             case 13:
                 hint = "When you place a weapon stand here with the appropriate matching parts as in the recipe, you can sell the weapon and receive payment for it. Note that each recipe has its own delivery time—if you manage to deliver it within that time, you'll get a bonus for express order fulfillment!\r\nNow I'll show you what to do if you accidentally ruin an item. Buy copper ore and put it in the smeltr, wait until the red bar above the furnace fills up.";
                 break;
             case 14:
-                hint = "Now there's a cracked copper ingot in the furnace that's good for nothing—you can only throw it into the scrap bin. It's located in the bottom-right corner of the yard.\r\nPlace the ruined ingot in the scrap bin.";
+                hint = "Now there's a cracked copper ingot in the furnace that's good for nothing-you can only throw it into the scrap bin. It's located in the bottom-right corner of the yard.\r\nPlace the ruined ingot in the scrap bin.";
                 break;
             case 15:
                 hint = "The item has just been thrown into the scrap.\r\nCongratulations! You've completed the tutorial! Good luck, Blacksmith!";
