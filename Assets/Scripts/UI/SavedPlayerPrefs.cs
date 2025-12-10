@@ -14,8 +14,8 @@ public class SavedPlayerPrefs : MonoBehaviour
     void Update()
     {
         if (PlayerPrefs.GetInt("AnalyticsSet") == 0)
-            analytics.text = "Off";
+            analytics.text = "OFF";
         else
-            analytics.text = "On";
+            analytics.text = "ON";
     }
 }
