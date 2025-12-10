@@ -2,13 +2,16 @@ using UnityEngine;
 
 public class BackgroundMusic : MonoBehaviour
 {
-    private static BackgroundMusic backgroundMusic;
-    void Awake()
+    public static BackgroundMusic Instance { get; private set; }
+    private void Awake()
     {
-        if (backgroundMusic == null)
+        if (Instance != null && Instance != this)
         {
-            backgroundMusic = this;
-            DontDestroyOnLoad(backgroundMusic);
+            Destroy(this.gameObject);
+            return;
         }
+        Instance = this;
+
+        DontDestroyOnLoad(this.gameObject);
     }
 }
