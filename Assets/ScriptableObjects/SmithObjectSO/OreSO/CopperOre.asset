@@ -15,3 +15,4 @@ MonoBehaviour:
   prefab: {fileID: 6338669265703863827, guid: a5507c0ee95e7514eb07b65ace0a07e0, type: 3}
   sprite: {fileID: -3337038689812066966, guid: b22648e9891f9cb4d83a7923cde6db24, type: 3}
   objectName: Copper Ore
+  price: 2

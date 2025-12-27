@@ -15,3 +15,4 @@ MonoBehaviour:
   prefab: {fileID: 6338669265703863827, guid: d11a0dbc834f18442b473433ea6c5a1d, type: 3}
   sprite: {fileID: 4179495660910005209, guid: 8e618e234215c2641bea6d66cc0bf77d, type: 3}
   objectName: Wooden Log
+  price: 1
