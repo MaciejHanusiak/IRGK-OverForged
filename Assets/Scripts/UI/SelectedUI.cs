@@ -18,6 +18,9 @@ public class SelectedUI : MonoBehaviour
     public TextMeshProUGUI inputText;
     public TextMeshProUGUI actionText;
     public TextMeshProUGUI outputText;
+    public TextMeshProUGUI goldAmount;
+
+    public Transform goldAmountPanel;
 
     private void Start()
     {
@@ -26,6 +29,8 @@ public class SelectedUI : MonoBehaviour
 
         // Na start ukryj panel (¿eby nie œwieci³ na pocz¹tku gry)
         HidePanel();
+        
+
     }
 
     private void OnDestroy()
@@ -58,19 +63,22 @@ public class SelectedUI : MonoBehaviour
                 inputImage.sprite = config.inputSprite;
                 actionImage.sprite = config.actionSprite;
                 outputImage.sprite = config.outputSprite;
-                if (objectName == "ContainerCounter")
-                {
-                    
-                }
-
+               
                 if (inputText) inputText.text = config.inputLabel;
                 if (actionText) actionText.text = config.actionLabel;
                 if (outputText) outputText.text = config.outputLabel;
                 if (objectName == "ContainerCounter")
                 {
+                    goldAmountPanel.gameObject.SetActive(true);
+
                     outputImage.sprite = e.selectedCounter.GetOutputSmithObjectSO().sprite;
                     outputText.text = e.selectedCounter.GetOutputSmithObjectSO().name;
+                    goldAmount.text = e.selectedCounter.GetOutputSmithObjectSO().price.ToString();
                     Debug.Log(e.selectedCounter.GetOutputSmithObjectSO().name);
+                }
+                else
+                {
+                    goldAmountPanel.gameObject.SetActive(false);
                 }
             }
             else
