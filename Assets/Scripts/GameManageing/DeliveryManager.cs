@@ -69,6 +69,8 @@ public class DeliveryManager : MonoBehaviour
             float endTime = singleRecipeEndTimeList[i];
             float remaining = endTime - Time.time;
 
+                Debug.Log($"Remaining: {remaining}");
+                Debug.Log($"endTime: {endTime}");
             if (remaining <= 0 && endTime > 0) // Receptura  raz po terminie
             {
                 singleRecipeEndTimeList[i] = -1; // Oznacz jako expierd
