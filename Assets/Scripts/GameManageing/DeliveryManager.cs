@@ -17,6 +17,7 @@ public class DeliveryManager : MonoBehaviour
 
     private List<RecipeSO> waitingRecipeSOList;
     private List<float> singleRecipeEndTimeList; // Time measurement for every recipe in level
+    private List<float> singleRecipeMaxTimeList; // Time measurement for every recipe in level
 
     private float spawnRecipeTimer;
     
@@ -48,6 +49,7 @@ public class DeliveryManager : MonoBehaviour
                 RecipeSO newRecipe = recipeListSO.recipeSOList[UnityEngine.Random.Range(0, recipeListSO.recipeSOList.Count)]; // random new recipe form list in recipeList
                 waitingRecipeSOList.Add(newRecipe);
                 singleRecipeEndTimeList.Add(Time.time + newRecipe.recipeTime); // get recipeTime from RecipeSO and add to EndTimeList
+                singleRecipeMaxTimeList.Add(newRecipe.recipeTime);
 
                 OnRecipeSpawned?.Invoke(this, EventArgs.Empty);
                 Debug.Log($"Nowe zamównienie: {newRecipe.recipeName}");
@@ -71,6 +73,7 @@ public class DeliveryManager : MonoBehaviour
 
                 Debug.Log($"Remaining: {remaining}");
                 Debug.Log($"endTime: {endTime}");
+                Debug.Log($"TimeMax: { waitingRecipeSOList[i].recipeTime}");
             if (remaining <= 0 && endTime > 0) // Receptura  raz po terminie
             {
                 singleRecipeEndTimeList[i] = -1; // Oznacz jako expierd
