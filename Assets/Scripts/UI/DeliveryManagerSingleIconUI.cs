@@ -1,4 +1,5 @@
 using TMPro;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -8,6 +9,12 @@ public class DeliveryManagerSingleIconUI : TimerSliderUI
     [Header("Delivery Specific")]
     [SerializeField] private Transform iconContainer;
     [SerializeField] private Transform iconTemplate;
+
+    [SerializeField] private TextMeshProUGUI recipeReward;
+    [SerializeField] private TextMeshProUGUI timeBonusMultiplier;
+    [SerializeField] private TextMeshProUGUI recipeFinalReward;
+
+    
 
     private int recipeIndex;
 
@@ -72,7 +79,15 @@ public class DeliveryManagerSingleIconUI : TimerSliderUI
             return;
         }
 
-        // Resztê robi klasa bazowa!
+        // Panel Final Reward dla recipe
+        recipeReward.text = "Recipe reward: " + DeliveryManager.Instance.GetWaitingRecipeSOPriceByIndex(recipeIndex).ToString();
+        timeBonusMultiplier.text = "Time Bonus x" + DeliveryManager.Instance.GetSingleRecipeRewardMultiplier(recipeIndex).ToString();
+        decimal price = (decimal)DeliveryManager.Instance.GetWaitingRecipeSOPriceByIndex(recipeIndex);
+        decimal multiplier = (decimal)DeliveryManager.Instance.GetSingleRecipeRewardMultiplier(recipeIndex);
+        recipeFinalReward.text = "Final Reward: " + Math.Ceiling(price * multiplier);
+
+
+        
         base.Update();
 
         if (IsExpired())

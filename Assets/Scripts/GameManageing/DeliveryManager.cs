@@ -17,7 +17,8 @@ public class DeliveryManager : MonoBehaviour
 
     private List<RecipeSO> waitingRecipeSOList;
     private List<float> singleRecipeEndTimeList; // Time measurement for every recipe in level
-    private List<float> singleRecipeMaxTimeList; // Time measurement for every recipe in level
+    private List<float> singleRecipeRewardMultiplier;
+    private List<int> singleRecipeFinalReward;
 
     private float spawnRecipeTimer;
     
@@ -28,12 +29,13 @@ public class DeliveryManager : MonoBehaviour
         Instance = this;
         waitingRecipeSOList = new List<RecipeSO>();
         singleRecipeEndTimeList = new List<float>();
-       
+        singleRecipeRewardMultiplier = new List<float>();
+        singleRecipeFinalReward = new List<int>();
     }
     private void Update()
     {
         SpawnRecipeTimer();
-        UpdateRecipeTimers();
+        UpdateRecipes();
 
     }
     private void SpawnRecipeTimer()
@@ -48,9 +50,9 @@ public class DeliveryManager : MonoBehaviour
 
                 RecipeSO newRecipe = recipeListSO.recipeSOList[UnityEngine.Random.Range(0, recipeListSO.recipeSOList.Count)]; // random new recipe form list in recipeList
                 waitingRecipeSOList.Add(newRecipe);
+                singleRecipeRewardMultiplier.Add(69f);
+                singleRecipeFinalReward.Add(69);
                 singleRecipeEndTimeList.Add(Time.time + newRecipe.recipeTime); // get recipeTime from RecipeSO and add to EndTimeList
-                singleRecipeMaxTimeList.Add(newRecipe.recipeTime);
-
                 OnRecipeSpawned?.Invoke(this, EventArgs.Empty);
                 Debug.Log($"Nowe zamównienie: {newRecipe.recipeName}");
                 Analytics.Instance.RecipeGenerated(newRecipe.recipeName, LevelStats.Instance.gold, LevelTime.Instance.timeRemaining);
@@ -64,16 +66,42 @@ public class DeliveryManager : MonoBehaviour
             }
         }
     }
-    private void UpdateRecipeTimers()
+    private void UpdateRecipes()
     {
+        
         for (int i = 0; i < waitingRecipeSOList.Count; i++)
         {
-            float endTime = singleRecipeEndTimeList[i];
+
+            float endTime = singleRecipeEndTimeList[i]; 
+            
             float remaining = endTime - Time.time;
+            float recipemaxTime = waitingRecipeSOList[i].recipeTime;
 
                 Debug.Log($"Remaining: {remaining}");
                 Debug.Log($"endTime: {endTime}");
                 Debug.Log($"TimeMax: { waitingRecipeSOList[i].recipeTime}");
+            // multiplier
+            if (remaining > recipemaxTime * 0.5f)
+            {
+                singleRecipeRewardMultiplier[i] = 2f;
+
+            }
+            else if ( remaining > recipemaxTime * 0.2)
+            {
+
+                singleRecipeRewardMultiplier[i] = 1.5f;
+            }
+            else if (remaining > recipemaxTime * 0.000001)
+            {
+                singleRecipeRewardMultiplier[i] = 1.2f;
+
+            }
+            else
+            {
+                singleRecipeRewardMultiplier[i] = 1f;
+            }
+
+            // pasek czasu
             if (remaining <= 0 && endTime > 0) // Receptura  raz po terminie
             {
                 singleRecipeEndTimeList[i] = -1; // Oznacz jako expierd
@@ -81,6 +109,16 @@ public class DeliveryManager : MonoBehaviour
                 Debug.Log($"Zamównienie po terminie: {waitingRecipeSOList[i].recipeName}");
                 Analytics.Instance.TimeForRecipeEnd(waitingRecipeSOList[i].recipeName, i, LevelStats.Instance.gold, LevelTime.Instance.timeRemaining);
             }
+
+            // finalna nagroda
+            decimal price = (decimal)waitingRecipeSOList[i].recipePrice;  // jeœli recipePrice jest float/int, castuj
+            decimal multiplier = (decimal)singleRecipeRewardMultiplier[i];
+            singleRecipeFinalReward[i] = Convert.ToInt32(price * multiplier);
+            float dprice = waitingRecipeSOList[i].recipePrice;
+            float dmultiplier = singleRecipeRewardMultiplier[i];
+            float dproduct = dprice * dmultiplier;
+
+            Debug.Log($"Recipe index: {i} | Price: {dprice} | Multiplier: {dmultiplier} | Iloczyn: {dproduct} | Ceiling: {Math.Ceiling(dproduct)} | Final: {(int)Math.Ceiling(dproduct)}");
         }
     }
     public void DeliverRecipe(WeaponStandSmithObject weaponStandSmithObject)
@@ -89,7 +127,7 @@ public class DeliveryManager : MonoBehaviour
         {
             RecipeSO waitingRecipeSO = waitingRecipeSOList[i];
             
-#region MojeRozwiazanie
+#region MojeRozwiazanieA
             // ############################## Robi to samo co groka ##############################
             /*
             if (waitingRecipeSO.smithObjectSOList.Count == weaponStandSmithObject.GetSmithObjectSOList().Count)
@@ -149,14 +187,14 @@ public class DeliveryManager : MonoBehaviour
             */
 #endregion
             
-#region WersjaGroka
+#region MojeRozwiazanieB
 
             if (waitingRecipeSO.smithObjectSOList.Count != weaponStandSmithObject.GetSmithObjectSOList().Count)
                 continue; // Has not same count of parts - quit the loop
 
             // has same count of parts
             bool matches = true;
-            int totalReward = 0;
+            int finalReward = 0;
 
             // Cycling through parts of weapon in recipe
             foreach (SmithObjectSO recipePart in waitingRecipeSO.smithObjectSOList)
@@ -188,12 +226,11 @@ public class DeliveryManager : MonoBehaviour
                 waitingRecipeSOList.RemoveAt(i);
                 singleRecipeEndTimeList.RemoveAt(i);
 
-                totalReward = waitingRecipeSO.recipePrice;
-                if (!IsRecipeExpired(i)) totalReward = waitingRecipeSO.recipePrice * 2;
-                LevelStats.Instance.AddGold(totalReward);
+                finalReward = singleRecipeFinalReward[i];
+                LevelStats.Instance.AddGold(finalReward);
                 OnRecipeCompleted?.Invoke(this, EventArgs.Empty );
 
-                Debug.Log($"Zamówienie ukoñczone! +{totalReward} z³ota!");
+                Debug.Log($"Zamówienie ukoñczone! +{finalReward} z³ota!");
                 return;
             }
             #endregion
@@ -207,6 +244,7 @@ public class DeliveryManager : MonoBehaviour
 
     // GETTERY DO UI
     public List<RecipeSO> GetWaitingRecipeSOList() => waitingRecipeSOList;
+    public int GetWaitingRecipeSOPriceByIndex(int index) => waitingRecipeSOList[index].recipePrice;
     public float GetRecipeRemainingTime(int index)
     {
         if (index >= singleRecipeEndTimeList.Count) return 0;
@@ -220,6 +258,8 @@ public class DeliveryManager : MonoBehaviour
         return index < singleRecipeEndTimeList.Count && singleRecipeEndTimeList[index] == -1f;
     }
     public int GetWaitingRecipeSOListCount() => waitingRecipeSOList.Count;
+
+    public float GetSingleRecipeRewardMultiplier(int index) => singleRecipeRewardMultiplier[index];
     
 
 }
