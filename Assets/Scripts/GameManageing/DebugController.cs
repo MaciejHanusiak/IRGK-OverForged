@@ -10,6 +10,7 @@ public class DebugController : MonoBehaviour
     string input;
 
     public static DebugCommand<int> SET_GOLD;
+    public static DebugCommand<int> SET_TIME;
 
     public List<DebugCommandBase> commandList;
     public void OnToggleDebug()
@@ -33,10 +34,15 @@ public class DebugController : MonoBehaviour
             LevelStats.Instance.gold = x;
             Debug.Log("cheat-Gold Added");
         });
+        SET_TIME = new DebugCommand<int>("set_time", "Set time of currend level.", "set_time", (x) =>
+        {
+            LevelTime.Instance.timeRemaining = x;
+        });
 
         commandList = new List<DebugCommandBase>()
         {
             SET_GOLD,
+            SET_TIME,
         };
     }
     public void Start()
