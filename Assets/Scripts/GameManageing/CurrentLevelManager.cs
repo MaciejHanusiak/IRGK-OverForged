@@ -15,7 +15,9 @@ public class CurrentLevelManager : MonoBehaviour
     private void Awake()
     {
         normalFixedDeltaTime = Time.fixedDeltaTime; // Save default value
-        endLevelStatement.text = "";
+        if (endLevelStatement != null) 
+            endLevelStatement.text = "";
+
     }
 
     void Update()
@@ -23,11 +25,12 @@ public class CurrentLevelManager : MonoBehaviour
         goldGoal.text = levelGoldGoal.ToString();
         // If level ended do nothing
         if (hasLevelEnded) return;
-        endLevelStatement.text = LevelStats.Instance.gold >= levelGoldGoal ? "Congrats! You won this lvl!" : 
+        if (endLevelStatement != null)
+            endLevelStatement.text = LevelStats.Instance.gold >= levelGoldGoal ? "Congrats! You won this lvl!" : 
             LevelTime.Instance.timeRemaining <= 0 ? "Game over! :<" : "";
         if (endLevelStatement.text != "")
         {
-            if(endLevelStatement.text == "Game over! :<")
+            if(endLevelStatement.text != null && endLevelStatement.text == "Game over! :<")
                 nextLevelButton.SetActive(false);
             levelEndPanel.SetActive(true);
             UnlockNewLevel();
