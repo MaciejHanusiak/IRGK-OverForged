@@ -6,6 +6,7 @@ public class GameInput : MonoBehaviour
     public event EventHandler OnInteractAction;
     public event EventHandler OnInteractAlternateAction;
     public event EventHandler OnToggleDebug;
+    public event EventHandler OnReturn;
 
     private PlayerInputAction playerInputActions;
     private void Awake()
@@ -16,6 +17,7 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.Interact.performed += Interact_performed;
         playerInputActions.Player.InteractAlternate.performed += InteractAlternate_performed;
         playerInputActions.Player.ToggleDebug.performed += Toggle_Debug_performed;
+        playerInputActions.Player.Return.performed += Return_performed;
 
     }
 
@@ -31,6 +33,11 @@ public class GameInput : MonoBehaviour
     private void Toggle_Debug_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         OnToggleDebug?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void Return_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnReturn?.Invoke(this, EventArgs.Empty);
     }
 
     public Vector2 GetMovementVectorNormalized()
