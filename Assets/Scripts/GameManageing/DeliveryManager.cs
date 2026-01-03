@@ -77,9 +77,9 @@ public class DeliveryManager : MonoBehaviour
             float remaining = endTime - Time.time;
             float recipemaxTime = waitingRecipeSOList[i].recipeTime;
 
-                Debug.Log($"Remaining: {remaining}");
-                Debug.Log($"endTime: {endTime}");
-                Debug.Log($"TimeMax: { waitingRecipeSOList[i].recipeTime}");
+                //Debug.Log($"Remaining: {remaining}");
+                //Debug.Log($"endTime: {endTime}");
+                //Debug.Log($"TimeMax: { waitingRecipeSOList[i].recipeTime}");
             // multiplier
             if (remaining > recipemaxTime * 0.5f)
             {
@@ -118,7 +118,7 @@ public class DeliveryManager : MonoBehaviour
             float dmultiplier = singleRecipeRewardMultiplier[i];
             float dproduct = dprice * dmultiplier;
 
-            Debug.Log($"Recipe index: {i} | Price: {dprice} | Multiplier: {dmultiplier} | Iloczyn: {dproduct} | Ceiling: {Math.Ceiling(dproduct)} | Final: {(int)Math.Ceiling(dproduct)}");
+            //Debug.Log($"Recipe index: {i} | Price: {dprice} | Multiplier: {dmultiplier} | Iloczyn: {dproduct} | Ceiling: {Math.Ceiling(dproduct)} | Final: {(int)Math.Ceiling(dproduct)}");
         }
     }
     public void DeliverRecipe(WeaponStandSmithObject weaponStandSmithObject)
