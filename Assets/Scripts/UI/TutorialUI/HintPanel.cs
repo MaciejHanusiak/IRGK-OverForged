@@ -15,5 +15,15 @@ public class HintPanel : MonoBehaviour
             Time.timeScale = 1f;
             this.gameObject.SetActive(false);
         }
+
+        
+            
+        
+
+    }
+    public void OK_Button()
+    {
+        Time.timeScale = 1f;
+        this.gameObject.SetActive(false);
     }
 }

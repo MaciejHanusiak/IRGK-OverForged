@@ -30,13 +30,24 @@ public class DebugController : MonoBehaviour
     {
         SET_GOLD = new DebugCommand<int>("set_gold", "Add amount of gold.", "set_gold", (x) =>
         {
-            
+
+            if (LevelStats.Instance == null)
+            {
+                Debug.LogError("LevelStats nie istnieje w scenie! Nie mo¿na ustawiæ gold.");
+                return;
+            }
             LevelStats.Instance.gold = x;
-            Debug.Log("cheat-Gold Added");
+            Debug.Log($"Cheat: Gold ustawione na {x}");
         });
         SET_TIME = new DebugCommand<int>("set_time", "Set time of currend level.", "set_time", (x) =>
         {
+            if (LevelTime.Instance == null)
+            {
+                Debug.LogError("LevelTime nie istnieje w scenie! Nie mo¿na ustawiæ czasu.");
+                return;
+            }
             LevelTime.Instance.timeRemaining = x;
+            Debug.Log($"Czas ustawiony na {x}");
         });
 
         commandList = new List<DebugCommandBase>()
