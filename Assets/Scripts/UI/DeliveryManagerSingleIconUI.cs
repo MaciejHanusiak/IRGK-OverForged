@@ -14,7 +14,16 @@ public class DeliveryManagerSingleIconUI : TimerSliderUI
     [SerializeField] private TextMeshProUGUI timeBonusMultiplier;
     [SerializeField] private TextMeshProUGUI recipeFinalReward;
 
-    
+    // T³o migania
+    [Header("Flash Effect")]
+    [SerializeField] private Image backgroundImage;
+    [SerializeField] private Color successFlashColor = new Color(0.2f, 1f, 0.2f, 0.6f);
+    [SerializeField] private float flashDuration = 0.4f;
+
+    private Color orginalBackgroundColor;
+    //...private Tween currentFlashTween;
+
+
 
     private int recipeIndex;
 

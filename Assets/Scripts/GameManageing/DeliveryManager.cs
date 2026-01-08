@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class DeliveryManager : MonoBehaviour
 {
     public event EventHandler OnRecipeSpawned;
-    public event EventHandler OnRecipeCompleted;
+    public event EventHandler<RecipeCompletedEventArgs> OnRecipeCompleted;
     public event EventHandler OnRecipeExpired;
     public static DeliveryManager Instance { get; private set; }
 
@@ -22,7 +22,14 @@ public class DeliveryManager : MonoBehaviour
 
     private float spawnRecipeTimer;
     
-    
+    public class RecipeCompletedEventArgs : EventArgs
+    {
+        public bool CompletedInTime { get; }
+        public RecipeCompletedEventArgs(bool completedInTime)
+        {
+            CompletedInTime = completedInTime;
+        }
+    }
 
     private void Awake()
     {
@@ -223,12 +230,16 @@ public class DeliveryManager : MonoBehaviour
             {
                 // Sukces!
                 Analytics.Instance.GoodRecipeDelivered(waitingRecipeSOList[i].recipeName, i, LevelStats.Instance.gold, GetRecipeRemainingTime(i), LevelTime.Instance.timeRemaining);
+                
+                bool wasInTime = singleRecipeEndTimeList[i] > Time.time;
+
                 waitingRecipeSOList.RemoveAt(i);
                 singleRecipeEndTimeList.RemoveAt(i);
 
                 finalReward = singleRecipeFinalReward[i];
                 LevelStats.Instance.AddGold(finalReward);
-                OnRecipeCompleted?.Invoke(this, EventArgs.Empty );
+                OnRecipeCompleted?.Invoke(this, new RecipeCompletedEventArgs(wasInTime)
+                    );
 
                 Debug.Log($"Zamówienie ukoñczone! +{finalReward} z³ota!");
                 return;
