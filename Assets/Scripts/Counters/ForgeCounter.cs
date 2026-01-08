@@ -25,23 +25,28 @@ public class ForgeCounter : BaseCounter, IHasProgress
     private ForgeingRecipeSO forgeingRecipeSO;
     private BurningRecipeSO burningRecipeSO;
 
+    [SerializeField] private Animator animator;
+
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         state = State.Idle;
     }
     private void Update()
     {
+        animator.SetInteger("State", (int)state);
         if (HasSmithObject())
         {
 
             switch(state)
             {
                 case State.Idle:
+                    
                     break;
                 case State.Forgeing:
                     forgeingTimer += Time.deltaTime;
-
+                   
                     OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
                     {
                         progressNormalized = forgeingTimer / forgeingRecipeSO.forgeingTimerMax
@@ -71,6 +76,7 @@ public class ForgeCounter : BaseCounter, IHasProgress
 
                 case State.Forged:
                     burningTimer += Time.deltaTime;
+                   
 
                     OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
                     {
@@ -102,7 +108,8 @@ public class ForgeCounter : BaseCounter, IHasProgress
                         {
                             progressNormalized = 0f
                         });
-                        state = State.Burned;                       
+                        state = State.Burned;
+                        
                     }
                     break;
 
