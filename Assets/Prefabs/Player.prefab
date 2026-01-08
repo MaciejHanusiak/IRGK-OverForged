@@ -26,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2974114169646962038}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1, y: 1, z: -0.043310307}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0.0000029504295}
+  m_LocalPosition: {x: 0, y: 0.7, z: -0.043310307}
+  m_LocalScale: {x: 1.4, y: 1.4, z: 1.4}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4128414709069579453}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!95 &2583725721294839637
 Animator:
   serializedVersion: 7
@@ -224,7 +224,7 @@ Transform:
   m_GameObject: {fileID: 5325923700931886612}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 1.2375, z: 0}
+  m_LocalPosition: {x: 0.5, y: 1.2312534, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -277,6 +277,9 @@ MonoBehaviour:
     m_Bits: 64
   smithObjectHoldPoint: {fileID: 8044275851176425710}
   objectToActivateWeaponStandUI: {fileID: 0}
+  animationTransform: {fileID: 4495961153826044913}
+  animationSpriteRenderer: {fileID: 8693060651220279968}
+  playerSpriteRenderer: {fileID: 8703821568815090690}
 --- !u!1 &5824518586758839193
 GameObject:
   m_ObjectHideFlags: 0

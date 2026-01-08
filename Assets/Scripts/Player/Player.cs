@@ -19,6 +19,10 @@ public class Player : MonoBehaviour, ISmithObjectParent
     [SerializeField] private Transform smithObjectHoldPoint;
     [SerializeField] private SmithObjectSO objectToActivateWeaponStandUI;
 
+    [SerializeField] private Transform animationTransform;
+    [SerializeField] private SpriteRenderer animationSpriteRenderer;
+    [SerializeField] private SpriteRenderer playerSpriteRenderer;
+
     // name of Parameters in "PlayerController" Animator 
     private const string ANIM_MOVE_X = "AnimMoveX";
     private const string ANIM_MOVE_Y = "AnimMoveY";
@@ -29,8 +33,30 @@ public class Player : MonoBehaviour, ISmithObjectParent
 
     private Vector2 moveDir;
     private Vector2 lastMoveDir;
+    private Vector3 baseLocalPos;
     private BaseCounter selectedCounter;
     private SmithObject smithObject;
+
+    private enum LookDirection
+    {
+        Up,
+        Down,
+        Left,
+        Right
+    }
+    private LookDirection lookDir;
+
+    void UpdateLookDirection()
+    {
+        if (Mathf.Abs(lastMoveDir.x) > Mathf.Abs(lastMoveDir.y))
+        {
+            lookDir = lastMoveDir.x > 0 ? LookDirection.Right : LookDirection.Left;
+        }
+        else
+        {
+            lookDir = lastMoveDir.y > 0 ? LookDirection.Up : LookDirection.Down;
+        }
+    }
 
     private void Awake()
     {
@@ -40,6 +66,7 @@ public class Player : MonoBehaviour, ISmithObjectParent
             Debug.LogError("There is more then one Player instance");
         }
             Instance = this;
+        baseLocalPos = animationTransform.localPosition;
 
     }
     private void Start()
@@ -63,7 +90,9 @@ public class Player : MonoBehaviour, ISmithObjectParent
         if (selectedCounter != null)
         {
             selectedCounter.InteractAlternate(this);
+            if(selectedCounter is KnifesBenchCounter || selectedCounter is  AnvilCounter)
             hitAnimator.SetTrigger("InteractAlternate");
+            
 
         }
     }
@@ -71,9 +100,11 @@ public class Player : MonoBehaviour, ISmithObjectParent
     void Update()
     {
         ProcessInputs();
+        UpdateLookDirection();
         Animate();
         HandleInteractions();
         Move();
+
     }
 
     void ProcessInputs()
@@ -198,8 +229,47 @@ public class Player : MonoBehaviour, ISmithObjectParent
         animator.SetFloat(ANIM_MOVE_MAGNITUDE, moveDir.magnitude);
         animator.SetFloat(ANIM_LAST_MOVE_X,lastMoveDir.x);
         animator.SetFloat(ANIM_LAST_MOVE_Y,lastMoveDir.y);
+        UpdateAnimationRotation();
+        UpdateAnimationSortingOrder();
+
 
         
+    }
+    void UpdateAnimationRotation()
+    {
+        float zRot = lookDir switch
+        {
+            LookDirection.Right => -90f,
+            LookDirection.Up => 0f,
+            LookDirection.Left => 90f,
+            LookDirection.Down => 180f,
+            _ => 0f
+        };
+        Vector3 animationPosition = lookDir switch
+        {
+            LookDirection.Right => new Vector3(0.5f, 0f, 0f),
+            LookDirection.Up => new Vector3(0f, 0.5f, 0f),
+            LookDirection.Left => new Vector3(-0.5f, 0f, 0f),
+            LookDirection.Down => new Vector3(0f, -0.5f, 0f),
+            _ => new Vector3(0f, 0f, 0f),
+        };
+        animationTransform.localRotation = Quaternion.Euler(0f, 0f, zRot);
+        
+        animationTransform.localPosition = baseLocalPos + animationPosition;
+    }
+
+    void UpdateAnimationSortingOrder()
+    {
+        if (lookDir == LookDirection.Up)
+        {
+            animationSpriteRenderer.sortingOrder =
+                playerSpriteRenderer.sortingOrder - 1;
+        }
+        else
+        {
+            animationSpriteRenderer.sortingOrder = 
+                playerSpriteRenderer.sortingOrder + 1;
+        }
     }
 
     public Transform GetSmithObjectFollowTransform()
