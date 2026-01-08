@@ -21,12 +21,16 @@ public class SawCounter : BaseCounter, IHasProgress
     private CuttingRecipeSO cuttingRecipeSO;
     private OverCuttingRecipeSO overCuttingRecipeSO;
 
+    [SerializeField] private Animator animator;
+
     private void Start()
     {
         state = State.Idle;
+        animator = GetComponent<Animator>();
     }
     private void Update()
     {
+        animator.SetInteger("State", (int)state);
         if (HasSmithObject())
         {
 
