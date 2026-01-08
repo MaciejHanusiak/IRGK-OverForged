@@ -12,7 +12,8 @@ public class Player : MonoBehaviour, ISmithObjectParent
     } 
 
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private Animator anim;
+    [SerializeField] private Animator animator;
+    [SerializeField] private Animator hitAnimator;
     [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask countersLayerMask;
     [SerializeField] private Transform smithObjectHoldPoint;
@@ -62,6 +63,8 @@ public class Player : MonoBehaviour, ISmithObjectParent
         if (selectedCounter != null)
         {
             selectedCounter.InteractAlternate(this);
+            hitAnimator.SetTrigger("InteractAlternate");
+
         }
     }
 
@@ -190,11 +193,11 @@ public class Player : MonoBehaviour, ISmithObjectParent
         
 
         // Set parameters in animator
-        anim.SetFloat(ANIM_MOVE_X, moveDir.x);
-        anim.SetFloat(ANIM_MOVE_Y, moveDir.y);
-        anim.SetFloat(ANIM_MOVE_MAGNITUDE, moveDir.magnitude);
-        anim.SetFloat(ANIM_LAST_MOVE_X,lastMoveDir.x);
-        anim.SetFloat(ANIM_LAST_MOVE_Y,lastMoveDir.y);
+        animator.SetFloat(ANIM_MOVE_X, moveDir.x);
+        animator.SetFloat(ANIM_MOVE_Y, moveDir.y);
+        animator.SetFloat(ANIM_MOVE_MAGNITUDE, moveDir.magnitude);
+        animator.SetFloat(ANIM_LAST_MOVE_X,lastMoveDir.x);
+        animator.SetFloat(ANIM_LAST_MOVE_Y,lastMoveDir.y);
 
         
     }
