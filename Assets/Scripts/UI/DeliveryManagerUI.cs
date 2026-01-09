@@ -7,6 +7,9 @@ public class DeliveryManagerUI : MonoBehaviour
     [SerializeField] private Transform container;
     [SerializeField] private Transform recipeTemplate;
 
+    [SerializeField] private CoinFlyUI coinFlyUI;
+    [SerializeField] private RectTransform goldTarget; // ikonka z³ota w HUD
+
     private bool isAnimating;
     private bool refreshQueued;
 
@@ -52,6 +55,7 @@ public class DeliveryManagerUI : MonoBehaviour
         var completedUI = GetUIByIndex(e.CompletedIndex);
         if (completedUI != null)
         {
+       
             //completedUI.Flash(e.CompletedInTime);
             completedUI.PlayCompletionFx(
                 e.CompletedInTime,
@@ -59,6 +63,17 @@ public class DeliveryManagerUI : MonoBehaviour
                 e.Multiplier,
                 e.RecipeFinalReward
             );
+
+            // poczekaj a¿ zwój siê rozwinie
+            yield return new WaitForSeconds(completedUI.RightPanelExpandTime);
+
+            RectTransform startFrom = completedUI.RightPanelRect != null
+           ? completedUI.RightPanelRect
+           : (completedUI.transform as RectTransform);
+
+
+            coinFlyUI.Play(e.RecipeFinalReward, startFrom, goldTarget);
+
             // wait until ui stop blinking
             yield return new WaitForSeconds(
                 completedUI.SmoothBlinkCount * completedUI.SmoothBlinkDuration * 2f

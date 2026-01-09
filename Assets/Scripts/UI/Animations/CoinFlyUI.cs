@@ -14,7 +14,7 @@ public class CoinFlyUI : MonoBehaviour
     [SerializeField] private Vector2 startJitter = new Vector2(40f, 20f); // rozrzut startu
 
     [Header("Motion")]
-    [SerializeField] private float flightTime = 0.6f;
+    [SerializeField] private float flightTime = 2f;
     [SerializeField] private float arcHeight = 120f;     // wysokoœæ ³uku
     [SerializeField] private Vector2 endJitter = new Vector2(15f, 15f); // rozrzut koñca
 

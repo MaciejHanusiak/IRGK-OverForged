@@ -38,9 +38,12 @@ public class DeliveryManagerSingleIconUI : TimerSliderUI
 
     [Header("Right Scroll Panel")]
     [SerializeField] private RectTransform rightPanelRect;
+    public RectTransform RightPanelRect => rightPanelRect;
+
     [SerializeField] private GameObject rightPanelGO;
     [SerializeField] private TextMeshProUGUI rightPanelText;
     [SerializeField] private float rightPanelExpandTime = 0.5f;
+    public float RightPanelExpandTime => rightPanelExpandTime;
 
     private Coroutine completionFxCoroutine;
     public float CopletionFxTotalTime => rightPanelExpandTime + FlashTotalTime;
