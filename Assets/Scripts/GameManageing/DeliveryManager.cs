@@ -24,10 +24,12 @@ public class DeliveryManager : MonoBehaviour
     
     public class RecipeCompletedEventArgs : EventArgs
     {
+        public int CompletedIndex { get; }
         public bool CompletedInTime { get; }
-        public RecipeCompletedEventArgs(bool completedInTime)
+        public RecipeCompletedEventArgs(int completedIndex, bool completedInTime)
         {
             CompletedInTime = completedInTime;
+            CompletedIndex = completedIndex;
         }
     }
 
@@ -232,13 +234,17 @@ public class DeliveryManager : MonoBehaviour
                 Analytics.Instance.GoodRecipeDelivered(waitingRecipeSOList[i].recipeName, i, LevelStats.Instance.gold, GetRecipeRemainingTime(i), LevelTime.Instance.timeRemaining);
                 
                 bool wasInTime = singleRecipeEndTimeList[i] > Time.time;
-
-                waitingRecipeSOList.RemoveAt(i);
-                singleRecipeEndTimeList.RemoveAt(i);
+                int completedIndex = i;
 
                 finalReward = singleRecipeFinalReward[i];
+                
+                waitingRecipeSOList.RemoveAt(i);
+                singleRecipeEndTimeList.RemoveAt(i);
+                singleRecipeRewardMultiplier.RemoveAt(i);
+                singleRecipeFinalReward.RemoveAt(i);
+
                 LevelStats.Instance.AddGold(finalReward);
-                OnRecipeCompleted?.Invoke(this, new RecipeCompletedEventArgs(wasInTime)
+                OnRecipeCompleted?.Invoke(this, new RecipeCompletedEventArgs(completedIndex, wasInTime)
                     );
 
                 Debug.Log($"Zamówienie ukoñczone! +{finalReward} z³ota!");

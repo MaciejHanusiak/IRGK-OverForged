@@ -18,10 +18,14 @@ public class DeliveryManagerSingleIconUI : TimerSliderUI
     [Header("Flash Effect")]
     [SerializeField] private Image backgroundImage;
     [SerializeField] private Color successFlashColor = new Color(0.2f, 1f, 0.2f, 0.6f);
+    [SerializeField] private Color lateFlashColor = new Color(1f, 0.2f, 0.2f, 0.6f);
     [SerializeField] private float flashDuration = 0.4f;
+    [SerializeField] private float flashCount = 3f;
 
-    private Color orginalBackgroundColor;
-    //...private Tween currentFlashTween;
+    private Color originalBackgroundColor;
+    private Coroutine flashCoroutine;
+
+    public float FlashTotalTime => flashCount * flashDuration * 2f;
 
 
 
@@ -30,6 +34,32 @@ public class DeliveryManagerSingleIconUI : TimerSliderUI
     private void Awake()
     {
         iconTemplate.gameObject.SetActive(false);
+        if (backgroundImage != null ) 
+            originalBackgroundColor = backgroundImage.color;
+    }
+
+    public void Flash(bool completedInTime)
+    {
+        if (backgroundImage == null)
+            return;
+        if (flashCoroutine != null)
+            StopCoroutine(flashCoroutine);
+
+        Color c = completedInTime ? successFlashColor : lateFlashColor;
+        flashCoroutine = StartCoroutine(FlashRoutine(c));
+    }
+    private System.Collections.IEnumerator FlashRoutine(Color c)
+    {
+        for (int i = 0; i < flashCount; i++)
+        {
+            backgroundImage.color = c;
+            yield return new WaitForSeconds(flashDuration);
+
+            backgroundImage.color = originalBackgroundColor;
+            yield return new WaitForSeconds(flashDuration);
+        }
+        backgroundImage.color = originalBackgroundColor;
+        flashCoroutine = null;
     }
 
     public void SetRecipeSO(RecipeSO recipeSO, int index)
