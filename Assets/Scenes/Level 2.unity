@@ -213,12 +213,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   animator: {fileID: 0}
+  hitAnimator: {fileID: 0}
   gameInput: {fileID: 1318294641}
   countersLayerMask:
     serializedVersion: 2
     m_Bits: 64
   smithObjectHoldPoint: {fileID: 298506128}
   objectToActivateWeaponStandUI: {fileID: 0}
+  animationTransform: {fileID: 0}
+  animationSpriteRenderer: {fileID: 0}
+  playerSpriteRenderer: {fileID: 0}
 --- !u!95 &48828721
 Animator:
   serializedVersion: 7
@@ -63811,8 +63815,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 62548175a09e07f4baf58ee0583a43fe, type: 2}
     - target: {fileID: 9165892230123273566, guid: 664482375a65d9b4dba729049dcf631b, type: 3}
+      propertyPath: waitingRecipesMax
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9165892230123273566, guid: 664482375a65d9b4dba729049dcf631b, type: 3}
       propertyPath: spawnRecipeTimerMax
-      value: 50
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -60,7 +60,9 @@ public class DeliveryManagerUI : MonoBehaviour
                 e.RecipeFinalReward
             );
             // wait until ui stop blinking
-            yield return new WaitForSeconds(completedUI.FlashTotalTime);
+            yield return new WaitForSeconds(
+                completedUI.SmoothBlinkCount * completedUI.SmoothBlinkDuration * 2f
+            );
         }
         
         UpdateVisual(); // przebuduj ca³¹ listê po flashu

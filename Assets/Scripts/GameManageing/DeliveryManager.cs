@@ -129,7 +129,7 @@ public class DeliveryManager : MonoBehaviour
             // finalna nagroda
             decimal price = (decimal)waitingRecipeSOList[i].recipePrice;  // jeœli recipePrice jest float/int, castuj
             decimal multiplier = (decimal)singleRecipeRewardMultiplier[i];
-            singleRecipeFinalReward[i] = Convert.ToInt32(price * multiplier);
+            singleRecipeFinalReward[i] = (int)Math.Ceiling(price * multiplier);
             float dprice = waitingRecipeSOList[i].recipePrice;
             float dmultiplier = singleRecipeRewardMultiplier[i];
             float dproduct = dprice * dmultiplier;
