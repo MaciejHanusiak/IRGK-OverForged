@@ -2,7 +2,7 @@ using TMPro;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
+using System.Collections;
 
 public class DeliveryManagerSingleIconUI : TimerSliderUI
 {
@@ -20,12 +20,21 @@ public class DeliveryManagerSingleIconUI : TimerSliderUI
     [SerializeField] private Color successFlashColor = new Color(0.2f, 1f, 0.2f, 0.6f);
     [SerializeField] private Color lateFlashColor = new Color(1f, 0.2f, 0.2f, 0.6f);
     [SerializeField] private float flashDuration = 0.4f;
-    [SerializeField] private float flashCount = 3f;
+    [SerializeField] private int flashCount = 3;
 
     private Color originalBackgroundColor;
     private Coroutine flashCoroutine;
 
     public float FlashTotalTime => flashCount * flashDuration * 2f;
+
+    [Header("Right Scroll Panel")]
+    [SerializeField] private RectTransform rightPanelRect;
+    [SerializeField] private GameObject rightPanelGO;
+    [SerializeField] private TextMeshProUGUI rightPanelText;
+    [SerializeField] private float rightPanelExpandTime = 0.5f;
+
+    private Coroutine completionFxCoroutine;
+    public float CopletionFxTotalTime => rightPanelExpandTime + FlashTotalTime;
 
 
 
@@ -36,6 +45,8 @@ public class DeliveryManagerSingleIconUI : TimerSliderUI
         iconTemplate.gameObject.SetActive(false);
         if (backgroundImage != null ) 
             originalBackgroundColor = backgroundImage.color;
+        if (rightPanelGO != null)
+            rightPanelGO.SetActive(false);
     }
 
     public void Flash(bool completedInTime)
@@ -60,6 +71,48 @@ public class DeliveryManagerSingleIconUI : TimerSliderUI
         }
         backgroundImage.color = originalBackgroundColor;
         flashCoroutine = null;
+    }
+
+    public void PlayCompletionFx(bool completedInTime, int recipeRewardValue, float multiplierValue, int recipeFinalRewardValue)
+    {
+        if (completionFxCoroutine != null)
+            StopCoroutine(completionFxCoroutine);
+        completionFxCoroutine = StartCoroutine(
+            CompletionFxRoutine(completedInTime, recipeRewardValue, multiplierValue, recipeFinalRewardValue));
+    }
+
+    private IEnumerator CompletionFxRoutine(bool completedInTime, int recipeRewardValue, float multiplierValue, int recipeFinalRewardValue)
+    {
+        // 1) Poka¿ zwój i ustaw tekst
+        if (rightPanelGO != null) rightPanelGO.SetActive(true);
+        if (rightPanelRect != null) rightPanelRect.localScale = new Vector3(0f, 1f, 1f);
+
+        if (rightPanelText != null)
+            rightPanelText.text = $"{recipeRewardValue} * {multiplierValue} = {recipeFinalRewardValue}";
+
+        // 2) Rozwijanie od prawej do lewej
+        float t = 0f;
+        while (t < rightPanelExpandTime)
+        {
+            t += Time.unscaledDeltaTime;
+            float k = Mathf.Clamp01(t / rightPanelExpandTime);
+            if (rightPanelRect != null) rightPanelRect.localScale = new Vector3(k, 1f, 1f);
+            yield return null;
+        }
+        if (rightPanelRect != null) rightPanelRect.localScale = new Vector3(1f, 1f, 1f);
+
+
+        // 3) Miganie t³a
+        Flash(completedInTime);
+        yield return new WaitForSeconds(FlashTotalTime);
+
+        // 4) Schowaj zwój
+        if (rightPanelGO != null)
+            rightPanelGO.SetActive(false);
+        completionFxCoroutine = null;
+
+
+
     }
 
     public void SetRecipeSO(RecipeSO recipeSO, int index)

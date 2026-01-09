@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class DeliveryManagerUI : MonoBehaviour
@@ -6,6 +8,7 @@ public class DeliveryManagerUI : MonoBehaviour
     [SerializeField] private Transform recipeTemplate;
 
     private bool isAnimating;
+    private bool refreshQueued;
 
     private void Awake()
     {
@@ -17,17 +20,24 @@ public class DeliveryManagerUI : MonoBehaviour
         DeliveryManager.Instance.OnRecipeCompleted += DeliveryManager_OnRecipeCompleted;
         DeliveryManager.Instance.OnRecipeExpired += DeliveryManager_OnRecipeExpired; // dodany nowy event przeterminowania
     }
-    private void DeliveryManager_OnRecipeSpawned(object sender, System.EventArgs e) => UpdateVisual();
-    private void DeliveryManager_OnRecipeExpired(object sender, System.EventArgs e) => UpdateVisual(); 
+    private void DeliveryManager_OnRecipeSpawned(object sender, System.EventArgs e)
+    {
+        if (isAnimating) { refreshQueued = true; return; }
+        UpdateVisual();
+    }
+    private void DeliveryManager_OnRecipeExpired(object sender, System.EventArgs e)
+    {
+        if (isAnimating) { refreshQueued = true; return; }
+        UpdateVisual();
+    }
     private void DeliveryManager_OnRecipeCompleted(
         object sender, DeliveryManager.RecipeCompletedEventArgs e)
     {
-        if (isAnimating) return;
-        StartCoroutine(FlashThenRefresh(e.CompletedIndex, e.CompletedInTime));
+        if (isAnimating) { refreshQueued = true; return; }
+        StartCoroutine(FlashThenRefresh(e));
     }
-       // => UpdateVisual();
     // Dodane: odœwie¿a UI gdy zlecenie siê przeterminuje
-    private System.Collections.IEnumerator FlashThenRefresh(int completedIndex, bool completedInTime)
+    private System.Collections.IEnumerator FlashThenRefresh(DeliveryManager.RecipeCompletedEventArgs e)
     {
         isAnimating = true;
 
@@ -39,19 +49,27 @@ public class DeliveryManagerUI : MonoBehaviour
             if (ui != null) ui.enabled = false;
         }
 
-        var completedUI = GetUIByIndex(completedIndex);
+        var completedUI = GetUIByIndex(e.CompletedIndex);
         if (completedUI != null)
         {
-            completedUI.Flash(completedInTime);
+            //completedUI.Flash(e.CompletedInTime);
+            completedUI.PlayCompletionFx(
+                e.CompletedInTime,
+                e.RecipeReward,
+                e.Multiplier,
+                e.RecipeFinalReward
+            );
             // wait until ui stop blinking
             yield return new WaitForSeconds(completedUI.FlashTotalTime);
         }
-        else
-        {
-            yield return null;
-        }
-            UpdateVisual(); // przebuduj ca³¹ listê po flashu
+        
+        UpdateVisual(); // przebuduj ca³¹ listê po flashu
         isAnimating = false;
+        if (refreshQueued)
+        {
+            refreshQueued = false;
+            UpdateVisual();
+        }
 
 
     }

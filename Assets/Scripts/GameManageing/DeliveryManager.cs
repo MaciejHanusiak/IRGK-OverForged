@@ -1,5 +1,4 @@
 using System;
-using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -26,10 +25,18 @@ public class DeliveryManager : MonoBehaviour
     {
         public int CompletedIndex { get; }
         public bool CompletedInTime { get; }
-        public RecipeCompletedEventArgs(int completedIndex, bool completedInTime)
+
+        public int RecipeReward { get; }
+        public float Multiplier{ get; }
+        public int RecipeFinalReward { get; }
+        public RecipeCompletedEventArgs(int completedIndex, bool completedInTime, int recipeReward, float multiplier, int recipeFinalReward)
         {
             CompletedInTime = completedInTime;
             CompletedIndex = completedIndex;
+
+            RecipeReward = recipeReward;
+            Multiplier = multiplier;
+            RecipeFinalReward = recipeFinalReward;
         }
     }
 
@@ -203,7 +210,6 @@ public class DeliveryManager : MonoBehaviour
 
             // has same count of parts
             bool matches = true;
-            int finalReward = 0;
 
             // Cycling through parts of weapon in recipe
             foreach (SmithObjectSO recipePart in waitingRecipeSO.smithObjectSOList)
@@ -236,18 +242,22 @@ public class DeliveryManager : MonoBehaviour
                 bool wasInTime = singleRecipeEndTimeList[i] > Time.time;
                 int completedIndex = i;
 
-                finalReward = singleRecipeFinalReward[i];
+                int recipeReward = waitingRecipeSOList[i].recipePrice;
+                float multiplier = singleRecipeRewardMultiplier[i];
+                int recipeFinalReward = singleRecipeFinalReward[i];
+                
+
                 
                 waitingRecipeSOList.RemoveAt(i);
                 singleRecipeEndTimeList.RemoveAt(i);
                 singleRecipeRewardMultiplier.RemoveAt(i);
                 singleRecipeFinalReward.RemoveAt(i);
 
-                LevelStats.Instance.AddGold(finalReward);
-                OnRecipeCompleted?.Invoke(this, new RecipeCompletedEventArgs(completedIndex, wasInTime)
+                LevelStats.Instance.AddGold(recipeFinalReward);
+                OnRecipeCompleted?.Invoke(this, new RecipeCompletedEventArgs(completedIndex, wasInTime, recipeReward, multiplier, recipeFinalReward)
                     );
 
-                Debug.Log($"Zamówienie ukoñczone! +{finalReward} z³ota!");
+                Debug.Log($"Zamówienie ukoñczone! +{recipeFinalReward} z³ota!");
                 return;
             }
             #endregion
