@@ -277,6 +277,8 @@ MonoBehaviour:
     m_Bits: 64
   smithObjectHoldPoint: {fileID: 8044275851176425710}
   objectToActivateWeaponStandUI: {fileID: 0}
+  interactAlternateAnvilVfxPrefab: {fileID: 1557475802887035554, guid: faff2114d0d78f142ac316dda4b0894a, type: 3}
+  interactAlternateAnvilVfxOffset: {x: 0, y: 0, z: 0}
   animationTransform: {fileID: 4495961153826044913}
   animationSpriteRenderer: {fileID: 8693060651220279968}
   playerSpriteRenderer: {fileID: 8703821568815090690}

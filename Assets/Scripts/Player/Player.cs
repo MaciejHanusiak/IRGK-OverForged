@@ -19,6 +19,9 @@ public class Player : MonoBehaviour, ISmithObjectParent
     [SerializeField] private Transform smithObjectHoldPoint;
     [SerializeField] private SmithObjectSO objectToActivateWeaponStandUI;
 
+    [SerializeField] private ParticleSystem interactAlternateAnvilVfxPrefab;
+    [SerializeField] private Vector3 interactAlternateAnvilVfxOffset = Vector3.zero;
+
     [SerializeField] private Transform animationTransform;
     [SerializeField] private SpriteRenderer animationSpriteRenderer;
     [SerializeField] private SpriteRenderer playerSpriteRenderer;
@@ -90,6 +93,9 @@ public class Player : MonoBehaviour, ISmithObjectParent
         if (selectedCounter != null)
         {
             selectedCounter.InteractAlternate(this);
+
+            SpawnInteractAlternateVfx();
+
             if(selectedCounter is KnifesBenchCounter || selectedCounter is  AnvilCounter)
             hitAnimator.SetTrigger("InteractAlternate");
             
@@ -234,6 +240,14 @@ public class Player : MonoBehaviour, ISmithObjectParent
 
 
         
+    }
+    private void SpawnInteractAlternateVfx()
+    {
+        if (interactAlternateAnvilVfxPrefab == null) return;
+        if (selectedCounter == null) return;
+
+        Vector3 pos = selectedCounter.transform.position + interactAlternateAnvilVfxOffset;
+        Instantiate(interactAlternateAnvilVfxPrefab, pos,Quaternion.Euler(-90f, 0f, 0f));
     }
     void UpdateAnimationRotation()
     {
