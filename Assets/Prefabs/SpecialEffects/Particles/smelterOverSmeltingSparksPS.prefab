@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.61, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5662850521239985566}
@@ -42,7 +42,7 @@ ParticleSystem:
   m_GameObject: {fileID: 2144306113675856214}
   serializedVersion: 8
   lengthInSec: 5
-  simulationSpeed: 1
+  simulationSpeed: 2
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -871,7 +871,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 50
-      minScalar: 20
+      minScalar: 40
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1308,7 +1308,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0.36320752, b: 0.36320752, a: 1}
+        key0: {r: 0.5283019, g: 0.13207547, b: 0.13207547, a: 1}
         key1: {r: 0.9622642, g: 0.4320936, b: 0.12255252, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -1338,7 +1338,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
       minGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0.63323283, b: 0.19339621, a: 1}
+        key0: {r: 0.16981131, g: 0.052924924, b: 0.04085083, a: 1}
         key1: {r: 0.7264151, g: 0.5609403, b: 0, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -4875,7 +4875,7 @@ ParticleSystem:
   m_GameObject: {fileID: 4272996618218202957}
   serializedVersion: 8
   lengthInSec: 0.7
-  simulationSpeed: 0.3
+  simulationSpeed: 0.5
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -5056,7 +5056,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 0.09433961, g: 0.026254892, b: 0.026254892, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -5703,7 +5703,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 5
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -9734,7 +9734,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5662850521239985566}
   m_Layer: 0
-  m_Name: smelterSparksPS
+  m_Name: smelterOverSmeltingSparksPS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9800,7 +9800,7 @@ ParticleSystem:
   m_GameObject: {fileID: 6822676769929740418}
   serializedVersion: 8
   lengthInSec: 5
-  simulationSpeed: 1
+  simulationSpeed: 1.5
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -9984,7 +9984,7 @@ ParticleSystem:
       maxColor: {r: 0.4339623, g: 0.42372733, b: 0.42372733, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.8575115, g: 0.8867924, b: 0.88051796, a: 1}
+        key0: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 1}
         key1: {r: 0.4339623, g: 0.41553935, b: 0.41553935, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -10629,7 +10629,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 55
-      minScalar: 20
+      minScalar: 40
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -11066,7 +11066,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.5660378, g: 0.5633678, b: 0.5633678, a: 1}
+        key0: {r: 0.26415092, g: 0.25293696, b: 0.25293696, a: 1}
         key1: {r: 1, g: 1, b: 1, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -11096,7 +11096,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
       minGradient:
         serializedVersion: 2
-        key0: {r: 0.5471698, g: 0.52910286, b: 0.52910286, a: 1}
+        key0: {r: 0.1792453, g: 0.16656284, b: 0.16656284, a: 1}
         key1: {r: 1, g: 1, b: 1, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}

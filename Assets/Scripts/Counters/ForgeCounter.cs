@@ -16,6 +16,10 @@ public class ForgeCounter : BaseCounter, IHasProgress
         Burned,
     }
 
+    [Header("VFX")]
+    [SerializeField] private GameObject smeltingVfxRoot;
+    [SerializeField] private GameObject overSmeltingVfxRoot;
+
     [SerializeField] private ForgeingRecipeSO[] forgeingRecipeSOArray;
     [SerializeField] private BurningRecipeSO[] burningRecipeSOArray;
 
@@ -27,11 +31,18 @@ public class ForgeCounter : BaseCounter, IHasProgress
 
     [SerializeField] private Animator animator;
 
-
+    private ParticleSystem[] smeltingVfxSystems;
+    private ParticleSystem[] overSmeltingVfxSystems;
     private void Start()
     {
         animator = GetComponent<Animator>();
         state = State.Idle;
+        if (smeltingVfxRoot != null && overSmeltingVfxRoot != null)
+        {
+            smeltingVfxSystems = smeltingVfxRoot.GetComponentsInChildren<ParticleSystem>(true);
+            overSmeltingVfxSystems = overSmeltingVfxRoot.GetComponentsInChildren<ParticleSystem>(true);
+        }
+        ApplyVfxState();
     }
     private void Update()
     {
@@ -117,6 +128,7 @@ public class ForgeCounter : BaseCounter, IHasProgress
                     break;
             }
         }
+        ApplyVfxState();
     }
 
     public override void Interact(Player player)
@@ -167,6 +179,40 @@ public class ForgeCounter : BaseCounter, IHasProgress
                 {
                     progressNormalized = forgeingTimer / forgeingRecipeSO.forgeingTimerMax
                 });
+            }
+        }
+    }
+
+    private void ApplyVfxState()
+    {
+        // Idle => off
+        bool forgeingOn = (state == State.Forgeing);
+        bool forgedOn = (state == State.Forged || state == State.Burned);
+
+        SetGroupPlaying(smeltingVfxSystems, forgeingOn);
+        SetGroupPlaying(overSmeltingVfxSystems, forgedOn);
+    }
+    private void SetGroupPlaying(ParticleSystem[] group, bool shouldPlay)
+    {
+        if (group == null) return;
+
+        for (int i = 0; i < group.Length; i++)
+        {
+            var ps = group[i];
+            if (ps == null) continue;
+
+            if (shouldPlay)
+            {
+                if (!ps.isPlaying)
+                {
+
+                ps.Play();
+                Debug.Log("efekty robi¹ ziuuu");
+                }
+            }
+            else
+            {
+                if (ps.isPlaying) ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             }
         }
     }
