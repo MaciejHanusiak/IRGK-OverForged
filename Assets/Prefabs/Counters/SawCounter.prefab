@@ -305,6 +305,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   counterTopPoint: {fileID: 765814971616285824}
+  cuttingVfxRoot: {fileID: 6288766660630990527}
+  ocerCuttingVfxRoot: {fileID: 5360633641194685573}
   cuttingRecipeSOArray:
   - {fileID: 11400000, guid: e58423d8174675544b94cd180db3f862, type: 2}
   overCuttingRecipeSOArray:
@@ -547,6 +549,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5662850521239985566, guid: 52cd3ac9eac97824abee9fbbf05af40a, type: 3}
   m_PrefabInstance: {fileID: 7512873086702571615}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6288766660630990527 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4541099232001859296, guid: 52cd3ac9eac97824abee9fbbf05af40a, type: 3}
+  m_PrefabInstance: {fileID: 7512873086702571615}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8458308017890138725
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -607,5 +614,10 @@ PrefabInstance:
 --- !u!4 &4321079459161245691 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5662850521239985566, guid: 8da01a0d5159ae34e8aba4bf096d270b, type: 3}
+  m_PrefabInstance: {fileID: 8458308017890138725}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5360633641194685573 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4541099232001859296, guid: 8da01a0d5159ae34e8aba4bf096d270b, type: 3}
   m_PrefabInstance: {fileID: 8458308017890138725}
   m_PrefabAsset: {fileID: 0}
