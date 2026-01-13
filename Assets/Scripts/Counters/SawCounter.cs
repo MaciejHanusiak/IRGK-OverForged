@@ -19,6 +19,13 @@ public class SawCounter : BaseCounter, IHasProgress
     [SerializeField] private CuttingRecipeSO[] cuttingRecipeSOArray;
     [SerializeField] private OverCuttingRecipeSO[] overCuttingRecipeSOArray;
 
+    [Header("SFX (Loop)")]
+    [SerializeField] private AudioSource loopSource;     // AudioSource na tym samym obiekcie (pile)
+    [SerializeField] private AudioClip cuttingLoopA;    // State.Cutting
+    [SerializeField] private AudioClip doneLoopB;        // State.Cutted + State.Overcutted
+
+    private State lastState;
+
     private State state;
     private float cuttingTimer;
     private float overCuttingTimer;
@@ -32,8 +39,9 @@ public class SawCounter : BaseCounter, IHasProgress
 
     private void Start()
     {
-        state = State.Idle;
         animator = GetComponent<Animator>();
+        state = State.Idle;
+        ApplyAudioState();
         if (cuttingVfxRoot != null && ocerCuttingVfxRoot != null)
         {
             cuttingVfxSystems = cuttingVfxRoot.GetComponentsInChildren<ParticleSystem>(true);
@@ -121,6 +129,12 @@ public class SawCounter : BaseCounter, IHasProgress
             }
         }
         ApplyVfxState();
+
+        if (state != lastState)
+        {
+            lastState = state;
+            ApplyAudioState();
+        }
     }
 
     public override void Interact(Player player)
@@ -175,6 +189,42 @@ public class SawCounter : BaseCounter, IHasProgress
         }
     }
 
+    private void ApplyAudioState()
+    {
+        if (loopSource == null) return;
+
+        AudioClip target = null;
+
+        switch (state)
+        {
+            case State.Cutting:
+                target = cuttingLoopA;
+                break;
+            case State.Cutted:
+            case State.OverCutted:
+                target = doneLoopB;
+                break;
+            case State.Idle:
+            default:
+                target = null;
+                break;
+        }
+
+        // Nic siê nie zmienia -> nie ruszaj AudioSource
+        if (loopSource.clip == target)
+        {
+            // jeœli target null, upewnij siê ¿e nie gra
+            if (target == null && loopSource.isPlaying) loopSource.Stop();
+            return;
+        }
+
+        // Zmiana klipu/stanu
+        loopSource.Stop();
+        loopSource.clip = target;
+
+        if (target != null)
+            loopSource.Play();
+    }
     private void ApplyVfxState()
     {
         // Idle => off

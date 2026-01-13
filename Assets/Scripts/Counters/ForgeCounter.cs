@@ -23,6 +23,13 @@ public class ForgeCounter : BaseCounter, IHasProgress
     [SerializeField] private ForgeingRecipeSO[] forgeingRecipeSOArray;
     [SerializeField] private BurningRecipeSO[] burningRecipeSOArray;
 
+    [Header("SFX (Loop)")]
+    [SerializeField] private AudioSource loopSource;     // AudioSource na tym samym obiekcie (piecu)
+    [SerializeField] private AudioClip forgeingLoopA;    // State.Forgeing
+    [SerializeField] private AudioClip doneLoopB;        // State.Forged + State.Burned
+
+    private State lastState;
+
     private State state;
     private float forgeingTimer;
     private float burningTimer;
@@ -37,6 +44,7 @@ public class ForgeCounter : BaseCounter, IHasProgress
     {
         animator = GetComponent<Animator>();
         state = State.Idle;
+        ApplyAudioState();
         if (smeltingVfxRoot != null && overSmeltingVfxRoot != null)
         {
             smeltingVfxSystems = smeltingVfxRoot.GetComponentsInChildren<ParticleSystem>(true);
@@ -129,6 +137,12 @@ public class ForgeCounter : BaseCounter, IHasProgress
             }
         }
         ApplyVfxState();
+
+        if (state != lastState)
+        {
+            lastState = state;
+            ApplyAudioState();
+        }
     }
 
     public override void Interact(Player player)
@@ -183,6 +197,42 @@ public class ForgeCounter : BaseCounter, IHasProgress
         }
     }
 
+    private void ApplyAudioState()
+    {
+        if (loopSource == null) return;
+
+        AudioClip target = null;
+
+        switch (state)
+        {
+            case State.Forgeing:
+                target = forgeingLoopA;
+                break;
+            case State.Forged:
+            case State.Burned:
+                target = doneLoopB;
+                break;
+            case State.Idle:
+            default:
+                target = null;
+                break;
+        }
+
+        // Nic siê nie zmienia -> nie ruszaj AudioSource
+        if (loopSource.clip == target)
+        {
+            // jeœli target null, upewnij siê ¿e nie gra
+            if (target == null && loopSource.isPlaying) loopSource.Stop();
+            return;
+        }
+
+        // Zmiana klipu/stanu
+        loopSource.Stop();
+        loopSource.clip = target;
+
+        if (target != null)
+            loopSource.Play();
+    }
     private void ApplyVfxState()
     {
         // Idle => off

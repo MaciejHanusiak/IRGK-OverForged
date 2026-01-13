@@ -29,6 +29,16 @@ public class Player : MonoBehaviour, ISmithObjectParent
     [SerializeField] private SpriteRenderer animationSpriteRenderer;
     [SerializeField] private SpriteRenderer playerSpriteRenderer;
 
+    [Header("SFX")]
+    [SerializeField] private AudioSource sfxSource;          // AudioSource na Playerze (SFX)
+
+    [SerializeField] private AudioClip[] hammerHitClips;     // 5 plików
+    [SerializeField] private float hammerHitVolume = 1f;     // opcjonalnie
+    [SerializeField] private AudioClip[] knifeHitClips;     // 5 plików
+    [SerializeField] private float knifeHitVolume = 1f;     // opcjonalnie
+
+
+
 
     private ParticleSystem interactAlternateVfxPrefab;
     
@@ -102,10 +112,18 @@ public class Player : MonoBehaviour, ISmithObjectParent
 
             SpawnInteractAlternateVfx();
 
-            if(selectedCounter is KnifesBenchCounter || selectedCounter is  AnvilCounter)
-            hitAnimator.SetTrigger("InteractAlternate");
+           // bool isHitCounter = (selectedCounter is KnifesBenchCounter) || (selectedCounter is AnvilCounter);
+            if (selectedCounter is AnvilCounter)
+            {
+                hitAnimator.SetTrigger("InteractAlternate");
+                PlayRandomHammerHit();
+            }
             
-
+            if (selectedCounter is KnifesBenchCounter)
+            {
+                hitAnimator.SetTrigger("InteractAlternate");
+                PlayRandomKnifesHit();
+            }
         }
     }
 
@@ -247,18 +265,33 @@ public class Player : MonoBehaviour, ISmithObjectParent
 
         
     }
+
+    private void PlayRandomHammerHit()
+    {
+        if (sfxSource == null) return;
+        if (hammerHitClips == null || hammerHitClips.Length == 0) return;
+
+        int idx = UnityEngine.Random.Range(0, 1);
+        sfxSource.PlayOneShot(hammerHitClips[idx], hammerHitVolume);
+    }
+    private void PlayRandomKnifesHit()
+    {
+        if (sfxSource == null) return;
+        if (knifeHitClips == null || knifeHitClips.Length == 0) return;
+
+        int idx = UnityEngine.Random.Range(0, knifeHitClips.Length);
+        sfxSource.PlayOneShot(knifeHitClips[idx], knifeHitVolume);
+    }
     private void SpawnInteractAlternateVfx()
     {
         if (selectedCounter == null) return;
         if (selectedCounter is AnvilCounter)
             interactAlternateVfxPrefab = interactAlternateAnvilVfxPrefab;
-        if (selectedCounter is KnifesBenchCounter)
+        else if (selectedCounter is KnifesBenchCounter)
             interactAlternateVfxPrefab = interactAlternateKnifesBenchVfxPrefab;
+        else return;
 
-        Debug.Log("interactAlternateVfxPrefab is null");
         if (interactAlternateVfxPrefab == null) return;
-        Debug.Log("selectd counter is null");
-        Debug.Log("Bum");
         Vector3 pos = selectedCounter.transform.position + interactAlternateVfxOffset;
         Instantiate(interactAlternateVfxPrefab, pos,Quaternion.Euler(-90f, 0f, 0f));
     }
