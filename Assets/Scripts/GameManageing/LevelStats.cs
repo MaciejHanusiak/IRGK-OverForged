@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class LevelStats : MonoBehaviour
 {
+    [SerializeField] AudioSource goldSound;
+
+    [SerializeField] AudioClip earnGold;
+    [SerializeField] AudioClip spendGold;
+
     public static LevelStats Instance;              // }
     public int gold = 0;                            // }
                                                     // }
@@ -17,6 +22,8 @@ public class LevelStats : MonoBehaviour
         gold += moneyAmount;
         Debug.Log("Gold: " + gold);
         Analytics.Instance.GoldAdded(gold, moneyAmount, LevelTime.Instance.timeRemaining);
+        goldSound.clip = earnGold;
+        goldSound.Play();
 
     }
 
@@ -29,6 +36,8 @@ public class LevelStats : MonoBehaviour
         gold -= moneyAmount;
         Debug.Log("Gold: " + gold);
         Analytics.Instance.GoldSpend(gold, moneyAmount, LevelTime.Instance.timeRemaining);
+            goldSound.clip = spendGold;
+            goldSound.Play();
             return true;
         }
         Debug.Log("Not enough gold");
