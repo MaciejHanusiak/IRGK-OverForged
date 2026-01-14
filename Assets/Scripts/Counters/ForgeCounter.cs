@@ -1,8 +1,9 @@
-using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System;
 using UnityEditor;
+using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 
 public class ForgeCounter : BaseCounter, IHasProgress
@@ -28,6 +29,26 @@ public class ForgeCounter : BaseCounter, IHasProgress
     [SerializeField] private AudioClip forgeingLoopA;    // State.Forgeing
     [SerializeField] private AudioClip doneLoopB;        // State.Forged + State.Burned
 
+    [Header("Light (URP 2D)")]
+    [SerializeField] private Light2D furnaceLight;
+    
+
+    // 3 poziomy
+    [SerializeField] private float idleIntensity = 0.2f;
+    [SerializeField] private float forgeingIntensity = 0.7f;
+    [SerializeField] private float overforgeingIntensity = 1.2f; // Forged + Burned
+
+    // puls
+    [SerializeField] private float pulseAmplitude = 0.25f;
+    [SerializeField] private float pulseSpeedForgeing = 4f;
+    [SerializeField] private float pulseSpeedOverforgeing = 8;
+
+    [SerializeField] private float flickerSpeed = 6f;      // jak szybko „tañczy”
+    [SerializeField] private float flickerSharpness = 2.2f; // >1 = bardziej szarpane
+    [SerializeField] private float flickerJitter = 0.15f;   // drobne szybkie drgania
+
+    private float pulseSeed;
+
     private State lastState;
 
     private State state;
@@ -44,6 +65,8 @@ public class ForgeCounter : BaseCounter, IHasProgress
     {
         animator = GetComponent<Animator>();
         state = State.Idle;
+        pulseSeed = UnityEngine.Random.value * 10f;
+        ApplyLightState();
         ApplyAudioState();
         if (smeltingVfxRoot != null && overSmeltingVfxRoot != null)
         {
@@ -143,6 +166,7 @@ public class ForgeCounter : BaseCounter, IHasProgress
             lastState = state;
             ApplyAudioState();
         }
+        ApplyLightState();
     }
 
     public override void Interact(Player player)
@@ -195,6 +219,59 @@ public class ForgeCounter : BaseCounter, IHasProgress
                 });
             }
         }
+    }
+
+    private void ApplyLightState()
+    {
+        if (furnaceLight == null) return;
+
+        // ===== 3 poziomy intensywnoœci + czy pulsujemy =====
+        float baseIntensity;
+        bool pulse;
+
+        if (state == State.Idle)
+        {
+            baseIntensity = idleIntensity;
+            pulse = false;
+        }
+        else if (state == State.Forgeing)
+        {
+            baseIntensity = forgeingIntensity;
+            pulse = true;
+        }
+        else // State.Forged OR State.Burned => overforgeing
+        {
+            baseIntensity = overforgeingIntensity;
+            pulse = true; // jeœli chcesz sta³e w overforgeing, ustaw false
+        }
+
+        float intensity = baseIntensity;
+
+        // ===== Flicker: Perlin + "szarpniêcie" =====
+        if (pulse && baseIntensity > 0f && pulseAmplitude > 0f)
+        {
+            float t = Time.time + pulseSeed;
+
+            // g³ówny szum 0..1
+            float n = Mathf.PerlinNoise(t * flickerSpeed, pulseSeed);
+
+            // shaping: >1 = czêœciej nisko, rzadziej piki -> bardziej "ogieñ"
+            float shaped = Mathf.Pow(n, flickerSharpness);
+
+            // drobne szybkie drgania
+            float j = Mathf.PerlinNoise(t * (flickerSpeed * 3.5f), pulseSeed * 7.1f);
+            float jitter = (j - 0.5f) * 2f * flickerJitter; // ~[-jitter..+jitter]
+
+            float flicker01 = Mathf.Clamp01(shaped + jitter); // 0..1
+
+            // base ± amp
+            intensity = baseIntensity + (flicker01 - 0.5f) * 2f * pulseAmplitude;
+
+            // twarde zabezpieczenie
+            if (intensity < 0f) intensity = 0f;
+        }
+
+        furnaceLight.intensity = intensity;
     }
 
     private void ApplyAudioState()
