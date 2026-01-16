@@ -1,11 +1,76 @@
 using System;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class AnvilCounter : BaseCounter, IHasProgress
 {
     public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
     [SerializeField] private AnvilForgeingRecipeSO[] anvilForgeingRecipeSOArray;
+
+    [Header("Hit Flash (URP 2D)")]
+    [SerializeField] private Light2D hitFlashLight;
+    [SerializeField] private float hitFlashMinIntensity = 1.8f;
+    [SerializeField] private float hitFlashMaxIntensity = 2.2f;
+    [SerializeField] private float hitFlashInTime = 0.02f;   // szybki zap³on
+    [SerializeField] private float hitFlashOutTime = 1f;  // gaœniêcie
+    [SerializeField] private float hitFlashChance = 1f;      // 1 = zawsze, np. 0.85 = czasem
+
+    private float hitFlashTimer;
+    private float hitFlashPeak;
+    private bool hitFlashActive;
+
     private int anvilForgeingProgress;
+
+    private void Update()
+    {
+        UpdateHitFlash();
+    }
+
+    private void UpdateHitFlash()
+    {
+        if (hitFlashLight == null)
+            return;
+
+        if (!hitFlashActive)
+        {
+            hitFlashLight.intensity = 0f;
+            return;
+        }
+
+        hitFlashTimer += Time.deltaTime;
+
+        float tIn = hitFlashInTime <= 0f ? 0.0001f : hitFlashInTime;
+        float tOut = hitFlashOutTime <= 0f ? 0.0001f : hitFlashOutTime;
+
+        float intensity;
+        if (hitFlashTimer <= tIn)
+        {
+            float a = hitFlashTimer / tIn;
+            intensity = Mathf.Lerp(0f, hitFlashPeak, a);
+        }
+        else
+        {
+            float a = (hitFlashTimer - tIn) / tOut;
+            intensity = Mathf.Lerp(hitFlashPeak, 0f, a);
+
+            if (a >= 1f)
+            {
+                intensity = 0f;
+                hitFlashActive = false;
+            }
+        }
+
+        hitFlashLight.intensity = intensity;
+    }
+    private void TriggerHitFlash()
+    {
+        if (hitFlashLight == null) return;
+        if (hitFlashChance < 1f && UnityEngine.Random.value > hitFlashChance) return;
+
+        hitFlashPeak = UnityEngine.Random.Range(hitFlashMinIntensity, hitFlashMaxIntensity);
+        hitFlashTimer = 0f;
+        hitFlashActive = true;
+    }
     public override void Interact(Player player)
     {
         if (!HasSmithObject())
@@ -55,6 +120,7 @@ public class AnvilCounter : BaseCounter, IHasProgress
         {
             // There is a smith object AND it can be forged on anvil
             anvilForgeingProgress++;
+            TriggerHitFlash();
 
             AnvilForgeingRecipeSO anvilForgeingRecipeSO = GetAnvilForgeingRecipeSOWithInput(GetSmithObject().GetSmithObjectSO());
             SmithObjectSO outputSmithObjectSO = GetOutputForInput(GetSmithObject().GetSmithObjectSO());
