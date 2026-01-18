@@ -213,12 +213,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   animator: {fileID: 0}
+  hitAnimator: {fileID: 0}
   gameInput: {fileID: 1318294641}
   countersLayerMask:
     serializedVersion: 2
     m_Bits: 64
   smithObjectHoldPoint: {fileID: 298506128}
   objectToActivateWeaponStandUI: {fileID: 0}
+  interactAlternateAnvilVfxPrefab: {fileID: 0}
+  interactAlternateKnifesBenchVfxPrefab: {fileID: 0}
+  interactAlternateVfxOffset: {x: 0, y: 0, z: 0}
+  animationTransform: {fileID: 0}
+  animationSpriteRenderer: {fileID: 0}
+  playerSpriteRenderer: {fileID: 0}
+  sfxSource: {fileID: 0}
+  hammerHitClips: []
+  hammerHitVolume: 1
+  knifeHitClips: []
+  knifeHitVolume: 1
 --- !u!95 &48828721
 Animator:
   serializedVersion: 7
@@ -63116,7 +63128,7 @@ PrefabInstance:
     - target: {fileID: 209085471543150208, guid: 664482375a65d9b4dba729049dcf631b, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 48828722}
+      objectReference: {fileID: 1616810928}
     - target: {fileID: 847225486744448434, guid: 664482375a65d9b4dba729049dcf631b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
