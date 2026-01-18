@@ -7,6 +7,10 @@ public class LevelStats : MonoBehaviour
     [SerializeField] AudioClip earnGold;
     [SerializeField] AudioClip spendGold;
 
+    [Header("UI VFX")]
+    [SerializeField] private CoinFlyUI coinFlyUI;
+    [SerializeField] private RectTransform goldIconUI; // RectTransform ikonki monet w HUD
+
     public static LevelStats Instance;              // }
     public int gold = 0;                            // }
                                                     // }
@@ -38,6 +42,8 @@ public class LevelStats : MonoBehaviour
         Analytics.Instance.GoldSpend(gold, moneyAmount, LevelTime.Instance.timeRemaining);
             goldSound.clip = spendGold;
             goldSound.Play();
+            if (coinFlyUI != null && goldIconUI != null)
+                coinFlyUI.PlaySpend(moneyAmount, goldIconUI);
             return true;
         }
         Debug.Log("Not enough gold");

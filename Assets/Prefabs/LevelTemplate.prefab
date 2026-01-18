@@ -1690,6 +1690,8 @@ MonoBehaviour:
   goldSound: {fileID: 6759617035884130560}
   earnGold: {fileID: 8300000, guid: 079a02ae7d02d1f44ba143de8c612217, type: 3}
   spendGold: {fileID: 8300000, guid: 8730e5ae9096f77428e049898cbb560e, type: 3}
+  coinFlyUI: {fileID: 8605278444112529403}
+  goldIconUI: {fileID: 8547297505297553890}
   gold: 10
 --- !u!1 &2177257345537890615
 GameObject:
@@ -8987,3 +8989,9 @@ MonoBehaviour:
   endJitter: {x: 15, y: 15}
   startScale: 1
   endScale: 0.6
+  maxCoinsSpendVisual: 12
+  spendSpawnInterval: 0.015
+  offscreenMargin: 120
+  spendArcHeight: 60
+  spendStartJitter: {x: 25, y: 15}
+  spendEndJitter: {x: 220, y: 40}
