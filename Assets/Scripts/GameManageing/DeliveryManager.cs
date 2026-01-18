@@ -66,9 +66,9 @@ public class DeliveryManager : MonoBehaviour
 
                 RecipeSO newRecipe = recipeListSO.recipeSOList[UnityEngine.Random.Range(0, recipeListSO.recipeSOList.Count)]; // random new recipe form list in recipeList
                 waitingRecipeSOList.Add(newRecipe);
+                singleRecipeEndTimeList.Add(Time.time + newRecipe.recipeTime); // get recipeTime from RecipeSO and add to EndTimeList
                 singleRecipeRewardMultiplier.Add(69f);
                 singleRecipeFinalReward.Add(69);
-                singleRecipeEndTimeList.Add(Time.time + newRecipe.recipeTime); // get recipeTime from RecipeSO and add to EndTimeList
                 OnRecipeSpawned?.Invoke(this, EventArgs.Empty);
                 Debug.Log($"Nowe zamównienie: {newRecipe.recipeName}");
                 Analytics.Instance.RecipeGenerated(newRecipe.recipeName, LevelStats.Instance.gold, LevelTime.Instance.timeRemaining);
@@ -81,6 +81,17 @@ public class DeliveryManager : MonoBehaviour
 
             }
         }
+        else if (waitingRecipeSOList.Count <= 0)
+        {
+            RecipeSO newRecipe = recipeListSO.recipeSOList[UnityEngine.Random.Range(0, recipeListSO.recipeSOList.Count)]; // random new recipe form list in recipeList
+            waitingRecipeSOList.Add(newRecipe);
+            singleRecipeEndTimeList.Add(Time.time + newRecipe.recipeTime); // get recipeTime from RecipeSO and add to EndTimeList
+            singleRecipeRewardMultiplier.Add(69f);
+            singleRecipeFinalReward.Add(69);
+
+        }
+        //Debug.Log(waitingRecipeSOList.Count);
+        //Debug.Log(spawnRecipeTimer);
     }
     private void UpdateRecipes()
     {
