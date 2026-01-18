@@ -22,6 +22,14 @@ public class CoinFlyUI : MonoBehaviour
     [SerializeField] private float startScale = 1f;
     [SerializeField] private float endScale = 0.6f;
 
+    [Header("Spend / Fall")]
+    [SerializeField] private int maxCoinsSpendVisual = 12;      // ile max monet przy wydawaniu
+    [SerializeField] private float spendSpawnInterval = 0.015f; // gêœciej ni¿ reward
+    [SerializeField] private float offscreenMargin = 120f;      // jak daleko poni¿ej dolnej krawêdzi
+    [SerializeField] private float spendArcHeight = 60f;        // ma³y "wyrzut" zanim spadnie
+    [SerializeField] private Vector2 spendStartJitter = new Vector2(25f, 15f);
+    [SerializeField] private Vector2 spendEndJitter = new Vector2(220f, 40f); // rozrzut na dole
+
     public void Play(int finalReward, RectTransform startFrom, RectTransform targetTo)
     {
         if (coinsLayer == null || coinPrefab == null || startFrom == null || targetTo == null)
@@ -30,7 +38,16 @@ public class CoinFlyUI : MonoBehaviour
         int count = Mathf.Clamp(finalReward, 1, maxCoinsVisual);
         StartCoroutine(SpawnRoutine(count, startFrom, targetTo));
     }
+    public void PlaySpend(int spendAmount, RectTransform startFrom)
+    {
+        if (coinsLayer == null || coinPrefab == null || startFrom == null)
+            return;
 
+        // nie rób 200 monet jak ktoœ kupuje drogi item — efekt ma byæ "czytelny"
+        int count = Mathf.Clamp(Mathf.Max(1, spendAmount), 1, maxCoinsSpendVisual);
+
+        StartCoroutine(SpawnRoutineSpend(count, startFrom));
+    }
     private IEnumerator SpawnRoutine(int count, RectTransform startFrom, RectTransform targetTo)
     {
         for (int i = 0; i < count; i++)
@@ -62,7 +79,44 @@ public class CoinFlyUI : MonoBehaviour
             yield return new WaitForSecondsRealtime(spawnInterval);
         }
     }
+    private IEnumerator SpawnRoutineSpend(int count, RectTransform startFrom)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            var coin = Instantiate(coinPrefab, coinsLayer);
+            coin.gameObject.SetActive(true);
 
+            Vector2 startPos = WorldToLayerPos(startFrom);
+            startPos += new Vector2(
+                Random.Range(-spendStartJitter.x, spendStartJitter.x),
+                Random.Range(-spendStartJitter.y, spendStartJitter.y)
+            );
+
+            Vector2 endPos = GetBottomOffscreenPos();
+            endPos += new Vector2(
+                Random.Range(-spendEndJitter.x, spendEndJitter.x),
+                Random.Range(-spendEndJitter.y, spendEndJitter.y)
+            );
+
+            // kontrolny punkt: lekko w górê nad startem (wyrzut), potem spadek na dó³
+            Vector2 control = startPos + Vector2.up * spendArcHeight;
+
+            coin.anchoredPosition = startPos;
+            coin.localScale = Vector3.one * startScale;
+
+            StartCoroutine(FlyCoin(coin, startPos, control, endPos));
+
+            yield return new WaitForSecondsRealtime(spendSpawnInterval);
+        }
+    }
+
+    private Vector2 GetBottomOffscreenPos()
+    {
+        // local coords coinsLayer: yMin to dolna krawêdŸ recta
+        float y = coinsLayer.rect.yMin - offscreenMargin;
+        // x = 0 (œrodek), jitter dodajemy wy¿ej
+        return new Vector2(0f, y);
+    }
     private IEnumerator FlyCoin(RectTransform coin, Vector2 p0, Vector2 p1, Vector2 p2)
     {
         float t = 0f;
