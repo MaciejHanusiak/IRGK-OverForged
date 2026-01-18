@@ -4,6 +4,9 @@ public class ContainerCounter : BaseCounter
 {
     [SerializeField] public SmithObjectSO smithObjectSO;
     //private int priceForMaterial = 0;
+    [Header("UI VFX")]
+    [SerializeField] private CoinFlyUI coinFlyUI;
+    [SerializeField] private RectTransform goldIconUI; // RectTransform ikonki monet w HUD
 
 
     public override void Interact(Player player)
@@ -28,7 +31,8 @@ public class ContainerCounter : BaseCounter
             {
                 SmithObject.SpawnSmithObject(smithObjectSO, player);
                 Analytics.Instance.PlayerBuySomething(smithObjectSO.name, LevelStats.Instance.gold, LevelTime.Instance.timeRemaining);
-
+                if (coinFlyUI != null && goldIconUI != null)
+                    coinFlyUI.PlaySpend(smithObjectSO.price, goldIconUI);
             }
 
         }
