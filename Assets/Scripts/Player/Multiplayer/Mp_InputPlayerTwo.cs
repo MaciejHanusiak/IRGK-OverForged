@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class GameInput : MonoBehaviour
+public class Mp_InputPlayerTwo : MonoBehaviour
 {
     public event EventHandler OnInteractAction;
     public event EventHandler OnInteractAlternateAction;
@@ -12,12 +12,12 @@ public class GameInput : MonoBehaviour
     private void Awake()
     {
         playerInputActions = new PlayerInputAction();
-        playerInputActions.Player.Enable();
+        playerInputActions.Mp_P2.Enable();
 
-        playerInputActions.Player.Interact.performed += Interact_performed;
-        playerInputActions.Player.InteractAlternate.performed += InteractAlternate_performed;
-        playerInputActions.Player.ToggleDebug.performed += Toggle_Debug_performed;
-        playerInputActions.Player.Return.performed += Return_performed;
+        playerInputActions.Mp_P2.Interact.performed += Interact_performed;
+        playerInputActions.Mp_P2.InteractAlternate.performed += InteractAlternate_performed;
+        playerInputActions.Mp_P2.ToggleDebug.performed += Toggle_Debug_performed;
+        playerInputActions.Mp_P2.Return.performed += Return_performed;
 
     }
 
