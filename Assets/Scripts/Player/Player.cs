@@ -310,12 +310,24 @@ public class Player : MonoBehaviour, ISmithObjectParent
             LookDirection.Right => new Vector3(0.5f, 0f, 0f),
             LookDirection.Up => new Vector3(0f, 0.5f, 0f),
             LookDirection.Left => new Vector3(-0.5f, 0f, 0f),
-            LookDirection.Down => new Vector3(0f, -0.5f, 0f),
+            LookDirection.Down => new Vector3(0f, 0f, 0f),
             _ => new Vector3(0f, 0f, 0f),
         };
+        Vector3 holdPointPosition = animationPosition;
         animationTransform.localRotation = Quaternion.Euler(0f, 0f, zRot);
         
         animationTransform.localPosition = baseLocalPos + animationPosition;
+        if (zRot == 0f)
+            holdPointPosition += new Vector3(0.3f, 0f, 0f);
+        if (zRot == 180f)
+            holdPointPosition += new Vector3(-0.2f, 0f, 0f);
+        smithObjectHoldPoint.localPosition = baseLocalPos + holdPointPosition;
+
+        SpriteRenderer sr = smithObjectHoldPoint.GetComponentInChildren<SpriteRenderer>();
+        if (sr != null)
+        {
+            Debug.Log(sr.sortingOrder);
+        }
     }
 
     void UpdateAnimationSortingOrder()
@@ -329,6 +341,18 @@ public class Player : MonoBehaviour, ISmithObjectParent
         {
             animationSpriteRenderer.sortingOrder = 
                 playerSpriteRenderer.sortingOrder + 1;
+        }
+        
+        SpriteRenderer sr = smithObjectHoldPoint.GetComponentInChildren<SpriteRenderer>();
+        if (sr != null && lookDir == LookDirection.Down)
+        {
+            sr.sortingOrder = 11;
+            Debug.Log(sr.sortingOrder);
+        }
+        else
+        {
+           if (sr != null)
+                sr.sortingOrder = 7;
         }
     }
 

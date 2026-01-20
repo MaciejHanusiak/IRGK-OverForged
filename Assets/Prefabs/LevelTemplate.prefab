@@ -8982,15 +8982,15 @@ MonoBehaviour:
   coinsLayer: {fileID: 1536272726720027520}
   coinPrefab: {fileID: 2396420960814876805}
   maxCoinsVisual: 60
-  spawnInterval: 0.02
+  spawnInterval: 0.1
   startJitter: {x: 40, y: 20}
-  flightTime: 0.6
+  flightTime: 1.5
   arcHeight: 120
   endJitter: {x: 15, y: 15}
   startScale: 1
   endScale: 0.6
   maxCoinsSpendVisual: 12
-  spendSpawnInterval: 0.015
+  spendSpawnInterval: 0.2
   offscreenMargin: 120
   spendArcHeight: 60
   spendStartJitter: {x: 25, y: 15}
