@@ -208,6 +208,7 @@ GameObject:
   - component: {fileID: 4128414709069579453}
   - component: {fileID: 8766057455452298161}
   - component: {fileID: 5320620995582096368}
+  - component: {fileID: 1209719697182667330}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Untagged
@@ -264,7 +265,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5325923700931886612}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d452e6b825baf304c849c63e0e3e4abd, type: 3}
   m_Name: 
@@ -272,7 +273,7 @@ MonoBehaviour:
   moveSpeed: 5
   animator: {fileID: 8766057455452298161}
   hitAnimator: {fileID: 2583725721294839637}
-  gameInput: {fileID: 3678032257578646610}
+  gameInput: {fileID: 0}
   countersLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -300,6 +301,43 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5e54f6bfcbaa5e6438e40dca26adad3a, type: 3}
   - {fileID: 8300000, guid: eadf09da4fa62384aa1bd76e59d61ee6, type: 3}
   knifeHitVolume: 1
+--- !u!114 &1209719697182667330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5325923700931886612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5364abbcf686194478a7034d22b7fb1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  animator: {fileID: 8766057455452298161}
+  hitAnimator: {fileID: 2583725721294839637}
+  gameInput: {fileID: 4350703224803466368}
+  countersLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  smithObjectHoldPoint: {fileID: 8044275851176425710}
+  objectToActivateWeaponStandUI: {fileID: 0}
+  interactAlternateAnvilVfxPrefab: {fileID: 1557475802887035554, guid: faff2114d0d78f142ac316dda4b0894a, type: 3}
+  interactAlternateKnifesBenchVfxPrefab: {fileID: 1557475802887035554, guid: 7649318282919a44ea9241d5a25d00f0, type: 3}
+  interactAlternateVfxOffset: {x: 0, y: 0, z: 0}
+  animationTransform: {fileID: 4495961153826044913}
+  animationSpriteRenderer: {fileID: 8693060651220279968}
+  playerSpriteRenderer: {fileID: 8703821568815090690}
+  sfxSource: {fileID: 9158648279809898985}
+  hammerHitClips:
+  - {fileID: 8300000, guid: 63e216b0200600d4fa3dbf109c9d310f, type: 3}
+  hammerHitVolume: 1
+  knifeHitClips:
+  - {fileID: 8300000, guid: 67d396c6ebe88dd40bc3c8d6f21e1529, type: 3}
+  - {fileID: 8300000, guid: bed432ead50c83d43ad7066cc18acc3e, type: 3}
+  - {fileID: 8300000, guid: a85e805e16cd1764d9cf3a8fff99203d, type: 3}
+  - {fileID: 8300000, guid: 5e54f6bfcbaa5e6438e40dca26adad3a, type: 3}
+  knifeHitVolume: 1
 --- !u!1 &5824518586758839193
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,7 +347,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4940855100591465535}
-  - component: {fileID: 3678032257578646610}
+  - component: {fileID: 4350703224803466368}
   m_Layer: 0
   m_Name: GameInput
   m_TagString: Untagged
@@ -332,7 +370,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4128414709069579453}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3678032257578646610
+--- !u!114 &4350703224803466368
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -341,7 +379,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5824518586758839193}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ea055cdfc083664285a9e0a0ec0a04f, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c19ab299e89aa24daf74e6656852160, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7244744914420983537
