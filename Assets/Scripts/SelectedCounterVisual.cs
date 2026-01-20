@@ -4,10 +4,8 @@ public class SelectedCounterVisual : MonoBehaviour
 {
     [SerializeField] private BaseCounter baseCounter;
     [SerializeField] private GameObject visualGameObject;
-    private void Start()
-    {
-        Player.Instance.OnSelectedCounterChanged += Player_OnSelectedCounterChanged;
-    }
+    
+    private Player player;
 
     private void Player_OnSelectedCounterChanged(object sender, Player.OnSelectedCounterChangedEventArgs e)
     {
@@ -19,6 +17,24 @@ public class SelectedCounterVisual : MonoBehaviour
         {
             Hide();
         }
+    }
+    public void Bind(Player player)
+    {
+        // odpinamy starego (jeœli by³)
+        if (this.player != null)
+            this.player.OnSelectedCounterChanged -= Player_OnSelectedCounterChanged;
+
+        this.player = player;
+
+        if (this.player != null)
+            this.player.OnSelectedCounterChanged += Player_OnSelectedCounterChanged;
+
+        Hide();
+    }
+    private void OnDestroy()
+    {
+        if (player != null)
+            player.OnSelectedCounterChanged -= Player_OnSelectedCounterChanged;
     }
 
     private void Show()

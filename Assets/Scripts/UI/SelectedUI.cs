@@ -22,21 +22,36 @@ public class SelectedUI : MonoBehaviour
 
     public Transform goldAmountPanel;
 
+    private Player player;
+
     private void Start()
     {
-        // Subskrybujemy event
-        Player.Instance.OnSelectedCounterChanged += UpdateToolUI;
+
 
         // Na start ukryj panel (¿eby nie œwieci³ na pocz¹tku gry)
+
         HidePanel();
-        
+
 
     }
 
     private void OnDestroy()
     {
         // Wa¿ne! Odsubskrybuj, ¿eby nie by³o b³êdów po zniszczeniu obiektu
-        Player.Instance.OnSelectedCounterChanged -= UpdateToolUI;
+        if (player != null)
+            player.OnSelectedCounterChanged -= UpdateToolUI;
+    }
+    public void Bind(Player p)
+    {
+        if (player != null)
+            player.OnSelectedCounterChanged -= UpdateToolUI;
+
+        player = p;
+
+        if (player != null)
+            player.OnSelectedCounterChanged += UpdateToolUI;
+
+        HidePanel();
     }
 
     void UpdateToolUI(object sender, Player.OnSelectedCounterChangedEventArgs e)

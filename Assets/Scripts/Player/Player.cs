@@ -1,9 +1,11 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour, ISmithObjectParent
 {
-    public static Player Instance { get; private set; }
+    public int PlayerIndex {  get; private set; }
+    //public static Player Instance { get; private set; }
 
     public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
     public class OnSelectedCounterChangedEventArgs : EventArgs 
@@ -79,12 +81,14 @@ public class Player : MonoBehaviour, ISmithObjectParent
 
     private void Awake()
     {
+        var pi = GetComponent<PlayerInput>();
+        PlayerIndex = (pi != null) ? pi.playerIndex : 0;
         // Singleton Pattern
-        if (Instance != null)
-        {
-            Debug.LogError("There is more then one Player instance");
-        }
-            Instance = this;
+        //if (Instance != null)
+        //{
+        //    Debug.LogError("There is more then one Player instance");
+       // }
+           // Instance = this;
         baseLocalPos = animationTransform.localPosition;
 
     }
