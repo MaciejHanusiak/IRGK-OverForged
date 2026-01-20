@@ -6,7 +6,10 @@ public class Player : MonoBehaviour, ISmithObjectParent
 {
     public int PlayerIndex {  get; private set; }
     //public static Player Instance { get; private set; }
-
+    private PlayerInput playerInput;
+    private InputAction moveAction;
+    private InputAction interactAction;
+    private InputAction interactAltAction;
     public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
     public class OnSelectedCounterChangedEventArgs : EventArgs 
     {
@@ -16,7 +19,7 @@ public class Player : MonoBehaviour, ISmithObjectParent
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private Animator animator;
     [SerializeField] private Animator hitAnimator;
-    [SerializeField] private GameInput gameInput;
+   // [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask countersLayerMask;
     [SerializeField] private Transform smithObjectHoldPoint;
     [SerializeField] private SmithObjectSO objectToActivateWeaponStandUI;
@@ -90,46 +93,50 @@ public class Player : MonoBehaviour, ISmithObjectParent
        // }
            // Instance = this;
         baseLocalPos = animationTransform.localPosition;
+        playerInput = GetComponent<PlayerInput>();
+        moveAction = playerInput.actions["Move"];
+        interactAction = playerInput.actions["Interact"];
+        interactAltAction = playerInput.actions["InteractAlternate"];
 
     }
-    private void Start()
-    {
-        gameInput.OnInteractAction += GameInput_OnInteractAction;
-        gameInput.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
-    }
+    //private void Start()
+    //{
+    //    gameInput.OnInteractAction += GameInput_OnInteractAction;
+    //    gameInput.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
+    //}
 
 
-    private void GameInput_OnInteractAction(object sender, EventArgs e)
-    {
-        // input Event
-        if (selectedCounter != null)
-        {
-            selectedCounter.Interact(this);
-        }
-    }
-    private void GameInput_OnInteractAlternateAction(object sender, EventArgs e)
-    {
-        // input Event
-        if (selectedCounter != null)
-        {
-            selectedCounter.InteractAlternate(this);
+    //private void GameInput_OnInteractAction(object sender, EventArgs e)
+    //{
+    //    // input Event
+    //    if (selectedCounter != null)
+    //    {
+    //        selectedCounter.Interact(this);
+    //    }
+    //}
+    //private void GameInput_OnInteractAlternateAction(object sender, EventArgs e)
+    //{
+    //    // input Event
+    //    if (selectedCounter != null)
+    //    {
+    //        selectedCounter.InteractAlternate(this);
 
-            SpawnInteractAlternateVfx();
+    //        SpawnInteractAlternateVfx();
 
-           // bool isHitCounter = (selectedCounter is KnifesBenchCounter) || (selectedCounter is AnvilCounter);
-            if (selectedCounter is AnvilCounter)
-            {
-                hitAnimator.SetTrigger("InteractAlternate");
-                PlayRandomHammerHit();
-            }
+    //       // bool isHitCounter = (selectedCounter is KnifesBenchCounter) || (selectedCounter is AnvilCounter);
+    //        if (selectedCounter is AnvilCounter)
+    //        {
+    //            hitAnimator.SetTrigger("InteractAlternate");
+    //            PlayRandomHammerHit();
+    //        }
             
-            if (selectedCounter is KnifesBenchCounter)
-            {
-                hitAnimator.SetTrigger("InteractAlternate");
-                PlayRandomKnifesHit();
-            }
-        }
-    }
+    //        if (selectedCounter is KnifesBenchCounter)
+    //        {
+    //            hitAnimator.SetTrigger("InteractAlternate");
+    //            PlayRandomKnifesHit();
+    //        }
+    //    }
+    //}
 
     void Update()
     {
@@ -138,14 +145,50 @@ public class Player : MonoBehaviour, ISmithObjectParent
         Animate();
         HandleInteractions();
         Move();
+        Debug.Log($"{name} idx={PlayerIndex} move={moveDir} devices={playerInput.devices.Count}");
 
     }
+    private void OnEnable()
+    {
+        if (interactAction != null) interactAction.performed += OnInteractPerformed;
+        if (interactAltAction != null) interactAltAction.performed += OnInteractAltPerformed;
+    }
 
+    private void OnDisable()
+    {
+        if (interactAction != null) interactAction.performed -= OnInteractPerformed;
+        if (interactAltAction != null) interactAltAction.performed -= OnInteractAltPerformed;
+    }
+
+    private void OnInteractPerformed(InputAction.CallbackContext ctx)
+    {
+        if (selectedCounter != null)
+            selectedCounter.Interact(this);
+    }
+
+    private void OnInteractAltPerformed(InputAction.CallbackContext ctx)
+    {
+        if (selectedCounter == null) return;
+
+        selectedCounter.InteractAlternate(this);
+        SpawnInteractAlternateVfx();
+
+        if (selectedCounter is AnvilCounter)
+        {
+            hitAnimator.SetTrigger("InteractAlternate");
+            PlayRandomHammerHit();
+        }
+        else if (selectedCounter is KnifesBenchCounter)
+        {
+            hitAnimator.SetTrigger("InteractAlternate");
+            PlayRandomKnifesHit();
+        }
+    }
     void ProcessInputs()
     {
         
         // get input vector from GameInput.cs
-        Vector2 inputVector = gameInput.GetMovementVectorNormalized();
+        Vector2 inputVector = moveAction.ReadValue<Vector2>();
 
 
         // Set player vector 
