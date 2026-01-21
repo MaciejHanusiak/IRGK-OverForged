@@ -61,6 +61,17 @@ public class Player : MonoBehaviour, ISmithObjectParent
     private BaseCounter selectedCounter;
     private SmithObject smithObject;
 
+    public bool IsKeyboardPlayer
+    {
+        get
+        {
+            if (playerInput == null) return false;
+            foreach (var d in playerInput.devices)
+                if (d is Keyboard) return true;
+            return false;
+        }
+    }
+
     private enum LookDirection
     {
         Up,
@@ -290,6 +301,8 @@ public class Player : MonoBehaviour, ISmithObjectParent
     private void SetSelectedCounter(BaseCounter selectedCounter)
     {
         this.selectedCounter = selectedCounter;
+        Debug.Log(this.selectedCounter);
+        Debug.Log(selectedCounter);
 
         OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs {
             selectedCounter = selectedCounter

@@ -8,9 +8,15 @@ public class LocalCoopJoinManager : MonoBehaviour
     [Header("UI (single shared UI)")]
     [SerializeField] private SelectedUI sharedSelectedUI;
 
+
     private void Awake()
     {
         if (pim == null) pim = FindFirstObjectByType<PlayerInputManager>();
+    }
+    private void Start()
+    {
+        // Obs³u¿ gracza, który jest ju¿ w scenie od pocz¹tku (nie przeszed³ przez onPlayerJoined)
+        TryBindPrimaryPlayer();
     }
 
     private void OnEnable()
@@ -25,20 +31,46 @@ public class LocalCoopJoinManager : MonoBehaviour
 
     private void OnPlayerJoined(PlayerInput playerInput)
     {
-        var player = playerInput.GetComponent<Player>();
-        if (player == null)
+        // Po do³¹czeniu nowego gracza: nadal binduj tylko "primary" (P1)
+        TryBindPrimaryPlayer();
+    }
+    private void TryBindPrimaryPlayer()
+    {
+        // Primary = playerIndex 0, a jak go nie ma, to pierwszy znaleziony Player
+        Player primary = null;
+
+        foreach (var p in FindObjectsByType<Player>(FindObjectsSortMode.None))
         {
-            Debug.LogError("Spawned player prefab has no Player component.");
-            return;
+            var pi = p.GetComponent<PlayerInput>();
+            if (pi != null && pi.playerIndex == 0)
+            {
+                primary = p;
+                break;
+            }
         }
 
-        // 1) Jeœli masz jedno UI na ekran (obs³uguje tylko P1):
-        if (sharedSelectedUI != null && player.PlayerIndex == 0)
-            sharedSelectedUI.Bind(player);
+        if (primary == null)
+            primary = FindFirstObjectByType<Player>();
 
-        // 2) Bind wszystkich SelectedCounterVisual w scenie do tego gracza
-        //    (dla 2 graczy oba bêd¹ dzia³aæ równolegle, bo ka¿dy visual ma swoje visualP1/visualP2)
+        if (primary == null) return;
+
         foreach (var vis in FindObjectsByType<SelectedCounterVisual>(FindObjectsSortMode.None))
-            vis.Bind(player);
+            vis.Bind(primary);
+
+        if (sharedSelectedUI != null)
+            sharedSelectedUI.Bind(primary);
+    }
+    public bool IsKeyboardPlayer
+    {
+        get
+        {
+            var pi = GetComponent<PlayerInput>();
+            if (pi == null) return false;
+
+            foreach (var d in pi.devices)
+                if (d is Keyboard) return true;
+
+            return false;
+        }
     }
 }

@@ -21,6 +21,7 @@ public class SelectedCounterVisual : MonoBehaviour
     }
     public void Bind(Player player)
     {
+        Debug.Log($"[SelectedCounterVisual] Bind: {name} -> {player?.name}");
         // odpinamy starego (jeœli by³)
         if (this.player != null)
             this.player.OnSelectedCounterChanged -= Player_OnSelectedCounterChanged;
