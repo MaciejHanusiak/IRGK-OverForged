@@ -1,51 +1,48 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SelectedCounterVisual : MonoBehaviour
 {
     [SerializeField] private BaseCounter baseCounter;
-    [SerializeField] private GameObject visualGameObject;
-    
-    private Player player;
 
+    [SerializeField] private GameObject[] visualByPlayerIndex = new GameObject[2];
+
+    private readonly HashSet<Player> boundPlayers = new HashSet<Player>();
 
     private void Player_OnSelectedCounterChanged(object sender, Player.OnSelectedCounterChangedEventArgs e)
     {
-        if (e.selectedCounter == baseCounter)
-        {
-            Show();
-        }
-        else
-        {
-            Hide();
-        }
+        var p = sender as Player;
+        if (p == null) return;
+
+        int idx = p.PlayerIndex;
+        if (idx < 0 || idx >= visualByPlayerIndex.Length) return;
+
+        var vis = visualByPlayerIndex[idx];
+        if (vis == null) return;
+
+        vis.SetActive(e.selectedCounter == baseCounter);
     }
+
     public void Bind(Player player)
     {
-        Debug.Log($"[SelectedCounterVisual] Bind: {name} -> {player?.name}");
-        // odpinamy starego (jeœli by³)
-        if (this.player != null)
-            this.player.OnSelectedCounterChanged -= Player_OnSelectedCounterChanged;
+        if (player == null) return;
+        if (boundPlayers.Contains(player)) return;
 
-        this.player = player;
+        boundPlayers.Add(player);
+        player.OnSelectedCounterChanged += Player_OnSelectedCounterChanged;
 
-        if (this.player != null)
-            this.player.OnSelectedCounterChanged += Player_OnSelectedCounterChanged;
-
-        Hide();
+        int idx = player.PlayerIndex;
+        if (idx >= 0 && idx < visualByPlayerIndex.Length && visualByPlayerIndex[idx] != null)
+            visualByPlayerIndex[idx].SetActive(false);
     }
+
     private void OnDestroy()
     {
-        if (player != null)
-            player.OnSelectedCounterChanged -= Player_OnSelectedCounterChanged;
-    }
-
-    private void Show()
-    {
-        visualGameObject.SetActive(true);
-    }
-
-    private void Hide()
-    {
-        visualGameObject.SetActive(false);
+        foreach (var p in boundPlayers)
+        {
+            if (p != null)
+                p.OnSelectedCounterChanged -= Player_OnSelectedCounterChanged;
+        }
+        boundPlayers.Clear();
     }
 }

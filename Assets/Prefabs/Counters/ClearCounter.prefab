@@ -92,8 +92,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 656977baa0dd0ed43929fe8817ba0ba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smithObjectSO: {fileID: 11400000, guid: f5222167bf750c348a90aaf5a4326fad, type: 2}
   counterTopPoint: {fileID: 3733722679258728325}
+  smithObjectSO: {fileID: 11400000, guid: f5222167bf750c348a90aaf5a4326fad, type: 2}
 --- !u!4 &3733722679258728325 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4504992670981226894, guid: c8abd69e64d6d154a8a268364f8c1576, type: 3}
@@ -391,7 +391,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseCounter: {fileID: 2201101791415566773}
-  visualGameObject: {fileID: 1185547797675215875}
+  visualByPlayerIndex:
+  - {fileID: 1185547797675215875}
+  - {fileID: 1185547797675215875}
 --- !u!4 &8474108690837535478 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 969504586226311020, guid: dd2ef6c27e96edb4f91bb2becbbf5e51, type: 3}

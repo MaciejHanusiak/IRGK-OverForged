@@ -297,7 +297,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseCounter: {fileID: 6682007168617776859}
-  visualGameObject: {fileID: 162204521496382511}
+  visualByPlayerIndex:
+  - {fileID: 162204521496382511}
+  - {fileID: 162204521496382511}
 --- !u!1001 &4056425282954025110
 PrefabInstance:
   m_ObjectHideFlags: 0
