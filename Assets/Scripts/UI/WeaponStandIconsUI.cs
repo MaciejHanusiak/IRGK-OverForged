@@ -6,6 +6,7 @@ public class WeaponStandIconsUI : MonoBehaviour
     [SerializeField] private Transform iconTemplate;
 
     private Player player;
+    [SerializeField] private int playerIndex = 0; // w Inspectorze: 0 dla P1, 1 dla P2
 
     private void Awake()
     {
@@ -43,17 +44,17 @@ public class WeaponStandIconsUI : MonoBehaviour
     }
     public void Bind(Player p)
     {
-        if (player != null) return;
+        if (p == null) return;
 
-        if (p.PlayerIndex != 0) return;
-        
-        if(player != null)
-        player.OnSelectedCounterChanged -= Player_OnSelectedCounterChanged;
+        // jeœli chcesz tylko P1, zostaw:
+        // if (p.PlayerIndex != 0) return;
+
+        // odpinamy starego (jeœli by³)
+        if (player != null)
+            player.OnSelectedCounterChanged -= Player_OnSelectedCounterChanged;
 
         player = p;
-
-        if (player != null)
-            player.OnSelectedCounterChanged += Player_OnSelectedCounterChanged;
+        player.OnSelectedCounterChanged += Player_OnSelectedCounterChanged;
 
         HideUI();
     }
