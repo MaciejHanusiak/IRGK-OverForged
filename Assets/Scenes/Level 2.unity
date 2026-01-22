@@ -214,7 +214,6 @@ MonoBehaviour:
   moveSpeed: 5
   animator: {fileID: 0}
   hitAnimator: {fileID: 0}
-  gameInput: {fileID: 1318294641}
   countersLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -58043,17 +58042,6 @@ Transform:
   - {fileID: 2097538297}
   m_Father: {fileID: 1146928684}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1318294641 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4574670901939484482, guid: 664482375a65d9b4dba729049dcf631b, type: 3}
-  m_PrefabInstance: {fileID: 2108602195570783217}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ea055cdfc083664285a9e0a0ec0a04f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1359416955
 GameObject:
   m_ObjectHideFlags: 0
