@@ -7,6 +7,9 @@ public class LocalCoopJoinManager : MonoBehaviour
 
     [Header("UI (single shared UI)")]
     [SerializeField] private SelectedUI sharedSelectedUI;
+    [SerializeField] private InputPanelUI inputPanelUI;
+
+
 
 
     private void Awake()
@@ -17,22 +20,39 @@ public class LocalCoopJoinManager : MonoBehaviour
     {
         // Obs³u¿ gracza, który jest ju¿ w scenie od pocz¹tku (nie przeszed³ przez onPlayerJoined)
         TryBindPrimaryPlayer();
+        UpdateMultiplayerUI();
     }
 
     private void OnEnable()
     {
-        if (pim != null) pim.onPlayerJoined += OnPlayerJoined;
+        if (pim != null)
+        {
+            pim.onPlayerJoined += OnPlayerJoined;
+            pim.onPlayerLeft += OnPlayerLeft;
+        }
     }
 
     private void OnDisable()
     {
-        if (pim != null) pim.onPlayerJoined -= OnPlayerJoined;
+        if (pim != null)
+        {
+            pim.onPlayerJoined -= OnPlayerJoined;
+            pim.onPlayerLeft -= OnPlayerLeft;
+
+        }
     }
 
     private void OnPlayerJoined(PlayerInput playerInput)
     {
         // Po do³¹czeniu nowego gracza: nadal binduj tylko "primary" (P1)
         TryBindPrimaryPlayer();
+        UpdateMultiplayerUI();
+        Debug.Log("OnPlayerJoined");
+    }
+
+    private void OnPlayerLeft(PlayerInput playerInput)
+    {
+        UpdateMultiplayerUI();
     }
     private void TryBindPrimaryPlayer()
     {
@@ -60,17 +80,16 @@ public class LocalCoopJoinManager : MonoBehaviour
         if (sharedSelectedUI != null)
             sharedSelectedUI.Bind(primary);
     }
-    public bool IsKeyboardPlayer
+    private void UpdateMultiplayerUI()
     {
-        get
-        {
-            var pi = GetComponent<PlayerInput>();
-            if (pi == null) return false;
+        int playerCount = PlayerInput.all.Count;
 
-            foreach (var d in pi.devices)
-                if (d is Keyboard) return true;
-
-            return false;
-        }
+        bool isMultiplayer = playerCount >= 2;
+        // inputPanelUI.SinglePlayerControlsPanel.gameObject.SetActive(!isMultiplayer);
+        // inputPanelUI.MultiPlayerControlsPanel.gameObject.SetActive(isMultiplayer);
+        inputPanelUI.PlayerTwoJoinPanel.gameObject.SetActive(!isMultiplayer);
+        inputPanelUI.PlayerTwoPanel.gameObject.SetActive(isMultiplayer);
     }
+
+
 }

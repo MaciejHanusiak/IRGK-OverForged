@@ -14,19 +14,21 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(this.gameObject);
     }
-    static bool isMultiplayerSelected = false;
+    public bool isMultiplayerSelected = false;
 
     public void Update()
     {
-        Debug.Log(isMultiplayerSelected);
+        
     }
 
     public void SelectMultiPlayer()
     {
         isMultiplayerSelected = true;
+        Debug.Log(isMultiplayerSelected);
     }
     public void UnselectMultiPlayer()
     {
         isMultiplayerSelected = false;
+        Debug.Log(isMultiplayerSelected);
     }
 }

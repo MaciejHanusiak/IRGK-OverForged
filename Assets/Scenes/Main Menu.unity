@@ -345,11 +345,11 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1375724130}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: UnselectMultiPlayer
+      - m_Target: {fileID: 71611629}
+        m_TargetAssemblyTypeName: MainMenuUI, Assembly-CSharp
+        m_MethodName: SelectSingle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -357,7 +357,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 835036513}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
@@ -746,6 +746,50 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5133653618479831181, guid: bc02e75830ccd9f479465604c2dfdb0b, type: 3}
   m_PrefabInstance: {fileID: 65436502}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &71611628
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 71611630}
+  - component: {fileID: 71611629}
+  m_Layer: 0
+  m_Name: MainMenuUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &71611629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 71611628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1c5e380db3caf44ab4ca9ac968dd20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &71611630
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 71611628}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 964.5575, y: 462.76404, z: -3.3678603}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &112530772
 GameObject:
   m_ObjectHideFlags: 0
@@ -5972,9 +6016,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1375724130}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: SelectMultiPlayer
+      - m_Target: {fileID: 71611629}
+        m_TargetAssemblyTypeName: MainMenuUI, Assembly-CSharp
+        m_MethodName: SelectMulti
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6994,6 +7038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82cc29f6fdce43342ad03751cedb7eb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMultiplayerSelected: 0
 --- !u!4 &1375724131
 Transform:
   m_ObjectHideFlags: 0
@@ -10788,3 +10833,4 @@ SceneRoots:
   - {fileID: 225864403}
   - {fileID: 564959524}
   - {fileID: 1375724131}
+  - {fileID: 71611630}
