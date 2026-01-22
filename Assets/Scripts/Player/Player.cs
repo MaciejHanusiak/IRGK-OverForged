@@ -156,7 +156,7 @@ public class Player : MonoBehaviour, ISmithObjectParent
         Animate();
         HandleInteractions();
         Move();
-        Debug.Log($"{name} idx={PlayerIndex} move={moveDir} devices={playerInput.devices.Count}");
+        //Debug.Log($"{name} idx={PlayerIndex} move={moveDir} devices={playerInput.devices.Count}");
 
     }
     private void OnEnable()
@@ -301,8 +301,8 @@ public class Player : MonoBehaviour, ISmithObjectParent
     private void SetSelectedCounter(BaseCounter selectedCounter)
     {
         this.selectedCounter = selectedCounter;
-        Debug.Log(this.selectedCounter);
-        Debug.Log(selectedCounter);
+       // Debug.Log(this.selectedCounter);
+       // Debug.Log(selectedCounter);
 
         OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs {
             selectedCounter = selectedCounter
