@@ -11,6 +11,9 @@ public class LocalCoopJoinManager : MonoBehaviour
 
     private Player lastPrimaryBound;
     private bool didInitialBind = false;
+
+    [SerializeField] private SelectedUI selectedUI_P1; // mo¿esz tu daæ to co masz jako sharedSelectedUI
+    [SerializeField] private SelectedUI selectedUI_P2;
     private void Awake()
     {
         if (pim == null) pim = FindFirstObjectByType<PlayerInputManager>();
@@ -24,6 +27,7 @@ public class LocalCoopJoinManager : MonoBehaviour
     }
     private void Update()
     {
+        Debug.Log("[LocalCoopJoinManager] Update tick");
         if (didInitialBind) return;
 
         // Czekamy a¿ pojawi siê pierwszy Player w scenie
@@ -34,6 +38,7 @@ public class LocalCoopJoinManager : MonoBehaviour
         TryBindPrimaryPlayer();
         BindAllPlayersToSelectedCounterVisuals();
         BindAllPlayersToWeaponStandUI();
+        BindSelectedUIPanels();
         UpdateMultiplayerUI();
 
         didInitialBind = true;
@@ -64,6 +69,7 @@ public class LocalCoopJoinManager : MonoBehaviour
         TryBindPrimaryPlayer();
         BindAllPlayersToSelectedCounterVisuals();
         BindAllPlayersToWeaponStandUI();
+        BindSelectedUIPanels();
         UpdateMultiplayerUI();
     }
 
@@ -136,6 +142,42 @@ public class LocalCoopJoinManager : MonoBehaviour
                 iconsUI.Bind(p);
             }
         }
+    }
+    private void BindSelectedUIPanels()
+    {
+        Debug.Log("[LocalCoopJoinManager] BindSelectedUIPanels CALLED");
+        var players = FindObjectsByType<Player>(FindObjectsSortMode.None);
+
+        Player p1 = null;
+        Player p2 = null;
+
+        foreach (var p in players)
+        {
+            if (p.PlayerIndex == 0) p1 = p;
+            else if (p.PlayerIndex == 1) p2 = p;
+        }
+
+        // P1
+        if (sharedSelectedUI != null)
+        {
+            if (p1 != null) sharedSelectedUI.Bind(p1);
+            else sharedSelectedUI.HidePanel(); // jeœli masz publiczne HidePanel
+        }
+
+        // P2
+        if (selectedUI_P2 != null)
+        {
+            if (p2 != null)
+            {
+                selectedUI_P2.gameObject.SetActive(true);
+                selectedUI_P2.Bind(p2);
+            }
+            else
+            {
+                selectedUI_P2.gameObject.SetActive(false);
+            }
+        }
+        Debug.Log(p1 + "p1,            p2," + p2);
     }
     private void UpdateMultiplayerUI()
     {

@@ -119,7 +119,7 @@ public class SelectedUI : MonoBehaviour
         if (outputText) outputText.text = "";
     }
 
-    private void HidePanel()
+    public void HidePanel()
     {
         selectedPanel.gameObject.SetActive(false);
         ClearIconsAndLabels();
