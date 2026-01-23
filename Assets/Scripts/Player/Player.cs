@@ -384,10 +384,7 @@ public class Player : MonoBehaviour, ISmithObjectParent
         smithObjectHoldPoint.localPosition = baseLocalPos + holdPointPosition;
 
         SpriteRenderer sr = smithObjectHoldPoint.GetComponentInChildren<SpriteRenderer>();
-        if (sr != null)
-        {
-            Debug.Log(sr.sortingOrder);
-        }
+  
     }
 
     void UpdateAnimationSortingOrder()
@@ -407,7 +404,6 @@ public class Player : MonoBehaviour, ISmithObjectParent
         if (sr != null && lookDir == LookDirection.Down)
         {
             sr.sortingOrder = 11;
-            Debug.Log(sr.sortingOrder);
         }
         else
         {
