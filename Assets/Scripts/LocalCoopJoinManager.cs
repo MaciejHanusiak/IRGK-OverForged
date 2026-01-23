@@ -9,6 +9,7 @@ public class LocalCoopJoinManager : MonoBehaviour
     [SerializeField] private SelectedUI sharedSelectedUI;
     [SerializeField] private InputPanelUI inputPanelUI;
 
+    private Player lastPrimaryBound;
     private void Awake()
     {
         if (pim == null) pim = FindFirstObjectByType<PlayerInputManager>();
@@ -18,16 +19,11 @@ public class LocalCoopJoinManager : MonoBehaviour
     {
         // Obs³uga gracza, który jest ju¿ w scenie od pocz¹tku (nie przeszed³ przez onPlayerJoined)
         TryBindPrimaryPlayer();
-        BindAllPlayersToWeaponStandUI();
-        UpdateMultiplayerUI();
-        InvokeRepeating(nameof(RebindUI), 0f, 0.25f);
-    }
-    private void RebindUI()
-    {
-        TryBindPrimaryPlayer();
+        BindAllPlayersToSelectedCounterVisuals();
         BindAllPlayersToWeaponStandUI();
         UpdateMultiplayerUI();
     }
+
     private void OnEnable()
     {
         if (pim != null)
@@ -44,15 +40,14 @@ public class LocalCoopJoinManager : MonoBehaviour
             pim.onPlayerJoined -= OnPlayerJoined;
             pim.onPlayerLeft -= OnPlayerLeft;
         }
-        CancelInvoke(nameof(RebindUI));
     }
 
 
     private void OnPlayerJoined(PlayerInput playerInput)
     {
-        // Nadal mo¿na robiæ bind "primary" pod SelectedCounterVisual i sharedSelectedUI,
-        // ale WeaponStandIconsUI bindowane jest do WSZYSTKICH graczy.
         TryBindPrimaryPlayer();
+
+        BindAllPlayersToSelectedCounterVisuals();
         BindAllPlayersToWeaponStandUI();
         UpdateMultiplayerUI();
     }
@@ -60,6 +55,7 @@ public class LocalCoopJoinManager : MonoBehaviour
     private void OnPlayerLeft(PlayerInput playerInput)
     {
         // Jak ktoœ wyszed³: odœwie¿ UI
+        BindAllPlayersToSelectedCounterVisuals();
         BindAllPlayersToWeaponStandUI();
         UpdateMultiplayerUI();
     }
@@ -89,20 +85,30 @@ public class LocalCoopJoinManager : MonoBehaviour
 
         Debug.Log($"[LocalCoopJoinManager] TryBindPrimaryPlayer -> primary = {primary.name}");
 
-        // 1) SelectedCounterVisual (jeœli to masz jako wspólne / P1 logic)
-        foreach (var vis in FindObjectsByType<SelectedCounterVisual>(FindObjectsSortMode.None))
-        {
-            Debug.Log($"[LocalCoopJoinManager] Binding SelectedCounterVisual {vis.name} to {primary.name}");
-            vis.Bind(primary);
-        }
 
-        // 2) sharedSelectedUI (wspólny panel)
-        if (sharedSelectedUI != null)
+
+        // 1) sharedSelectedUI (wspólny panel) - binduj tylko jeœli primary siê zmieni³
+        if (sharedSelectedUI != null && primary != lastPrimaryBound)
         {
+            lastPrimaryBound = primary;
             Debug.Log($"[LocalCoopJoinManager] Binding sharedSelectedUI {sharedSelectedUI.name} to {primary.name}");
             sharedSelectedUI.Bind(primary);
         }
     }
+    private void BindAllPlayersToSelectedCounterVisuals()
+    {
+        var players = FindObjectsByType<Player>(FindObjectsSortMode.None);
+        var visuals = FindObjectsByType<SelectedCounterVisual>(FindObjectsSortMode.None);
+
+        foreach (var vis in visuals)
+        {
+            foreach (var p in players)
+            {
+                vis.Bind(p);
+            }
+        }
+    }
+
     private void BindAllPlayersToWeaponStandUI()
     {
         var players = FindObjectsByType<Player>(FindObjectsSortMode.None);

@@ -33,7 +33,10 @@ public class SelectedCounterVisual : MonoBehaviour
 
         int idx = player.PlayerIndex;
         if (idx >= 0 && idx < visualByPlayerIndex.Length && visualByPlayerIndex[idx] != null)
-            visualByPlayerIndex[idx].SetActive(false);
+        {
+            // Natychmiast ustaw poprawny stan (bez migania po do³¹czeniu gracza)
+            visualByPlayerIndex[idx].SetActive(player.GetSelectedCounter() == baseCounter);
+        }
     }
 
     private void OnDestroy()

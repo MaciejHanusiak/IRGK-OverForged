@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour, ISmithObjectParent
 {
-    public int PlayerIndex {  get; private set; }
+    public int PlayerIndex => playerInput != null ? playerInput.playerIndex : 0;
     // Subskrypcja stanu aktualnie wybranego countera (¿eby UI odœwie¿a³o siê bez zmiany selekcji)
     private BaseCounter subscribedCounter;
 
@@ -97,14 +97,6 @@ public class Player : MonoBehaviour, ISmithObjectParent
 
     private void Awake()
     {
-        var pi = GetComponent<PlayerInput>();
-        PlayerIndex = (pi != null) ? pi.playerIndex : 0;
-        // Singleton Pattern
-        //if (Instance != null)
-        //{
-        //    Debug.LogError("There is more then one Player instance");
-       // }
-           // Instance = this;
         baseLocalPos = animationTransform.localPosition;
         playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions["Move"];
@@ -112,44 +104,7 @@ public class Player : MonoBehaviour, ISmithObjectParent
         interactAltAction = playerInput.actions["InteractAlternate"];
 
     }
-    //private void Start()
-    //{
-    //    gameInput.OnInteractAction += GameInput_OnInteractAction;
-    //    gameInput.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
-    //}
 
-
-    //private void GameInput_OnInteractAction(object sender, EventArgs e)
-    //{
-    //    // input Event
-    //    if (selectedCounter != null)
-    //    {
-    //        selectedCounter.Interact(this);
-    //    }
-    //}
-    //private void GameInput_OnInteractAlternateAction(object sender, EventArgs e)
-    //{
-    //    // input Event
-    //    if (selectedCounter != null)
-    //    {
-    //        selectedCounter.InteractAlternate(this);
-
-    //        SpawnInteractAlternateVfx();
-
-    //       // bool isHitCounter = (selectedCounter is KnifesBenchCounter) || (selectedCounter is AnvilCounter);
-    //        if (selectedCounter is AnvilCounter)
-    //        {
-    //            hitAnimator.SetTrigger("InteractAlternate");
-    //            PlayRandomHammerHit();
-    //        }
-            
-    //        if (selectedCounter is KnifesBenchCounter)
-    //        {
-    //            hitAnimator.SetTrigger("InteractAlternate");
-    //            PlayRandomKnifesHit();
-    //        }
-    //    }
-    //}
 
     void Update()
     {
@@ -158,7 +113,7 @@ public class Player : MonoBehaviour, ISmithObjectParent
         Animate();
         HandleInteractions();
         Move();
-        //Debug.Log($"{name} idx={PlayerIndex} move={moveDir} devices={playerInput.devices.Count}");
+        Debug.Log($"{name} idx={PlayerIndex} move={moveDir} devices={playerInput.devices.Count}");
 
     }
     private void OnEnable()
@@ -456,6 +411,10 @@ public class Player : MonoBehaviour, ISmithObjectParent
     public string GetObjectParentName()
     {
         return this.name;
+    }
+    public BaseCounter GetSelectedCounter()
+    {
+        return selectedCounter;
     }
     public virtual SmithObjectSO GetOutputSmithObjectSO() => null;
 }
