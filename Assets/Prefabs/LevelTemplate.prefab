@@ -1869,9 +1869,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e2122e58f9688e4e85841baa88be205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   offset: {x: 0, y: 0, z: -5}
   speed: 4
+  pim: {fileID: 5484543927044938501}
 --- !u!114 &7681110395414324111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13146,6 +13146,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6704162640911666440, guid: 594bf21fbf12e7343af54a88c94c8836, type: 3}
   m_PrefabInstance: {fileID: 7501106563926640842}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5484543927044938501 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2595281790716924879, guid: 594bf21fbf12e7343af54a88c94c8836, type: 3}
+  m_PrefabInstance: {fileID: 7501106563926640842}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8226540090275184962
 PrefabInstance:
   m_ObjectHideFlags: 0
