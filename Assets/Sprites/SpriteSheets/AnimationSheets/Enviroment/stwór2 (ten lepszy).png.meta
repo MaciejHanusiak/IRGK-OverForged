@@ -116,9 +116,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 12
-        width: 59
-        height: 38
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,10 +137,10 @@ TextureImporter:
       name: "stw\xF3r2 (ten lepszy)_1"
       rect:
         serializedVersion: 2
-        x: 63
+        x: 64
         y: 0
-        width: 60
-        height: 50
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -159,10 +159,10 @@ TextureImporter:
       name: "stw\xF3r2 (ten lepszy)_2"
       rect:
         serializedVersion: 2
-        x: 127
-        y: 12
-        width: 60
-        height: 38
+        x: 128
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -181,10 +181,10 @@ TextureImporter:
       name: "stw\xF3r2 (ten lepszy)_3"
       rect:
         serializedVersion: 2
-        x: 191
-        y: 12
-        width: 60
-        height: 38
+        x: 192
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -203,10 +203,10 @@ TextureImporter:
       name: "stw\xF3r2 (ten lepszy)_4"
       rect:
         serializedVersion: 2
-        x: 255
+        x: 256
         y: 0
-        width: 60
-        height: 50
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -225,7 +225,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 8a78e47850dd2a14fac24fc73dd2ff40
     internalID: 0
     vertices: []
     indices: 

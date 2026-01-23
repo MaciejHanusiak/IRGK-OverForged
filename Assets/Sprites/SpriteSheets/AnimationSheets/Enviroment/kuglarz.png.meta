@@ -121,10 +121,10 @@ TextureImporter:
       name: kuglarz_0
       rect:
         serializedVersion: 2
-        x: 15
-        y: 13
-        width: 22
-        height: 42
+        x: 0
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,10 +143,10 @@ TextureImporter:
       name: kuglarz_1
       rect:
         serializedVersion: 2
-        x: 79
-        y: 13
-        width: 22
-        height: 42
+        x: 64
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -165,10 +165,10 @@ TextureImporter:
       name: kuglarz_2
       rect:
         serializedVersion: 2
-        x: 143
-        y: 13
-        width: 22
-        height: 42
+        x: 128
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -187,10 +187,10 @@ TextureImporter:
       name: kuglarz_3
       rect:
         serializedVersion: 2
-        x: 207
-        y: 13
-        width: 22
-        height: 42
+        x: 192
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -209,10 +209,10 @@ TextureImporter:
       name: kuglarz_4
       rect:
         serializedVersion: 2
-        x: 271
-        y: 13
-        width: 22
-        height: 42
+        x: 256
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -231,10 +231,10 @@ TextureImporter:
       name: kuglarz_5
       rect:
         serializedVersion: 2
-        x: 335
-        y: 13
-        width: 22
-        height: 42
+        x: 320
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -253,10 +253,10 @@ TextureImporter:
       name: kuglarz_6
       rect:
         serializedVersion: 2
-        x: 399
-        y: 13
-        width: 22
-        height: 42
+        x: 384
+        y: 0
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -275,7 +275,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: d4016efba9913304f842f05525150f4e
     internalID: 0
     vertices: []
     indices: 
