@@ -8974,7 +8974,7 @@ GameObject:
   - component: {fileID: 8153399847720934016}
   - component: {fileID: 8200038855706187302}
   m_Layer: 5
-  m_Name: SelectedUI (1)
+  m_Name: SelectedUIP2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

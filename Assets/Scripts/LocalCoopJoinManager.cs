@@ -12,7 +12,6 @@ public class LocalCoopJoinManager : MonoBehaviour
     private Player lastPrimaryBound;
     private bool didInitialBind = false;
 
-    [SerializeField] private SelectedUI selectedUI_P1; // mo¿esz tu daæ to co masz jako sharedSelectedUI
     [SerializeField] private SelectedUI selectedUI_P2;
     private void Awake()
     {
