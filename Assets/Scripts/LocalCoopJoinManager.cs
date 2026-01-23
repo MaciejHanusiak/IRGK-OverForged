@@ -47,7 +47,6 @@ public class LocalCoopJoinManager : MonoBehaviour
         // Po do³¹czeniu nowego gracza: nadal binduj tylko "primary" (P1)
         TryBindPrimaryPlayer();
         UpdateMultiplayerUI();
-        Debug.Log("OnPlayerJoined");
     }
 
     private void OnPlayerLeft(PlayerInput playerInput)
