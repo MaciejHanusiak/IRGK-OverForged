@@ -5,7 +5,9 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour, ISmithObjectParent
 {
     public int PlayerIndex {  get; private set; }
-    //public static Player Instance { get; private set; }
+    // Subskrypcja stanu aktualnie wybranego countera (¿eby UI odœwie¿a³o siê bez zmiany selekcji)
+    private BaseCounter subscribedCounter;
+
     private PlayerInput playerInput;
     private InputAction moveAction;
     private InputAction interactAction;
@@ -169,6 +171,19 @@ public class Player : MonoBehaviour, ISmithObjectParent
     {
         if (interactAction != null) interactAction.performed -= OnInteractPerformed;
         if (interactAltAction != null) interactAltAction.performed -= OnInteractAltPerformed;
+
+        // Bezpieczne odpiêcie (unikasz "wisz¹cych" subskrypcji)
+        if (subscribedCounter != null)
+            subscribedCounter.OnStateChanged -= SelectedCounter_OnStateChanged;
+    }
+
+    private void SelectedCounter_OnStateChanged(object sender, EventArgs e)
+    {
+        // Selected counter siê nie zmieni³, ale jego stan tak -> wymuœ odœwie¿enie UI
+        OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs
+        {
+            selectedCounter = selectedCounter
+        });
     }
 
     private void OnInteractPerformed(InputAction.CallbackContext ctx)
@@ -300,10 +315,16 @@ public class Player : MonoBehaviour, ISmithObjectParent
 
     private void SetSelectedCounter(BaseCounter selectedCounter)
     {
-        this.selectedCounter = selectedCounter;
-       // Debug.Log(this.selectedCounter);
-       // Debug.Log(selectedCounter);
+        // Odepnij poprzedni counter
+        if (subscribedCounter != null)
+            subscribedCounter.OnStateChanged -= SelectedCounter_OnStateChanged;
 
+        this.selectedCounter = selectedCounter;
+            subscribedCounter = selectedCounter;
+
+        // Podepnij nowy counter
+        if (subscribedCounter != null)
+            subscribedCounter.OnStateChanged += SelectedCounter_OnStateChanged;
         OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs {
             selectedCounter = selectedCounter
         });
