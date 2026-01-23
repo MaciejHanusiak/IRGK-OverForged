@@ -15,6 +15,7 @@ public class LocalCoopJoinManager : MonoBehaviour
     private void Awake()
     {
         if (pim == null) pim = FindFirstObjectByType<PlayerInputManager>();
+        pim.enabled = GameManager.Instance.isMultiplayerSelected;
     }
     private void Start()
     {

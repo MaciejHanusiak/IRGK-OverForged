@@ -2,33 +2,54 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
 
+[RequireComponent(typeof(Camera))]
 public class CameraMovement : MonoBehaviour
 {
-    [Header("Follow")]
-    [SerializeField] private Vector3 offset = new Vector3(0, 0, -10f);
-    [SerializeField] private float speed = 5f;
-
-    [Header("Auto source")]
+    [Header("Targets")]
     [SerializeField] private PlayerInputManager pim;
 
     [Header("Pixel Perfect")]
     [SerializeField] private PixelPerfectCamera ppc;
-    [SerializeField] private int multiplayerRefResX = 360;
-    [SerializeField] private int multiplayerRefResY = 180;
 
-    private int defaultRefResX;
+    [Header("Follow")]
+    [SerializeField] private Vector3 offset = new Vector3(0, 0, -10f);
+    [SerializeField] private float followSmoothTime = 0.12f;
 
-    private Transform p1;
-    private Transform p2;
+    [Header("Zoom (ORTHO SIZE)")]
+    [SerializeField] private float minOrthoSize = 5f;     // najbli¿ej (zoom in)
+    [SerializeField] private float maxOrthoSize = 10f;    // najdalej (zoom out)
+    [SerializeField] private float zoomSmoothTime = 0.18f;
+
+    [Header("Distance -> Zoom mapping (Unity units)")]
+    [SerializeField] private float minDistance = 2f;      // dystans => minOrthoSize
+    [SerializeField] private float maxDistance = 12f;     // dystans => maxOrthoSize
+
+    [Header("Hybrid anti-shimmer")]
+    [Tooltip("Snapuje pozycjê kamery do siatki pikseli (zmniejsza shimmer, ale mo¿e dodaæ 'mikro-klik').")]
+    [SerializeField] private bool snapToPixelGrid = true;
+
+    [Tooltip("Dodatkowy mno¿nik: jeœli nadal p³ywa, ustaw 2 (snap co 2 piksele), jak zbyt klika, ustaw 1.")]
+    [SerializeField] private int snapPixelStep = 1;
+
+    private Transform p1, p2;
+    private Camera cam;
+
+    private Vector3 followVelocity;
+    private float zoomVelocity;
 
     private void Awake()
     {
         if (pim == null) pim = FindFirstObjectByType<PlayerInputManager>();
-        if (ppc == null)
-            ppc = Camera.main.GetComponent<PixelPerfectCamera>();
 
-        if (ppc != null)
-            defaultRefResX = ppc.refResolutionX;
+        cam = GetComponent<Camera>();
+        cam.orthographic = true;
+
+        if (ppc == null) ppc = GetComponent<PixelPerfectCamera>();
+        if (ppc == null && Camera.main != null) ppc = Camera.main.GetComponent<PixelPerfectCamera>();
+
+        snapPixelStep = Mathf.Max(1, snapPixelStep);
+        if (GameManager.Instance.isMultiplayerSelected)
+            ppc.enabled = false;
     }
 
     private void OnEnable()
@@ -39,7 +60,7 @@ public class CameraMovement : MonoBehaviour
             pim.onPlayerLeft += OnPlayerLeft;
         }
 
-        RefreshPlayers(); // wa¿ne jeœli P1 ju¿ jest na scenie
+        RefreshPlayers();
     }
 
     private void OnDisable()
@@ -53,19 +74,16 @@ public class CameraMovement : MonoBehaviour
 
     private void OnPlayerJoined(PlayerInput _)
     {
-        RefreshPlayers(); // po join P2 -> prze³¹czy w multi
-        UpdatePixelPerfect();
+        RefreshPlayers();
     }
 
     private void OnPlayerLeft(PlayerInput _)
     {
-        RefreshPlayers(); // po leave -> wróci do solo
-        UpdatePixelPerfect();
+        RefreshPlayers();
     }
 
     private void RefreshPlayers()
     {
-        // PlayerInput.all jest Ÿród³em prawdy (kolejnoœæ = playerIndex)
         p1 = null;
         p2 = null;
 
@@ -76,45 +94,71 @@ public class CameraMovement : MonoBehaviour
             if (pi.playerIndex == 0) p1 = pi.transform;
             else if (pi.playerIndex == 1) p2 = pi.transform;
         }
-
-        // Fallback, gdyby coœ by³o nietypowe:
-        if (p1 == null)
-        {
-            var anyPlayer = FindFirstObjectByType<Player>();
-            if (anyPlayer != null) p1 = anyPlayer.transform;
-        }
-    }
-    private void UpdatePixelPerfect()
-    {
-        if (ppc == null) return;
-
-        bool isMultiplayer = (p2 != null);
-
-        if (isMultiplayer)
-        {
-            ppc.refResolutionX = multiplayerRefResX;
-            ppc.refResolutionY = multiplayerRefResY;
-        }
-        else
-        {
-            ppc.refResolutionX = defaultRefResX;
-        }
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (p1 == null) return;
 
-        Vector3 target;
+        // --- FOLLOW (smooth) ---
+        Vector3 center = (p2 != null) ? (p1.position + p2.position) * 0.5f : p1.position;
+        center.z = 0f; // stabilne 2D
 
-        // MULTI: œrodek pomiêdzy p1 i p2
+        Vector3 desiredPos = center + offset;
+
+        transform.position = Vector3.SmoothDamp(
+            transform.position,
+            desiredPos,
+            ref followVelocity,
+            followSmoothTime
+        );
+
+        // --- ZOOM (smooth) ---
+        float targetSize = minOrthoSize;
+
         if (p2 != null)
-            target = (p1.position + p2.position) * 0.5f;
-        else
-            target = p1.position;
+        {
+            float d = Vector2.Distance(p1.position, p2.position);
+            float t = Mathf.InverseLerp(minDistance, maxDistance, d);
+            targetSize = Mathf.Lerp(minOrthoSize, maxOrthoSize, t);
+        }
 
-        target += offset;
+        cam.orthographicSize = Mathf.SmoothDamp(
+            cam.orthographicSize,
+            targetSize,
+            ref zoomVelocity,
+            zoomSmoothTime
+        );
 
-        transform.position = Vector3.Lerp(transform.position, target, speed * Time.deltaTime);
+        // --- HYBRID: snap camera position to pixel grid ---
+        if (snapToPixelGrid)
+            SnapCameraToPixelGrid();
+    }
+
+    private void SnapCameraToPixelGrid()
+    {
+        // Jeœli nie ma PixelPerfectCamera, nie mamy jak policzyæ units-per-pixel sensownie.
+        if (ppc == null) return;
+
+        // assetsPPU: ile pikseli ma 1 unit w œwiecie (Twoje PPU)
+        float assetsPPU = ppc.assetsPPU;
+        if (assetsPPU <= 0f) return;
+
+        // pixelRatio: aktualny integer scale (np. 5)
+        int ratio = ppc.pixelRatio;
+        if (ratio <= 0) return;
+
+        // 1 pixel w œwiecie = 1 / (assetsPPU * ratio) unity
+        float unitsPerPixel = 1f / (assetsPPU * ratio);
+
+        // Snap co N pikseli (snapPixelStep)
+        float step = unitsPerPixel * snapPixelStep;
+
+        Vector3 pos = transform.position;
+        pos.x = Mathf.Round(pos.x / step) * step;
+        pos.y = Mathf.Round(pos.y / step) * step;
+        // z zostaje z offsetu (-10)
+
+        transform.position = pos;
     }
 }
