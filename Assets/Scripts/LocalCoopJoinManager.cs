@@ -10,6 +10,7 @@ public class LocalCoopJoinManager : MonoBehaviour
     [SerializeField] private InputPanelUI inputPanelUI;
 
     private Player lastPrimaryBound;
+    private bool didInitialBind = false;
     private void Awake()
     {
         if (pim == null) pim = FindFirstObjectByType<PlayerInputManager>();
@@ -18,12 +19,27 @@ public class LocalCoopJoinManager : MonoBehaviour
     private void Start()
     {
         // Obs³uga gracza, który jest ju¿ w scenie od pocz¹tku (nie przeszed³ przez onPlayerJoined)
+
+        UpdateMultiplayerUI();
+    }
+    private void Update()
+    {
+        if (didInitialBind) return;
+
+        // Czekamy a¿ pojawi siê pierwszy Player w scenie
+        var anyPlayer = FindFirstObjectByType<Player>();
+        if (anyPlayer == null) return;
+
+        // Teraz ju¿ ma sens
         TryBindPrimaryPlayer();
         BindAllPlayersToSelectedCounterVisuals();
         BindAllPlayersToWeaponStandUI();
         UpdateMultiplayerUI();
-    }
 
+        didInitialBind = true;
+
+        Debug.Log("[LocalCoopJoinManager] Initial bind done (players found).");
+    }
     private void OnEnable()
     {
         if (pim != null)
@@ -46,7 +62,6 @@ public class LocalCoopJoinManager : MonoBehaviour
     private void OnPlayerJoined(PlayerInput playerInput)
     {
         TryBindPrimaryPlayer();
-
         BindAllPlayersToSelectedCounterVisuals();
         BindAllPlayersToWeaponStandUI();
         UpdateMultiplayerUI();

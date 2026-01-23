@@ -42,6 +42,15 @@ public class WeaponStandIconsUI : MonoBehaviour
             Debug.LogWarning("[WeaponStandIconsUI] weaponStandSmithObject == NULL!");
         }
 
+        if (boundPlayers.Count == 0)
+        {
+            var players = FindObjectsByType<Player>(FindObjectsSortMode.None);
+            foreach (var p in players)
+                Bind(p);
+
+            Debug.Log($"[WeaponStandIconsUI] AutoBind in Start() -> players={players.Length}");
+        }
+
         // UWAGA: nie robimy AutoBind tutaj (bo w multi jest losowo i psuje logikê)
         // Bindowanie robi LocalCoopJoinManager dla wszystkich graczy.
     }
