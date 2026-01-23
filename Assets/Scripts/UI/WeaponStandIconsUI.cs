@@ -107,6 +107,7 @@ public class WeaponStandIconsUI : MonoBehaviour
     }
     private void UpdateVisual()
     {
+        Debug.Log($"[WeaponStandIconsUI] parts count = {weaponStandSmithObject.GetSmithObjectSOList().Count}");
         Debug.Log("[WeaponStandIconsUI] UpdateVisual() called");
 
         if (weaponStandSmithObject == null)
