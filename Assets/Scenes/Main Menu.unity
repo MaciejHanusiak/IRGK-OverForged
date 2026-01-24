@@ -3203,7 +3203,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &568220085
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6096,7 +6096,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1095669183
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7609,7 +7609,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Version 0.0.2
+  m_text: Version 0.1.0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8dd1b1adbac8cdf4f9dcbf8136ae36c3, type: 2}
   m_sharedMaterial: {fileID: 2022614767784060398, guid: 8dd1b1adbac8cdf4f9dcbf8136ae36c3, type: 2}
@@ -9420,7 +9420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.5254902, b: 0.5254902, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
